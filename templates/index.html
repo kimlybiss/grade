@@ -25,68 +25,73 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: radial-gradient(
-        circle at top right,
-        #efe2df,
-        var(--bg) 60%
-      );
+      background: radial-gradient(circle at top right, #efe2df, var(--bg) 60%);
       color: var(--text);
       line-height: 1.45;
       overflow-x: hidden;
     }
 
-    /* ================= HEADER (только здесь изменения) ================= */
+    /* HEADER */
 
     header {
       max-width: 1200px;
       margin: 0 auto;
-      /* увеличили правый padding, чтобы кнопка была дальше вправо */
-      padding: 26px 48px;
+      padding: 26px 24px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
     }
 
-    /* Левая группа растянута по ширине, чтобы меню занимало большую часть слева */
     .header-left {
       display: flex;
       align-items: center;
-      gap: 40px;               /* расстояние между лого и меню */
-      width: 68%;              /* растянули левую часть (логотип + навигация) */
-      min-width: 520px;
+      gap: 56px;
     }
 
     .logo {
       font-weight: 700;
+      font-size: 20px;
       letter-spacing: 0.08em;
-      font-size: 20px;         /* чуть больше логотип */
       color: var(--accent);
     }
 
-    /* Навигация занимает фиксированную область в левой части и распределяет пункты ровно */
     nav {
       display: flex;
-      width: 56%;              /* меню растянуто в пределах левой колонки */
-      min-width: 360px;
-      justify-content: space-between; /* равномерно растягиваем пункты по доступной ширине */
-      align-items: center;
+      gap: 40px;
     }
 
     nav a {
       text-decoration: none;
       color: var(--muted);
-      font-size: 16px;         /* увеличенный размер пунктов меню */
+      font-size: 15px;
       font-weight: 500;
-      padding: 6px 8px;        /* чуть больше кликабельной зоны */
+      position: relative;
+      transition: color 0.25s ease;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -8px;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      transform: translateX(-50%) scale(0);
+      transition: transform 0.25s ease;
     }
 
     nav a:hover {
       color: var(--text);
     }
 
-    /* Кнопка осталась визуально прежней, но из-за padding хедера стала дальше вправо */
+    nav a:hover::after {
+      transform: translateX(-50%) scale(1);
+    }
+
     .btn {
-      padding: 14px 20px;
+      padding: 16px 24px;
       border-radius: 999px;
       border: none;
       background: var(--accent);
@@ -94,25 +99,31 @@
       font-weight: 500;
       font-size: 15px;
       cursor: pointer;
-      box-shadow: 0 10px 26px rgba(123,45,45,0.22);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
-    /* ================== HERO и остальное (без изменений) ================== */
+    .btn:hover {
+      transform: translateY(-1px) scale(1.03);
+      box-shadow: 0 10px 25px rgba(123,45,45,0.25);
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    /* HERO */
 
     .hero {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 32px 24px 56px;
+      padding: 36px 24px 60px;
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
-      align-items: center; /* 🔑 КЛЮЧ */
       gap: 40px;
+      align-items: center;
     }
 
     .hero-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center; /* 🔑 */
       max-width: 560px;
     }
 
@@ -121,7 +132,6 @@
       font-weight: 600;
       line-height: 1.05;
       margin-bottom: 18px;
-      letter-spacing: -0.02em;
     }
 
     .hero h1 span {
@@ -135,7 +145,7 @@
     }
 
     .hero p + p {
-      margin-bottom: 26px;
+      margin-bottom: 28px;
     }
 
     .signup {
@@ -162,19 +172,15 @@
       position: relative;
       height: 520px;
       display: flex;
-      align-items: center; /* 🔑 */
       justify-content: center;
+      align-items: center;
     }
 
     .glow {
       position: absolute;
       width: 520px;
       height: 520px;
-      background: radial-gradient(
-        circle,
-        rgba(123,45,45,0.45) 0%,
-        transparent 70%
-      );
+      background: radial-gradient(circle, rgba(123,45,45,0.45), transparent 70%);
       filter: blur(70px);
       opacity: 0.75;
       z-index: 0;
@@ -184,8 +190,7 @@
       position: relative;
       z-index: 1;
       width: 440px;
-      max-width: none;
-      filter: drop-shadow(0 35px 55px rgba(0, 0, 0, 0.18));
+      filter: drop-shadow(0 35px 55px rgba(0,0,0,0.18));
     }
 
     /* STATS */
@@ -204,18 +209,45 @@
       border-radius: var(--radius);
       padding: 28px;
       box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+      transition: transform 0.25s ease;
+    }
+
+    .stat:hover {
+      transform: translateY(-4px);
     }
 
     .stat span {
       font-size: 40px;
       font-weight: 600;
       color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stat span {
+      font-size: 40px;
+      font-weight: 600;
+      color: var(--accent);
+      display: inline-block;
+      animation: numberPulse 2.8s ease-in-out infinite;
     }
 
     .stat p {
-      margin-top: 12px;
+      margin-top: 14px;
       font-size: 14px;
       color: var(--muted);
+      transition: transform 0.2s ease, font-weight 0.2s ease;
+    }
+
+    .stat:hover p {
+      transform: scale(1.03);
+      font-weight: 500;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.6); opacity: 1; }
     }
 
     footer {
@@ -225,22 +257,7 @@
       color: var(--muted);
     }
 
-    /* ================== ADAPTIVE ================== */
-
     @media (max-width: 900px) {
-      header {
-        padding: 18px 20px;
-      }
-
-      .header-left {
-        width: auto;
-        gap: 18px;
-      }
-
-      nav {
-        display: none; /* прячем большую навигацию на мобильных */
-      }
-
       .hero {
         grid-template-columns: 1fr;
         text-align: center;
@@ -266,14 +283,14 @@
 
 <header>
   <div class="header-left">
-    <div class="logo">GRADE.</div>
+    <div class="logo">GRADE'</div>
     <nav>
-      <a href="#">Курсы</a>
-      <a href="#">Методология</a>
-      <a href="#">О проекте</a>
+      <a href="/courses">Курсы</a>
+      <a href="/methodology">Методология</a>
+      <a href="/about">О проекте</a>
     </nav>
   </div>
-  <button class="btn">Начать</button>
+  <a href="/start"><button class="btn">Начать</button></a>
 </header>
 
 <section class="hero">
@@ -282,12 +299,12 @@
 
     <p>
       Grade — это не витрина обещаний. Это спокойный и честный взгляд на онлайн-курсы:
-      цены, реальное содержание программ, опыт студентов и результат после обучения.
+      цены, реальное содержание программ и результат после обучения.
     </p>
 
     <p>
-      Мы знаем, как сложно выбрать курс, когда вокруг — громкие заголовки,
-      бесконечные «успешные кейсы» и обещания быстрых результатов.
+      Я убрал маркетинговый шум и показываю,
+      что действительно стоит за каждым курсом.
     </p>
 
     <div class="signup">
@@ -305,15 +322,15 @@
 <section class="stats">
   <div class="stat">
     <span>01</span>
-    <p>Мы не продаём курсы — мы вскрываем их. Плюсы, минусы и подводные камни без купюр.</p>
+    <p>Я не продаю курсы — я вскрываю их сильные и слабые стороны.</p>
   </div>
   <div class="stat">
     <span>02</span>
-    <p>Алгоритм сравнивает программы, а не маркетинг. Слова не проходят — данные да.</p>
+    <p>Алгоритм сравнивает программы, а не рекламные обещания.</p>
   </div>
   <div class="stat">
     <span>03</span>
-    <p>Выбираешь не «популярное», а подходящее именно тебе. Без иллюзий.</p>
+    <p>Ты выбираешь курс осознанно, без иллюзий.</p>
   </div>
 </section>
 

@@ -3,277 +3,414 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grade — выбирай курсы с умом</title>
+  <title>Grade — Выбирай курсы осознанно</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg: #f4f2ef;
-      --text: #1a1a1a;
-      --muted: #6f6b67;
-      --accent: #7b2d2d;
-      --card: #ffffff;
-      --radius: 20px;
+    :root{
+      --bg:#fcfaf8;
+      --text:#1a1a1a;
+      --muted:#706c68;
+      --accent:#7b2d2d;
+      --accent-soft:rgba(123,45,45,0.08);
+      --card:#fff;
+      --line:#edebe8;
+      --shadow:0 30px 70px rgba(0,0,0,.06);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+
+    body{
+      font-family:Inter,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      overflow-x:hidden;
     }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at top right, #efe2df, var(--bg) 60%);
-      color: var(--text);
-      line-height: 1.45;
-      overflow-x: hidden;
+    /* ===== HEADER ===== */
+    header{
+      max-width:1200px;
+      margin:0 auto;
+      padding:18px 24px;
+      display:flex;
+      align-items:center;
+      gap:42px;
+      animation:fadeDown .8s ease both;
     }
 
-    /* HEADER */
+    .logo{
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:-.02em;
+      text-decoration:none;
+      color:var(--text);
+    }
+    .logo span{color:var(--accent)}
 
-    header {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 26px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    nav{display:flex;gap:26px}
+    nav a{
+      position:relative;
+      font-size:14px;
+      font-weight:500;
+      text-decoration:none;
+      color:var(--muted);
+      transition:.25s;
+    }
+    nav a::after{
+      content:"";
+      position:absolute;
+      left:0;bottom:-4px;
+      width:0;height:2px;
+      background:var(--accent);
+      transition:.25s;
+    }
+    nav a:hover{color:var(--accent)}
+    nav a:hover::after{width:100%}
+
+    .header-spacer{flex:1}
+
+    .btn{
+      padding:10px 20px;
+      border-radius:12px;
+      border:none;
+      background:var(--accent);
+      color:#fff;
+      font-weight:600;
+      cursor:pointer;
+      transition:.25s;
+    }
+    .btn:hover{
+      transform:translateY(-3px);
+      box-shadow:0 14px 30px rgba(123,45,45,.25);
     }
 
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 56px;
+    /* ===== HERO ===== */
+    .hero{
+      max-width:1200px;
+      margin:0 auto;
+      padding:36px 24px 44px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:48px;
+      align-items:center;
     }
 
-    .logo {
-      font-weight: 700;
-      font-size: 20px;
-      letter-spacing: 0.08em;
-      color: var(--accent);
+    .hero-visual{
+      position:relative;
     }
 
-    nav {
-      display: flex;
-      gap: 40px;
+    .hero-visual::before{
+      content:"";
+      position:absolute;
+
+      width:220px;
+      height:260px;
+
+      left:50%;
+      top:58%;
+      transform:translateX(-50%);
+
+      background:rgba(123,45,45,.22);
+      filter:blur(60px);
+      border-radius:50%;
+
+      z-index:0;
+      pointer-events:none;
     }
 
-    nav a {
-      text-decoration: none;
-      color: var(--muted);
-      font-size: 15px;
-      font-weight: 500;
-      position: relative;
-      transition: color 0.25s ease;
+    .hero-visual img{
+      position:relative;
+      z-index:1;
+      filter:drop-shadow(0 30px 60px rgba(0,0,0,.18));
     }
 
-    nav a::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      bottom: -8px;
-      width: 6px;
-      height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      transform: translateX(-50%) scale(0);
-      transition: transform 0.25s ease;
+    .hero h1{
+      font-size:56px;
+      font-weight:900;
+      line-height:1;
+      margin-bottom:18px;
+      animation:fadeUp .8s .1s both;
+    }
+    .hero h1 span{color:var(--accent)}
+
+    .hero p{
+      color:var(--muted);
+      font-size:17px;
+      margin-bottom:18px;
+      max-width:480px;
+      animation:fadeUp .8s .2s both;
     }
 
-    nav a:hover {
-      color: var(--text);
+    .search-ui{
+      display:flex;
+      background:var(--card);
+      border-radius:14px;
+      padding:8px;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      animation:fadeUp .8s .3s both;
+    }
+    .search-ui input{
+      flex:1;
+      border:none;
+      outline:none;
+      padding:8px 12px;
+      font-size:15px;
     }
 
-    nav a:hover::after {
-      transform: translateX(-50%) scale(1);
+    .hero-visual img{
+      width:100%;
+      max-width:460px;
+      filter:drop-shadow(0 25px 50px rgba(0,0,0,.14));
+      animation:float 6s ease-in-out infinite;
     }
 
-    .btn {
-      padding: 16px 24px;
-      border-radius: 999px;
-      border: none;
-      background: var(--accent);
-      color: white;
-      font-weight: 500;
-      font-size: 15px;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    /* ===== FEATURES 01 02 03 ===== */
+    .features{
+      max-width:1200px;
+      margin:-10px auto 36px;
+      padding:0 24px;
+      display:flex;
+      gap:22px;
+      flex-wrap:wrap;
     }
 
-    .btn:hover {
-      transform: translateY(-1px) scale(1.03);
-      box-shadow: 0 10px 25px rgba(123,45,45,0.25);
+    .feature{
+      flex:1 1 300px;
+      background:var(--card);
+      border-radius:18px;
+      padding:26px;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      transition:.35s;
+      animation:featureIdle 6s ease-in-out infinite;
     }
 
-    .btn:active {
-      transform: scale(0.96);
+    .feature:nth-child(1){animation-delay:0s}
+    .feature:nth-child(2){animation-delay:1.2s}
+    .feature:nth-child(3){animation-delay:2.4s}
+
+    .feature:hover{
+      transform:translateY(-14px) scale(1.02);
+      box-shadow:0 50px 120px rgba(0,0,0,.14);
     }
 
-    /* HERO */
+    .feature strong{
+      font-size:42px;
+      color:var(--accent);
+      display:block;
+      margin-bottom:10px;
+    }
+    .feature p{font-size:14px;color:var(--muted)}
 
-    .hero {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 36px 24px 60px;
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 40px;
-      align-items: center;
+    /* ===== DARK SECTION ===== */
+    .not-for-section{
+      position:relative;
+      overflow:hidden;
+      background:#111;
+      padding:64px 24px;
+      color:#fff;
+    }
+    .not-for-section::after{
+      content:"";
+      position:absolute;
+      bottom:-120px;
+      right:-120px;
+      width:360px;
+      height:360px;
+      background:rgba(123,45,45,.15);
+      filter:blur(120px);
+      border-radius:50%;
+    }
+    .not-for-grid{
+      align-items:center;
+      max-width:1200px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1fr 1.2fr;
+      gap:48px;
+    }
+    .not-for-grid h2{font-size:34px;line-height:1.1}
+
+    .not-for-item{
+      border-left:2px solid var(--accent);
+      padding-left:16px;
+      margin-bottom:22px;
+    }
+    .not-for-item h4{color:var(--accent);margin-bottom:6px}
+    .not-for-item p{color:#bbb;font-size:14px}
+
+    .compare-section{
+      max-width:1200px;
+      margin:90px auto 110px;
+      padding:0 24px;
     }
 
-    .hero-content {
-      max-width: 560px;
+    .compare-tag{
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.16em;
+      color:var(--accent);
+      display:block;
+      margin-bottom:12px;
     }
 
-    .hero h1 {
-      font-size: 64px;
-      font-weight: 600;
-      line-height: 1.05;
-      margin-bottom: 18px;
+    .compare-title{
+      font-size:46px;
+      font-weight:900;
+      margin-bottom:48px;
     }
 
-    .hero h1 span {
-      color: var(--accent);
+    .compare-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:36px;
     }
 
-    .hero p {
-      font-size: 17px;
-      color: var(--muted);
-      margin-bottom: 16px;
+    .compare-card{
+      background:#fff;
+      border-radius:36px;
+      padding:40px 44px;
+      border:1px solid var(--line);
+      box-shadow:0 40px 90px rgba(0,0,0,.08);
+      position:relative;
     }
 
-    .hero p + p {
-      margin-bottom: 28px;
+    .compare-card h3{
+      font-size:24px;
+      font-weight:900;
+      margin-bottom:8px;
     }
 
-    .signup {
-      display: flex;
-      background: var(--card);
-      border-radius: 999px;
-      padding: 6px;
-      width: fit-content;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    .compare-sub{
+      font-size:15px;
+      color:var(--muted);
+      margin-bottom:32px;
     }
 
-    .signup input {
-      border: none;
-      outline: none;
-      padding: 12px 18px;
-      font-size: 14px;
-      width: 220px;
-      background: transparent;
+    .compare-row{
+      display:flex;
+      justify-content:space-between;
+      padding:14px 0;
+      border-bottom:1px dashed #e5e3e0;
+      font-size:15px;
     }
 
-    /* HERO VISUAL */
-
-    .hero-visual {
-      position: relative;
-      height: 520px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .compare-row strong{
+      font-weight:800;
     }
 
-    .glow {
-      position: absolute;
-      width: 520px;
-      height: 520px;
-      background: radial-gradient(circle, rgba(123,45,45,0.45), transparent 70%);
-      filter: blur(70px);
-      opacity: 0.75;
-      z-index: 0;
+    .compare-row.price strong{
+      font-size:16px;
     }
 
-    .character {
-      position: relative;
-      z-index: 1;
-      width: 440px;
-      filter: drop-shadow(0 35px 55px rgba(0,0,0,0.18));
+    .recommended .compare-row.price strong{
+      color:var(--accent);
     }
 
-    /* STATS */
-
-    .stats {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+    .recommended{
+      border:2px solid rgba(123,45,45,.35);
+      box-shadow:0 60px 140px rgba(123,45,45,.18);
     }
 
-    .stat {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 28px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.05);
-      transition: transform 0.25s ease;
+    .badge{
+      position:absolute;
+      top:-14px;
+      right:32px;
+      background:var(--accent);
+      color:#fff;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.12em;
+      padding:8px 16px;
+      border-radius:999px;
     }
 
-    .stat:hover {
-      transform: translateY(-4px);
+    .compare-section > *{
+      position:relative;
+      z-index:1;
     }
 
-    .stat span {
-      font-size: 40px;
-      font-weight: 600;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .compare-section::before{
+      content:"";
+      position:absolute;
+      top:40%;
+      left:-160px;
+      width:420px;
+      height:420px;
+      background:rgba(123,45,45,.12);
+      filter:blur(130px);
+      border-radius:50%;
+      z-index:0;
     }
 
-    .stat span {
-      font-size: 40px;
-      font-weight: 600;
-      color: var(--accent);
-      display: inline-block;
-      animation: numberPulse 2.8s ease-in-out infinite;
+
+    footer{
+      padding:42px 24px;
+      text-align:center;
+      font-size:13px;
+      color:var(--muted);
+      border-top:1px solid var(--line);
     }
 
-    .stat p {
-      margin-top: 14px;
-      font-size: 14px;
-      color: var(--muted);
-      transition: transform 0.2s ease, font-weight 0.2s ease;
+    /* ===== DECORATIVE ACCENT SHAPES ===== */
+    body::before{
+      content:"";
+      position:fixed;
+      width:520px;
+      height:520px;
+      border-radius:50%;
+      filter:blur(140px);
+      opacity:.25;
+      z-index:-1;
+      pointer-events:none;
+      top:-140px;
+      left:-140px;
+      background:rgba(123,45,45,.18);
+      animation:floatSoft 18s ease-in-out infinite;
     }
 
-    .stat:hover p {
-      transform: scale(1.03);
-      font-weight: 500;
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(20px)}
+      to{opacity:1;transform:none}
+    }
+    @keyframes fadeDown{
+      from{opacity:0;transform:translateY(-16px)}
+      to{opacity:1;transform:none}
+    }
+    @keyframes float{
+      0%{transform:translateY(0)}
+      50%{transform:translateY(-12px)}
+      100%{transform:translateY(0)}
+    }
+    @keyframes featureIdle{
+      0%{transform:translateY(0)}
+      50%{transform:translateY(-6px)}
+      100%{transform:translateY(0)}
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.6; }
-      50% { transform: scale(1.6); opacity: 1; }
+    @media(max-width:900px){
+      header{flex-wrap:wrap}
+      nav{order:3;width:100%;justify-content:center}
+      .header-spacer{display:none}
+      .hero,.analysis-section,.not-for-grid{grid-template-columns:1fr;text-align:center}
     }
 
-    footer {
-      text-align: center;
-      padding: 70px 24px 40px;
-      font-size: 13px;
-      color: var(--muted);
+    @keyframes floatSoft{
+      0%{transform:translate(0,0)}
+      50%{transform:translate(40px,-30px)}
+      100%{transform:translate(0,0)}
     }
 
-    @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-
-      .hero-content {
-        margin: 0 auto;
-      }
-
-      .signup {
-        margin: 0 auto;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-        margin-top: 40px;
+    @media(max-width:900px){
+      .compare-grid{
+        grid-template-columns:1fr;
       }
     }
   </style>
@@ -282,61 +419,154 @@
 <body>
 
 <header>
-  <div class="header-left">
-    <div class="logo">GRADE'</div>
-    <nav>
-      <a href="/courses">Курсы</a>
-      <a href="/methodology">Методология</a>
-      <a href="/about">О проекте</a>
-    </nav>
-  </div>
-  <a href="/start"><button class="btn">Начать</button></a>
+  <a class="logo" href="#">GRADE<span>'</span></a>
+  <nav>
+    <a href="/404.html">Каталог</a>
+    <a href="/404.html">Методика</a>
+    <a href="/404.html">О практике</a>
+  </nav>
+  <div class="header-spacer"></div>
+  <button class="btn" type="button" onclick="window.location.href='/404.html'">Начать</button>
 </header>
 
 <section class="hero">
-  <div class="hero-content">
-    <h1>Учёба без шума<br><span>Только факты</span></h1>
+  <div>
+    <h1>Инвестируйте в знания, а не в <span>рекламу</span></h1>
+    <p>Grade — это не витрина обещаний. Это спокойный и честный взгляд на онлайн-образование.</p>
+    <p>Мы анализируем программы, фиксируем цены и проверяем реальный результат, 
+      чтобы ты не тратил время и деньги на «пустые» обещания онлайн-школ</p>
 
-    <p>
-      Grade — это не витрина обещаний. Это спокойный и честный взгляд на онлайн-курсы:
-      цены, реальное содержание программ и результат после обучения.
-    </p>
-
-    <p>
-      Я убрал маркетинговый шум и показываю,
-      что действительно стоит за каждым курсом.
-    </p>
-
-    <div class="signup">
-      <input type="email" placeholder="Твой email" />
-      <button class="btn">Подобрать курс</button>
+    <div class="search-ui">
+      <input placeholder="Поиск по курсу или школе">
+      <button class="btn" type="button" onclick="window.location.href='/404.html'">Найти</button>
     </div>
   </div>
 
   <div class="hero-visual">
-    <div class="glow"></div>
-    <img src="{{ url_for('static', filename='character.png') }}" class="character" alt="Grade character">
+    <img src="static/character.png" alt="">
   </div>
 </section>
 
-<section class="stats">
-  <div class="stat">
-    <span>01</span>
-    <p>Я не продаю курсы — я вскрываю их сильные и слабые стороны.</p>
+<section class="features">
+  <div class="feature"><strong>01</strong><p>Мы не рекламируем курсы — мы помогаем найти обучение, которое работает.</p></div>
+  <div class="feature"><strong>02</strong><p>Алгоритм сравнивает учебные модули, а не рекламные слоганы лендингов.</p></div>
+  <div class="feature"><strong>03</strong><p>Ты выбираешь обучение осознанно, понимая, за что именно платишь деньги.</p></div>
+</section>
+
+<section class="not-for-section">
+  <div class="not-for-grid">
+    <h2>Для кого<br>этот сервис?</h2>
+    <div>
+      <div class="not-for-item">
+        <h4>Для рациональных</h4>
+        <p>Кому нужен курс на основе твердых данных, а не веры в «быстрый вход в IT».</p>
+      </div>
+
+      <div class="not-for-item">
+        <h4>Для прагматиков</h4>
+        <p>Кому нужны твердые навыки и реальные кейсы, а не красивые сертификаты в рамочке.</p>
+      </div>
+
+      <div class="not-for-item">
+        <h4>Для сомневающихся</h4>
+        <p>Кто устал от бесконечных прогревов в Instagram и хочет увидеть «начинку» курса до покупки.</p>
+      </div>
+    </div>
   </div>
-  <div class="stat">
-    <span>02</span>
-    <p>Алгоритм сравнивает программы, а не рекламные обещания.</p>
-  </div>
-  <div class="stat">
-    <span>03</span>
-    <p>Ты выбираешь курс осознанно, без иллюзий.</p>
+</section>
+
+
+<section class="compare-section">
+  <span class="compare-tag">СРАВНИТЕЛЬНОЕ ДОСЬЕ</span>
+  <h2 class="compare-title">Frontend-разработка</h2>
+
+  <div class="compare-grid">
+
+    <!-- Курс A -->
+    <div class="compare-card">
+      <h3>Skillbox · Frontend-разработчик</h3>
+      <p class="compare-sub">Классическая программа с упором на основы</p>
+
+      <div class="compare-row">
+        <span>Практика</span>
+        <strong>≈ 55%</strong>
+      </div>
+      <div class="compare-row">
+        <span>Фидбек</span>
+        <strong>Групповой</strong>
+      </div>
+      <div class="compare-row">
+        <span>Проекты</span>
+        <strong>4 учебных</strong>
+      </div>
+      <div class="compare-row">
+        <span>Трудоустройство</span>
+        <strong>Не заявлено</strong>
+      </div>
+      <div class="compare-row price">
+        <span>Стоимость</span>
+        <strong>≈ 150 000 ₽</strong>
+      </div>
+    </div>
+
+    <!-- Курс B -->
+    <div class="compare-card recommended">
+      <span class="badge">РЕКОМЕНДОВАНО</span>
+
+      <h3>Яндекс Практикум · Frontend</h3>
+      <p class="compare-sub">Инженерный подход и архитектурное мышление</p>
+
+      <div class="compare-row">
+        <span>Практика</span>
+        <strong>≈ 75%</strong>
+      </div>
+      <div class="compare-row">
+        <span>Фидбек</span>
+        <strong>Персональный, 1–2 дня</strong>
+      </div>
+      <div class="compare-row">
+        <span>Проекты</span>
+        <strong>8 реальных</strong>
+      </div>
+      <div class="compare-row">
+        <span>Трудоустройство</span>
+        <strong>После 6 месяцев</strong>
+      </div>
+      <div class="compare-row price">
+        <span>Стоимость</span>
+        <strong>≈ 120 000 ₽</strong>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <footer>
-  Grade © 2026 · Дипломный проект
+  Grade © 2026 · Дипломный проект сделанный с душой
 </footer>
+
+<!-- Скрипт на всякий случай: назначит поведение 404 для любых кнопок/ссылок, оставшихся без реального href -->
+<script>
+  (function() {
+    // все кнопки .btn уже имеют onclick, но подстраховка:
+    document.querySelectorAll('button').forEach(btn => {
+      if (!btn.hasAttribute('data-no-redirect')) {
+        btn.addEventListener('click', function(e){
+          // если кнопка уже делает навигацию по onclick — не мешаем
+          // но если она не имеет form или type="submit", перенаправим
+          if (!btn.getAttribute('data-skip-404')) {
+            window.location.href = '/404.html';
+          }
+        }, { once: true });
+      }
+    });
+
+    // Любые ссылки с href="#" перенаправляем на 404 (если остались)
+    document.querySelectorAll('a[href="#"], a[href=""]').forEach(a=>{
+      a.setAttribute('href','/404.html');
+    });
+  })();
+</script>
 
 </body>
 </html>

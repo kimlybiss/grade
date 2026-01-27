@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grade — Выбирай курсы осознанно</title>
+  <title>Grade — осознанный выбор</title>
 
+  <link rel="icon" href="/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -32,6 +33,12 @@
       overflow-x:hidden;
     }
 
+    .container{
+      max-width:1200px;
+      margin:0 auto;
+      padding:0 24px;
+    }
+
     /* ===== HEADER ===== */
     header{
       max-width:1200px;
@@ -49,8 +56,28 @@
       letter-spacing:-.02em;
       text-decoration:none;
       color:var(--text);
+      position:relative;
+      display:inline-block;
+      overflow:hidden;
     }
-    .logo span{color:var(--accent)}
+    .logo span{
+      display:inline-block;
+      color:var(--accent);
+      transform:translateX(-2px);
+      transition:transform .35s ease, opacity .35s ease;
+      opacity:.85;
+      animation:logoPulse 8s ease-in-out infinite;
+    }
+
+    /* hover */
+    .logo:hover span{
+      transform:translateX(2px);
+      opacity:1;
+    }
+
+    .logo:hover::after{
+      transform:scaleX(1);
+    }
 
     nav{display:flex;gap:26px}
     nav a{
@@ -126,7 +153,13 @@
     .hero-visual img{
       position:relative;
       z-index:1;
-      filter:drop-shadow(0 30px 60px rgba(0,0,0,.18));
+      width:100%;
+      max-width:460px;
+      filter:drop-shadow(0 25px 50px rgba(0,0,0,.14));
+
+      animation:
+        heroVisualIn 1s cubic-bezier(.22,.61,.36,1) .35s both,
+        float 6s ease-in-out 1.6s infinite;
     }
 
     .hero h1{
@@ -163,23 +196,17 @@
       font-size:15px;
     }
 
-    .hero-visual img{
-      width:100%;
-      max-width:460px;
-      filter:drop-shadow(0 25px 50px rgba(0,0,0,.14));
-      animation:float 6s ease-in-out infinite;
-    }
-
     /* ===== FEATURES 01 02 03 ===== */
     .features{
       max-width:1200px;
-      margin:-10px auto 36px;
+      margin:-40px auto 36px;
       padding:0 24px;
       display:flex;
       gap:22px;
       flex-wrap:wrap;
     }
 
+    /* карточка — стартовое состояние */
     .feature{
       flex:1 1 300px;
       background:var(--card);
@@ -187,35 +214,95 @@
       padding:26px;
       border:1px solid var(--line);
       box-shadow:var(--shadow);
-      transition:.35s;
+
+      opacity:0;
+      transform:translateY(32px);
+
+      transition:
+        opacity 1s ease,
+        transform 1s cubic-bezier(.16,1,.3,1),
+        box-shadow .75s cubic-bezier(.16,1,.3,1);
+    }
+
+    /* появление */
+    .features.is-visible .feature{
+      opacity:1;
+      transform:none;
+    }
+
+    /* задержки появления */
+    .features.is-visible .feature:nth-child(1){transition-delay:.15s}
+    .features.is-visible .feature:nth-child(2){transition-delay:.3s}
+    .features.is-visible .feature:nth-child(3){transition-delay:.45s}
+
+    /* idle-анимация — ТОЛЬКО ПОСЛЕ появления */
+    .features.is-visible .feature{
       animation:featureIdle 6s ease-in-out infinite;
     }
 
-    .feature:nth-child(1){animation-delay:0s}
-    .feature:nth-child(2){animation-delay:1.2s}
-    .feature:nth-child(3){animation-delay:2.4s}
+    .features.is-visible .feature:nth-child(1){animation-delay:0s}
+    .features.is-visible .feature:nth-child(2){animation-delay:1.2s}
+    .features.is-visible .feature:nth-child(3){animation-delay:2.4s}
 
+    /* hover — мягкий */
     .feature:hover{
       transform:translateY(-14px) scale(1.02);
       box-shadow:0 50px 120px rgba(0,0,0,.14);
     }
 
+    /* цифра */
     .feature strong{
       font-size:42px;
       color:var(--accent);
       display:block;
       margin-bottom:10px;
+      transition:transform .4s ease;
     }
-    .feature p{font-size:14px;color:var(--muted)}
+
+    .feature:hover strong{
+      transform:translateY(-2px);
+    }
+
+    .feature p{
+      font-size:14px;
+      color:var(--muted);
+    }
 
     /* ===== DARK SECTION ===== */
     .not-for-section{
       position:relative;
       overflow:hidden;
-      background:#111;
-      padding:64px 24px;
+      background:#111;  
       color:#fff;
+      opacity:0;
+      padding:64px 24px;
+      transform:translateY(40px);
+      transition:opacity .8s ease, transform .8s ease;
     }
+    .not-for-section h2 {
+      opacity: 0;
+      transform: translateY(6px);
+      animation: softIn 0.6s ease-out forwards;
+    }
+
+    .not-for-section.is-visible{
+      opacity:1;
+      transform:none;
+    }
+    .not-for-item{
+      opacity:0;
+      transform:translateX(-16px);
+      transition:opacity .6s ease, transform .6s ease;
+    }
+    .not-for-section.is-visible .not-for-item{
+      opacity:1;
+      transform:none;
+    }
+
+    .not-for-item:nth-child(1){transition-delay:.15s}
+    .not-for-item:nth-child(2){transition-delay:.3s}
+    .not-for-item:nth-child(3){transition-delay:.45s}
+
     .not-for-section::after{
       content:"";
       position:absolute;
@@ -229,13 +316,20 @@
     }
     .not-for-grid{
       align-items:center;
+      font-size:18px;
       max-width:1200px;
       margin:0 auto;
       display:grid;
       grid-template-columns:1fr 1.2fr;
       gap:48px;
     }
-    .not-for-grid h2{font-size:34px;line-height:1.1}
+    .not-for-grid h2{
+      font-size:28px;
+      line-height:1.2;
+      font-weight:500;
+      margin-bottom:32px;
+      text-align:left;
+    }
 
     .not-for-item{
       border-left:2px solid var(--accent);
@@ -243,7 +337,13 @@
       margin-bottom:22px;
     }
     .not-for-item h4{color:var(--accent);margin-bottom:6px}
+    
     .not-for-item p{color:#bbb;font-size:14px}
+
+    .not-for-list{
+      display:flex;
+      flex-direction:column;
+    }
 
     .compare-section{
       max-width:1200px;
@@ -287,6 +387,15 @@
       margin-bottom:8px;
     }
 
+    .compare-section.is-visible .compare-card{
+      opacity:1;
+      transform:none;
+    }
+
+    .compare-section{
+      position:relative;
+    }
+
     .compare-sub{
       font-size:15px;
       color:var(--muted);
@@ -309,10 +418,6 @@
       font-size:16px;
     }
 
-    .recommended .compare-row.price strong{
-      color:var(--accent);
-    }
-
     .recommended{
       border:2px solid rgba(123,45,45,.35);
       box-shadow:0 60px 140px rgba(123,45,45,.18);
@@ -331,9 +436,15 @@
       border-radius:999px;
     }
 
-    .compare-section > *{
-      position:relative;
-      z-index:1;
+    .compare-section{
+      opacity:0;
+      transform:translateY(40px);
+      transition:opacity .8s ease, transform .8s ease;
+    }
+
+    .compare-section.is-visible{
+      opacity:1;
+      transform:none;
     }
 
     .compare-section::before{
@@ -349,6 +460,25 @@
       z-index:0;
     }
 
+    .compare-card{
+      opacity:0;
+      transform:translateY(24px);
+      transition:
+        opacity .6s ease,
+        transform .6s ease;
+    }
+
+    .compare-card.recommended{
+      transition-delay:.55s;
+    }
+
+    .compare-card:nth-child(1){
+      transition-delay:.2s;
+    }
+
+    .compare-card:nth-child(2){
+      transition-delay:.4s;
+    }
 
     footer{
       padding:42px 24px;
@@ -376,6 +506,16 @@
     }
 
     /* ===== ANIMATIONS ===== */
+    @keyframes heroVisualIn{
+      from{
+        opacity:0;
+        transform:translateY(24px) scale(.98);
+      }
+      to{
+        opacity:1;
+        transform:none;
+      }
+    }
     @keyframes fadeUp{
       from{opacity:0;transform:translateY(20px)}
       to{opacity:1;transform:none}
@@ -394,20 +534,23 @@
       50%{transform:translateY(-6px)}
       100%{transform:translateY(0)}
     }
-
     @media(max-width:900px){
       header{flex-wrap:wrap}
       nav{order:3;width:100%;justify-content:center}
       .header-spacer{display:none}
       .hero,.analysis-section,.not-for-grid{grid-template-columns:1fr;text-align:center}
     }
-
     @keyframes floatSoft{
       0%{transform:translate(0,0)}
       50%{transform:translate(40px,-30px)}
       100%{transform:translate(0,0)}
     }
-
+    @keyframes softIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
     @media(max-width:900px){
       .compare-grid{
         grid-template-columns:1fr;
@@ -419,7 +562,7 @@
 <body>
 
 <header>
-  <a class="logo" href="#">GRADE<span>'</span></a>
+  <a class="logo" href="/">GRADE<span>'</span></a>
   <nav>
     <a href="/404.html">Каталог</a>
     <a href="/404.html">Методика</a>
@@ -454,30 +597,34 @@
 </section>
 
 <section class="not-for-section">
-  <div class="not-for-grid">
-    <h2>Для кого<br>этот сервис?</h2>
-    <div>
-      <div class="not-for-item">
-        <h4>Для рациональных</h4>
-        <p>Кому нужен курс на основе твердых данных, а не веры в «быстрый вход в IT».</p>
+  <div class="container">
+    <div class="not-for-grid">
+
+      <h2>Для кого этот сервис?</h2>
+
+      <div class="not-for-list">
+        <div class="not-for-item">
+          <h4>Для рациональных</h4>
+          <p>Кому нужен курс на основе твердых данных, а не веры в «быстрый вход в IT».</p>
+        </div>
+
+        <div class="not-for-item">
+          <h4>Для прагматиков</h4>
+          <p>Кому нужны твердые навыки и реальные кейсы, а не красивые сертификаты в рамочке.</p>
+        </div>
+
+        <div class="not-for-item">
+          <h4>Для сомневающихся</h4>
+          <p>Кто устал от бесконечных прогревов в Instagram и хочет увидеть «начинку» курса до покупки.</p>
+        </div>
       </div>
 
-      <div class="not-for-item">
-        <h4>Для прагматиков</h4>
-        <p>Кому нужны твердые навыки и реальные кейсы, а не красивые сертификаты в рамочке.</p>
-      </div>
-
-      <div class="not-for-item">
-        <h4>Для сомневающихся</h4>
-        <p>Кто устал от бесконечных прогревов в Instagram и хочет увидеть «начинку» курса до покупки.</p>
-      </div>
     </div>
   </div>
 </section>
 
-
 <section class="compare-section">
-  <span class="compare-tag">СРАВНИТЕЛЬНОЕ ДОСЬЕ</span>
+  <span class="compare-tag">КРАТКИЙ АНАЛИЗ ОБУЧЕНИЯ</span>
   <h2 class="compare-title">Frontend-разработка</h2>
 
   <div class="compare-grid">
@@ -485,19 +632,31 @@
     <!-- Курс A -->
     <div class="compare-card">
       <h3>Skillbox · Frontend-разработчик</h3>
-      <p class="compare-sub">Классическая программа с упором на основы</p>
+      <p class="compare-sub">Классическая программа с упором на базовую теорию</p>
 
       <div class="compare-row">
-        <span>Практика</span>
+        <span>Доля практики</span>
         <strong>≈ 55%</strong>
       </div>
       <div class="compare-row">
-        <span>Фидбек</span>
-        <strong>Групповой</strong>
+        <span>Формат фидбека</span>
+        <strong>Групповой, без code review</strong>
       </div>
       <div class="compare-row">
         <span>Проекты</span>
-        <strong>4 учебных</strong>
+        <strong>4 учебных кейса</strong>
+      </div>
+      <div class="compare-row">
+        <span>Проверка кода</span>
+        <strong>По чек-листу</strong>
+      </div>
+      <div class="compare-row">
+        <span>Нагрузка</span>
+        <strong>6–8 ч/нед</strong>
+      </div>
+      <div class="compare-row">
+        <span>Уровень на выходе</span>
+        <strong>Начальный</strong>
       </div>
       <div class="compare-row">
         <span>Трудоустройство</span>
@@ -509,28 +668,41 @@
       </div>
     </div>
 
+
     <!-- Курс B -->
     <div class="compare-card recommended">
       <span class="badge">РЕКОМЕНДОВАНО</span>
 
       <h3>Яндекс Практикум · Frontend</h3>
-      <p class="compare-sub">Инженерный подход и архитектурное мышление</p>
+      <p class="compare-sub">Инженерный подход и работа с реальными задачами</p>
 
       <div class="compare-row">
-        <span>Практика</span>
+        <span>Доля практики</span>
         <strong>≈ 75%</strong>
       </div>
       <div class="compare-row">
-        <span>Фидбек</span>
-        <strong>Персональный, 1–2 дня</strong>
+        <span>Формат фидбека</span>
+        <strong>Персональный, code review</strong>
       </div>
       <div class="compare-row">
         <span>Проекты</span>
-        <strong>8 реальных</strong>
+        <strong>8 задач, близких к продакшену</strong>
+      </div>
+      <div class="compare-row">
+        <span>Проверка кода</span>
+        <strong>Архитектура, git, правки</strong>
+      </div>
+      <div class="compare-row">
+        <span>Нагрузка</span>
+        <strong>10–15 ч/нед</strong>
+      </div>
+      <div class="compare-row">
+        <span>Уровень на выходе</span>
+        <strong>Junior Frontend</strong>
       </div>
       <div class="compare-row">
         <span>Трудоустройство</span>
-        <strong>После 6 месяцев</strong>
+        <strong>После ~6 месяцев обучения</strong>
       </div>
       <div class="compare-row price">
         <span>Стоимость</span>
@@ -544,6 +716,79 @@
 <footer>
   Grade © 2026 · Дипломный проект сделанный с душой
 </footer>
+
+<script>
+  const featuresSection = document.querySelector('.features');
+
+  if (featuresSection) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(featuresSection);
+  }
+</script>
+
+<script>
+  (function () {
+    const titles = [
+      "Grade — осознанный выбор",
+      "Grade — честно о курсах",
+      "Grade — без маркетинга",
+      "Grade — сравнение программ",
+      "Grade — без рекламы",
+      "Grade — анализ курсов",
+      "Grade — онлайн-образование"
+    ];
+
+    let index = 0;
+
+    setInterval(() => {
+      index = (index + 1) % titles.length;
+      document.title = titles[index];
+    }, 4000);
+  })();
+</script>
+
+<script>
+  const notForSection = document.querySelector('.not-for-section');
+
+  if (notForSection) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.25 });
+
+    observer.observe(notForSection);
+  }
+</script>
+
+<script>
+  const compareSection = document.querySelector('.compare-section');
+
+  if (compareSection) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.25 });
+
+    observer.observe(compareSection);
+  }
+</script>
+
 
 <!-- Скрипт на всякий случай: назначит поведение 404 для любых кнопок/ссылок, оставшихся без реального href -->
 <script>

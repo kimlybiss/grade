@@ -19,7 +19,7 @@
   <a class="logo" href="/">GRADE<span>'</span></a>
   <nav>
     <a href="/catalog">Каталог</a>
-    <a href="/catalog">Методика</a>
+    <a href="{{ url_for('methodology') }}">Методика</a>
     <a href="/catalog">О практике</a>
   </nav>
   <div class="header-spacer"></div>
@@ -50,29 +50,42 @@
   <div class="feature"><strong>03</strong><p>Ты выбираешь обучение осознанно, понимая, за что именно платишь деньги.</p></div>
 </section>
 
-<section class="not-for-section">
+<section class="who-is-it-for">
   <div class="container">
-    <div class="not-for-grid">
-
-      <h2>Для кого этот сервис?</h2>
-
-      <div class="not-for-list">
-        <div class="not-for-item">
-          <h4>Для рациональных</h4>
-          <p>Кому нужен курс на основе твердых данных, а не веры в «быстрый вход в IT».</p>
+    <div class="split-layout">
+      <div class="sticky-title">
+        <span class="compare-tag">ДЛЯ КОГО GRADE</span>
+        <h2>
+          Мы создали сервис для тех, кто ценит 
+          <span class="highlight">честность</span>
+        </h2>
+      </div>
+      
+      <div class="reasons-list">
+        <div class="reason-item">
+          <span class="reason-num">/ 01</span>
+          <div class="reason-content">
+            <h4>Рациональный подход</h4>
+            <p>Если вам нужны цифры и методология обучения, а не обещания «успешного успеха» и легких денег.</p>
+          </div>
         </div>
 
-        <div class="not-for-item">
-          <h4>Для прагматиков</h4>
-          <p>Кому нужны твердые навыки и реальные кейсы, а не красивые сертификаты в рамочке.</p>
+        <div class="reason-item">
+          <span class="reason-num">/ 02</span>
+          <div class="reason-content">
+            <h4>Прагматичный выбор</h4>
+            <p>Для тех, кто ищет конкретные навыки и реальный фидбек от индустрии, а не диплом в рамку.</p>
+          </div>
         </div>
 
-        <div class="not-for-item">
-          <h4>Для сомневающихся</h4>
-          <p>Кто устал от бесконечных прогревов в Instagram и хочет увидеть «начинку» курса до покупки.</p>
+        <div class="reason-item">
+          <span class="reason-num">/ 03</span>
+          <div class="reason-content">
+            <h4>Здоровый скептицизм</h4>
+            <p>Вы устали от «прогревов» и хотите видеть прозрачное сравнение программ до оплаты.</p>
+          </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -274,6 +287,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 </script>
+
+<script>
+  const reasonItems = document.querySelectorAll('.reason-item');
+
+  const reasonObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        reasonObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.25
+  });
+
+  reasonItems.forEach(item => reasonObserver.observe(item));
+</script>
+
+
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script> 
+<script>
+  const lenis = new Lenis({
+    duration: 0.9,
+    easing: (t) => 1 - Math.pow(1 - t, 3),
+    smoothWheel: true,
+    smoothTouch: false,
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+
+  requestAnimationFrame(raf);
+</script>
+
 
 </body>
 </html>

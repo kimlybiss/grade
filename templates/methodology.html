@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Методология анализа — Grade</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='methodology.css') }}">
+</head>
+<body>
+
+<header>
+  <a class="logo" href="/">GRADE<span>'</span></a>
+  <nav>
+    <a href="/catalog">Каталог</a>
+    <a href="/methodology" class="active">Методика</a>
+    <a href="/catalog">О практике</a>
+  </nav>
+  <div class="header-spacer"></div>
+  <button class="btn" onclick="window.location.href='/'">Начать</button>
+</header>
+
+<main>
+  <section class="method-hero">
+    <span class="compare-tag">КАК МЫ РАБОТАЕМ</span>
+    <h1>Наша методология: <br>Почему нашим оценкам можно доверять</h1>
+    <p>
+      В мире, где каждый второй обещает «стать джуном за 2 месяца», мы предлагаем холодный расчет.
+      Grade — это глубокий, независимый анализ каждого курса, свободный от влияния школ и рекламных бюджетов.
+    </p>
+  </section>
+
+  <div class="steps-container">
+
+    <div class="step-item">
+      <div class="step-image-wrapper">
+        <img src="/static/images/methodology/step1.jpg" alt="Анализ программы">
+      </div>
+      <div class="step-content">
+        <span class="step-number">01</span>
+        <h3>Глубокий анализ программы и навыков</h3>
+        <p>
+          Каждый учебный план декомпозируется до измеримых навыков.
+          Мы смотрим соотношение практики и теории и сверяем его с рынком труда.
+        </p>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-image-wrapper">
+        <img src="/static/images/methodology/step2.jpg" alt="Реальный фидбек">
+      </div>
+      <div class="step-content">
+        <span class="step-number">02</span>
+        <h3>Верифицированный фидбек выпускников</h3>
+        <p>
+          Мы анализируем независимые источники и реальные результаты:
+          собеседования, портфолио и офферы, а не витринные отзывы.
+        </p>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-image-wrapper">
+        <img src="/static/images/methodology/step3.jpg" alt="Стоимость обучения">
+      </div>
+      <div class="step-content">
+        <span class="step-number">03</span>
+        <h3>Прозрачная оценка стоимости обучения</h3>
+        <p>
+          Мы считаем реальную цену курса, стоимость часа обучения
+          и соотносим её с объемом полезных знаний.
+        </p>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-image-wrapper">
+        <img src="/static/images/methodology/step4.jpg" alt="Актуальность навыков">
+      </div>
+      <div class="step-content">
+        <span class="step-number">04</span>
+        <h3>Актуальность и индустриальный вес</h3>
+        <p>
+          Мы проверяем, соответствуют ли проекты и технологии
+          требованиям IT-рынка 2026 года.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <section class="statement-section">
+    <h2>Наша независимость — ваш успех.</h2>
+    <p>
+      Grade не продаёт места в рейтинге.
+      Мы помогаем выбирать обучение на основе данных, а не обещаний.
+    </p>
+    <a href="/" class="btn">Выбрать курс с умом</a>
+  </section>
+</main>
+
+<footer>
+  Grade © 2026 · Система независимой оценки знаний
+</footer>
+
+</body>
+</html>

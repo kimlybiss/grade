@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Методология анализа — Grade</title>
+  <meta charset="UTF-8">
+  <title>Методика анализа — Grade</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='methodology.css') }}">
 </head>
-<body>
+
+<body class="methodology-page">
 
 <header>
   <a class="logo" href="/">GRADE<span>'</span></a>
@@ -26,88 +24,135 @@
 </header>
 
 <main>
-  <section class="method-hero">
-    <span class="compare-tag">КАК МЫ РАБОТАЕМ</span>
-    <h1>Наша методология: <br>Почему нашим оценкам можно доверять</h1>
-    <p>
-      В мире, где каждый второй обещает «стать джуном за 2 месяца», мы предлагаем холодный расчет.
-      Grade — это глубокий, независимый анализ каждого курса, свободный от влияния школ и рекламных бюджетов.
-    </p>
+
+  <!-- HERO -->
+  <section class="m-hero">
+    <div class="container">
+      <span class="compare-tag">GRADE SYSTEM</span>
+      <h1>Как мы выбираем <span class="highlight">курсы</span></h1>
+      <p class="m-hero-lead">
+        Grade анализирует онлайн-курсы как продукт — по структуре,
+        нагрузке и реальной пользе, а не по маркетинговым обещаниям.
+      </p>
+    </div>
   </section>
 
-  <div class="steps-container">
+  <!-- ПРОСТРАНСТВО ДЛЯ СКРОЛЛА -->
+  <section class="method-spacer"></section>
 
-    <div class="step-item">
-      <div class="step-image-wrapper">
-        <img src="/static/images/methodology/step1.jpg" alt="Анализ программы">
-      </div>
-      <div class="step-content">
-        <span class="step-number">01</span>
-        <h3>Глубокий анализ программы и навыков</h3>
-        <p>
-          Каждый учебный план декомпозируется до измеримых навыков.
-          Мы смотрим соотношение практики и теории и сверяем его с рынком труда.
-        </p>
+  <!-- TIMELINE -->
+  <section class="m-timeline">
+    <div class="container">
+      <div class="timeline-wrapper">
+
+        <div class="timeline-item">
+          <span class="bg-number">01</span>
+          <div class="timeline-dot"></div>
+
+          <div class="timeline-content">
+            <h3>Сбор программ</h3>
+            <p>
+              Мы отбираем курсы по ключевым IT-направлениям и собираем
+              данные о формате обучения, стоимости, сроках и наполнении.
+            </p>
+          </div>
+
+          <div class="floating-badge">Актуальные цены</div>
+        </div>
+
+        <div class="timeline-item">
+          <span class="bg-number">02</span>
+          <div class="timeline-dot"></div>
+
+          <div class="timeline-content">
+            <h3>Приведение к стандарту</h3>
+            <p>
+              Все программы приводятся к единой структуре, что позволяет
+              честно сравнивать объём практики и теории.
+            </p>
+          </div>
+
+          <div class="floating-badge">Анализ часов</div>
+        </div>
+
+        <div class="timeline-item">
+          <span class="bg-number">03</span>
+          <div class="timeline-dot"></div>
+
+          <div class="timeline-content">
+            <h3>Верификация данных</h3>
+            <p>
+              Мы регулярно обновляем информацию и проверяем её по
+              открытым источникам и отзывам студентов.
+            </p>
+          </div>
+
+          <div class="floating-badge">Проверка отзывов</div>
+        </div>
+
       </div>
     </div>
+  </section>
 
-    <div class="step-item">
-      <div class="step-image-wrapper">
-        <img src="/static/images/methodology/step2.jpg" alt="Реальный фидбек">
-      </div>
-      <div class="step-content">
-        <span class="step-number">02</span>
-        <h3>Верифицированный фидбек выпускников</h3>
-        <p>
-          Мы анализируем независимые источники и реальные результаты:
-          собеседования, портфолио и офферы, а не витринные отзывы.
-        </p>
+  <!-- NOTE -->
+  <section class="method-note">
+    <div class="container">
+      <p>
+        Grade не выставляет субъективные оценки качеству обучения.
+        Мы сравниваем структуру и условия, оставляя вывод за пользователем.
+      </p>
+    </div>
+  </section>
+
+  <!-- DARK BLOCK -->
+  <div class="m-full-dark">
+    <div class="container">
+      <div class="principles-grid">
+        <div class="p-card">
+          <h4>Актуальность</h4>
+          <p>Информация регулярно обновляется и отражает реальный рынок.</p>
+        </div>
+        <div class="p-card">
+          <h4>Простота</h4>
+          <p>Только структура и цифры — без маркетинговых обещаний.</p>
+        </div>
+        <div class="p-card">
+          <h4>Честность</h4>
+          <p>Мы не продаём места в каталоге и не размещаем рекламу.</p>
+        </div>
       </div>
     </div>
-
-    <div class="step-item">
-      <div class="step-image-wrapper">
-        <img src="/static/images/methodology/step3.jpg" alt="Стоимость обучения">
-      </div>
-      <div class="step-content">
-        <span class="step-number">03</span>
-        <h3>Прозрачная оценка стоимости обучения</h3>
-        <p>
-          Мы считаем реальную цену курса, стоимость часа обучения
-          и соотносим её с объемом полезных знаний.
-        </p>
-      </div>
-    </div>
-
-    <div class="step-item">
-      <div class="step-image-wrapper">
-        <img src="/static/images/methodology/step4.jpg" alt="Актуальность навыков">
-      </div>
-      <div class="step-content">
-        <span class="step-number">04</span>
-        <h3>Актуальность и индустриальный вес</h3>
-        <p>
-          Мы проверяем, соответствуют ли проекты и технологии
-          требованиям IT-рынка 2026 года.
-        </p>
-      </div>
-    </div>
-
   </div>
 
-  <section class="statement-section">
-    <h2>Наша независимость — ваш успех.</h2>
-    <p>
-      Grade не продаёт места в рейтинге.
-      Мы помогаем выбирать обучение на основе данных, а не обещаний.
-    </p>
-    <a href="/" class="btn">Выбрать курс с умом</a>
+  <!-- CTA -->
+  <section class="m-cta">
+    <div class="container">
+      <h2>Найти обучение</h2>
+      <p>Выберите курс, который соответствует вашим целям.</p>
+      <button class="btn" onclick="window.location.href='/catalog'">К каталогу</button>
+    </div>
   </section>
+
 </main>
 
 <footer>
-  Grade © 2026 · Система независимой оценки знаний
+  <div class="container">Grade © 2026 · Дипломный проект</div>
 </footer>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document
+    .querySelectorAll('.timeline-item, .p-card')
+    .forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>

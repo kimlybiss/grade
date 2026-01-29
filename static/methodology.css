@@ -1,0 +1,207 @@
+/* === PAGE BACKGROUND GRID ============================== */
+.methodology-page {
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* === HERO ============================================== */
+.m-hero {
+  padding: 160px 0 220px; /* ВАЖНО: большой отступ снизу */
+}
+
+.m-hero h1 {
+  font-size: clamp(44px, 7vw, 72px);
+  font-weight: 900;
+  line-height: 1.05;
+  margin: 20px 0 24px;
+}
+
+.m-hero-lead {
+  font-size: 1.15rem;
+  color: var(--muted);
+  max-width: 520px;
+}
+
+/* === SPACER BETWEEN HERO AND TIMELINE ================== */
+.method-spacer {
+  height: 140px;
+}
+
+/* === TIMELINE ========================================== */
+.m-timeline {
+  padding: 0 0 0;
+}
+
+.timeline-wrapper {
+  position: relative;
+  max-width: 760px;
+  margin-left: 60px;
+  padding-left: 60px;
+  border-left: 2px solid var(--line);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 100px;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity .9s ease, transform .9s ease;
+}
+
+.timeline-item.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.bg-number {
+  position: absolute;
+  top: -50px;
+  left: -30px;
+  font-size: 140px;
+  font-weight: 900;
+  color: var(--line);
+  opacity: 0.18;
+  z-index: 0;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -67px;
+  top: 18px;
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 8px var(--bg);
+}
+
+.timeline-content {
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-content h3 {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.timeline-content p {
+  color: var(--muted);
+  max-width: 620px;
+  font-size: 16px;
+}
+
+/* === FLOATING BADGES (привязаны к шагам) =============== */
+.floating-badge {
+  position: absolute;
+  top: -24px;
+  right: -140px;
+  background: #fff;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  box-shadow: 0 10px 30px rgba(0,0,0,.05);
+  white-space: nowrap;
+}
+
+/* === METHOD NOTE ======================================= */
+.method-note {
+  padding: 140px 0 80px;
+}
+
+.method-note p {
+  max-width: 640px;
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+
+/* === DARK BLOCK ======================================== */
+.m-full-dark {
+  background: linear-gradient(180deg, #1a1a1a, #141414);
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: 120px 0;
+  color: #fff;
+}
+
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.p-card {
+  padding: 40px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+
+.p-card.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.p-card h4 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.p-card p {
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* === CTA =============================================== */
+.m-cta {
+  padding: 140px 0;
+  text-align: center;
+}
+
+.m-cta h2 {
+  font-size: 44px;
+  font-weight: 900;
+  margin-bottom: 16px;
+}
+
+.m-cta p {
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+
+/* === RESPONSIVE ======================================== */
+@media (max-width: 900px) {
+  .principles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-wrapper {
+    margin-left: 12px;
+    padding-left: 32px;
+  }
+
+  .floating-badge {
+    display: none;
+  }
+
+  .m-full-dark {
+    width: 100%;
+    left: 0;
+    margin: 0;
+  }
+}

@@ -22,7 +22,15 @@
     <a href="/catalog">Избранное</a>
   </nav>
   <div class="header-spacer"></div>
-  <button class="btn" type="button" onclick="window.location.href='/404.html'">Начать</button>
+  <div class="header-collection">
+  <div class="collection-icon">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+    </svg>
+  </div>
+  <span class="collection-label">Мой выбор</span>
+  <span class="collection-badge">0</span>
+</div>
 </header>
 
 <section class="hero">
@@ -32,25 +40,38 @@
     <p>Grade — это спокойный и честный взгляд на онлайн-образование. Мы анализируем программы, фиксируем цены и проверяем реальный результат, чтобы выбор был осознанным.</p>
 
     <div class="hero-actions">
-      <div class="search-ui">
-        <input placeholder="Поиск по курсу или школе">
-        <button class="btn" type="button" onclick="window.location.href='/404.html'">Найти</button>
+      <div class="hero-pathfinder">
+        <div class="path-item active" data-path="all">
+          <span class="path-dot"></span>
+          Все направления
+        </div>
+        <div class="path-item" data-path="design">
+          Дизайн
+        </div>
+        <div class="path-item" data-path="code">
+          Код
+        </div>
+        <div class="path-item" data-path="marketing">
+          Маркетинг
+        </div>
+        <div class="path-arrow">
+          <a href="#compare-section">→</a>
+        </div>
       </div>
-      <a class="hero-link" href="#compare-section">Смотреть сравнение</a>
     </div>
 
     <div class="hero-stats">
-      <div class="hero-stat">
+      <div class="hero-stat stat-1">
         <strong>16</strong>
-        <span>школ в подборке</span>
+        <span>школ под микроскопом</span>
       </div>
-      <div class="hero-stat">
+      <div class="hero-stat stat-2">
         <strong>11</strong>
-        <span>направлений фильтрации</span>
+        <span>метрик качества</span>
       </div>
-      <div class="hero-stat">
-        <strong>1 клик</strong>
-        <span>до официальной страницы</span>
+      <div class="hero-stat stat-3">
+        <strong>0%</strong>
+        <span>скрытой рекламы</span>
       </div>
     </div>
   </div>

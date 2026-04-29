@@ -146,50 +146,33 @@ nav a:hover::after{width:100%}
 
 .header-spacer{flex:1}
 
-.btn {
-  position: relative;
-  overflow: hidden;
-  padding: 12px 28px;
-  border-radius: 12px;
-  border: none;
+.header-collection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 6px 6px 6px 14px;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid var(--line); 
+  transition: all 0.3s ease;
+}
+
+.header-collection:hover {
+  transform: translateY(-1px);
+}
+
+.collection-badge {
   background: var(--accent);
   color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  z-index: 1;
-}
-
-.btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255, 255, 255, 0.3),
-    transparent
-  );
-  transition: all 0.6s;
-  z-index: -1;
-}
-
-.btn:hover {
-  transform: translateY(-1px);
-  background: #913636;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
-}
-
-.btn:hover::before {
-  left: 100%;
-}
-
-.btn:active {
-  transform: scale(0.97);
+  min-width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 900;
 }
 
 .hero{
@@ -244,40 +227,68 @@ nav a:hover::after{width:100%}
   margin-top:4px;
 }
 
-.search-ui{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  width:100%;
-  max-width:590px;
-  background:rgba(255,255,255,.9);
-  border-radius:18px;
-  padding:8px;
-  border:1px solid rgba(237,235,232,.9);
-  box-shadow:var(--shadow);
-  backdrop-filter:blur(14px);
-  transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+.hero-pathfinder {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card-soft); /* Мягкий фон из вашего конфига[cite: 1] */
+  padding: 6px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+  width: fit-content;
+  margin-top: 8px;
+  box-shadow: var(--shadow-soft);
 }
 
-.search-ui:hover{
-  transform:translateY(-2px);
-  box-shadow:0 26px 60px rgba(0,0,0,.08);
-  border-color:rgba(123,45,45,.13);
+.path-item {
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.search-ui input{
-  flex:1;
-  min-width:0;
-  border:none;
-  outline:none;
-  padding:10px 12px;
-  font-size:14px;
-  background:transparent;
-  color:var(--text);
+.path-item:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.5);
 }
 
-.search-ui input::placeholder{
-  color:rgba(112,108,104,.78);
+.path-item.active {
+  background: #fff;
+  color: var(--accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.path-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.path-arrow {
+  margin-left: 8px;
+  padding: 0 12px;
+}
+
+.path-arrow a {
+  text-decoration: none;
+  font-size: 18px;
+  color: var(--accent);
+  font-weight: 900;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.path-arrow:hover a {
+  transform: translateX(4px);
 }
 
 .hero-link{
@@ -412,15 +423,15 @@ nav a:hover::after{width:100%}
 }
 
 .floating-card-a{
-  top:26px;
-  left:0;
-  transform:translateX(-12%);
+  top:60px;
+  left:-40px;
+  transform:none;
 }
 
 .floating-card-b{
-  right:0;
-  bottom:24px;
-  transform:translateX(10%);
+  bottom:60px;
+  right:-50px;
+  transform:none;
   animation-delay:1.4s;
 }
 
@@ -959,3 +970,4 @@ footer{
     scroll-behavior:auto !important;
   }
 }
+

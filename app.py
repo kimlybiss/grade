@@ -6,9 +6,9 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route("/methodology")
-def methodology():
-    return render_template("methodology.html")
+@app.route("/schools")
+def schools():
+    return render_template("schools.html")
 
 @app.errorhandler(404)
 def page_not_found(e):

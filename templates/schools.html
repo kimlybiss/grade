@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Школы — GRADE</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet"/>
+<link href="{{ url_for('static', filename='schools.css') }}" rel="stylesheet"/>
+</head>
+<body class="schools-page">
+<header>
+<a class="logo" href="/">GRADE<span>'</span></a>
+<nav>
+<a href="/catalog">Каталог</a>
+<a class="active" href="/schools">Школы</a>
+<a href="/catalog">Избранное</a>
+</nav>
+<div class="header-spacer"></div>
+<button class="btn" type="button">Начать</button>
+</header>
+<section class="school-hero">
+<span class="compare-tag">ОБРАЗОВАТЕЛЬНЫЕ ПЛАТФОРМЫ</span>
+<h1>Школы, которые <span class="hero-rotating-word" id="heroRotatingWord" aria-live="polite">удобно сравнивать</span></h1>
+<p>Сравнивайте платформы по качеству обратной связи, практической нагрузке, карьерной поддержке и результатам выпускников в одном аккуратном интерфейсе.</p>
+<div class="school-stats">
+<div class="school-stat">
+<strong>16</strong>
+<span>школ в подборке</span>
+</div>
+<div class="school-stat">
+<strong>11</strong>
+<span>направлений фильтрации</span>
+</div>
+<div class="school-stat">
+<strong>1 клик</strong>
+<span>до официальной страницы</span>
+</div>
+</div>
+</section>
+<section class="school-filters-wrap">
+<div class="search-ui school-filters-bar">
+<div class="search-wrapper">
+<div aria-hidden="true" class="search-icon">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+</div>
+<input id="schoolSearch" placeholder="Поиск школы по названию..." type="text"/>
+<div class="select-divider"></div>
+<select aria-label="Фильтр по направлению" id="specFilter">
+<option value="all">Все направления</option>
+<option value="IT">IT / Программирование</option>
+<option value="Design">Дизайн</option>
+<option value="Management">Управление</option>
+<option value="Product">Продукт и бизнес</option>
+<option value="Finance">Финансы</option>
+<option value="English">Английский</option>
+<option value="Data">Данные</option>
+<option value="Marketing">Маркетинг</option>
+<option value="Creative">Креатив</option>
+<option value="Online">Онлайн</option>
+<option value="Business">Бизнес</option>
+</select>
+<div class="select-divider"></div>
+<select aria-label="Сортировка" id="sortFilter">
+<option value="rating-desc">Сначала по оценке</option>
+<option value="rating-asc">Сначала с низкой оценкой</option>
+<option value="name-asc">По названию А—Я</option>
+</select>
+</div>
+</div>
+</section>
+<section class="school-tools">
+<p>Показываются <span class="result-count" id="resultCount">0 школ</span></p>
+<p>Оценка GRADE — сводный балл по направлению, практике и карьерному фокусу. Оценка студентов показывает, как школу воспринимают те, кто уже учился внутри.</p>
+</section>
+<section class="container schools-section">
+<div class="schools-grid" id="schoolsGrid">
+<div class="compare-card school-card" data-rating="4.95" data-search="яндекс практикум it программирование data science анализ данных дизайн менеджмент маркетинг английский интерактивная платформа практика" data-spec="IT" data-student-rating="4.92">
+<div class="card-head">
+<div>
+<span class="school-kicker">ТОП-ВЫБОР</span>
+<h3>Яндекс Практикум</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.95</span>
+</div>
+<div class="tags">
+<span class="school-tag">IT</span>
+<span class="school-tag">Data</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">На официальном каталоге есть направления по программированию, анализу данных, дизайну, менеджменту, маркетингу, ИИ и английскому языку.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Высокий</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Сильный</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://practicum.yandex.ru/backend-developer/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+<div class="compare-card school-card" data-rating="4.90" data-search="нетология it программирование аналитика дизайн ux бизнес управление маркетинг финансы высшее образование практические программы" data-spec="IT" data-student-rating="4.88">
+<div class="card-head">
+<div>
+<span class="school-kicker">СТАБИЛЬНЫЙ ВЫБОР</span>
+<h3>Нетология</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.90</span>
+</div>
+<div class="tags">
+<span class="school-tag">IT</span>
+<span class="school-tag">Маркетинг</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">На сайте есть направления по программированию, аналитике, дизайну и UX, бизнесу, управлению, маркетингу, финансам и высшему образованию.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Выше среднего</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Сильный</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://netology.ru/navigation/python-razrabotka" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+<div class="compare-card school-card" data-rating="4.88" data-search="productstar рбк программирование менеджмент дизайн аналитика it digital профессии практические курсы" data-spec="Product" data-student-rating="4.84">
+<div class="card-head">
+<div>
+<span class="school-kicker">ПОПУЛЯРНАЯ</span>
+<h3>ProductStar</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.88</span>
+</div>
+<div class="tags">
+<span class="school-tag">Product</span>
+<span class="school-tag">Аналитика</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">Школа актуального образования РБК и ProductStar с курсами по ИТ, дизайну, менеджменту и аналитике.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Хороший</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Сильный</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://productstar.ru/course/product-manager" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+<div class="compare-card school-card" data-rating="4.85" data-search="skillbox программирование дизайн аналитика маркетинг управление финансы игры кино музыка маркетплейсы инженерия нейросети английский большое число курсов" data-spec="IT" data-student-rating="4.81">
+<div class="card-head">
+<div>
+<span class="school-kicker">ШИРОКИЙ КАТАЛОГ</span>
+<h3>Skillbox</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.85</span>
+</div>
+<div class="tags">
+<span class="school-tag">IT</span>
+<span class="school-tag">Дизайн</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">Официальный каталог включает программирование, дизайн, аналитику, маркетинг, управление, финансы, игры, инженерные и языковые направления.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Средний+</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Широкий</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://skillbox.ru/course/profession-python/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+<div class="compare-card school-card" data-rating="4.82" data-search="bang bang education школа дизайна технологий креатив маркетинг геймдев мода авторские курсы сертификат дизайн" data-spec="Design" data-student-rating="4.80">
+<div class="card-head">
+<div>
+<span class="school-kicker">КРЕАТИВНАЯ ШКОЛА</span>
+<h3>Bang Bang Education</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.82</span>
+</div>
+<div class="tags">
+<span class="school-tag">Design</span>
+<span class="school-tag">Creative</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">Позиционирует себя как школа дизайна и технологий, а также развивает направления маркетинга, геймдева и моды.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Выше среднего</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Творческий</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://bangbangeducation.ru/program/ux/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+<div class="compare-card school-card" data-rating="4.79" data-search="contented школа дизайна графический дизайн ux ui 3d моушн дизайн интерьеров практика портфолио" data-spec="Design" data-student-rating="4.77">
+<div class="card-head">
+<div>
+<span class="school-kicker">ПРОФИЛЬ ДИЗАЙНА</span>
+<h3>Contented</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.79</span>
+</div>
+<div class="tags">
+<span class="school-tag">Design</span>
+<span class="school-tag">UX/UI</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">Профильная онлайн-школа дизайна: графический дизайн, UX/UI, 3D, motion и интерьерные направления.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Хороший</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Портфолио</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://contented.ru/edu/ux-ui-designer-pro" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+<div class="compare-card school-card" data-rating="4.76" data-search="skyeng английский онлайн индивидуальные занятия разговорные клубы talks интерактивная платформа уровни" data-spec="English" data-student-rating="4.73">
+<div class="card-head">
+<div>
+<span class="school-kicker">ЯЗЫКОВАЯ ШКОЛА</span>
+<h3>Skyeng</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.76</span>
+</div>
+<div class="tags">
+<span class="school-tag">English</span>
+<span class="school-tag">Online</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">Онлайн-школа английского с индивидуальными занятиями, разговорными клубами и собственной платформой Vimbox.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Высокий</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Языковой</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://skyeng.ru/programs/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+<div class="compare-card school-card" data-rating="4.74" data-search="sf education финансы аналитика бизнес ит mini mba инвестиции личные финансы диплом удостоверение карьера" data-spec="Finance" data-student-rating="4.70">
+<div class="card-head">
+<div>
+<span class="school-kicker">ФИНАНСЫ И БИЗНЕС</span>
+<h3>SF Education</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.74</span>
+</div>
+<div class="tags">
+<span class="school-tag">Finance</span>
+<span class="school-tag">Business</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">Каталог программ в области финансов, аналитики, бизнеса и IT, с отдельными курсами по инвестициям и личным финансам.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Хороший</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Проф.</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://sf.education/financialanalyst" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+<div class="compare-card school-card" data-rating="4.71" data-search="otus it программирование тестирование инфраструктура информационная безопасность управление data science llm ai" data-spec="IT" data-student-rating="4.69">
+<div class="card-head">
+<div>
+<span class="school-kicker">СИЛЬНЫЙ IT-ФОКУС</span>
+<h3>OTUS</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.71</span>
+</div>
+<div class="tags">
+<span class="school-tag">IT</span>
+<span class="school-tag">Data</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">Платформа для IT-специалистов: программирование, тестирование, инфраструктура, информационная безопасность, управление и Data Science.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Высокий</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Продвинутый</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://otus.ru/lessons/python-specialization/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+<div class="compare-card school-card" data-rating="4.68" data-search="skypro программирование аналитика управление маркетинг дизайн python java веб разработка графический дизайнер карьерный центр" data-spec="IT" data-student-rating="4.66">
+<div class="card-head">
+<div>
+<span class="school-kicker">ПРАКТИКА И КАРЬЕРА</span>
+<h3>Skypro</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.68</span>
+</div>
+<div class="tags">
+<span class="school-tag">IT</span>
+<span class="school-tag">Marketing</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">На сайте есть курсы по программированию, аналитике, управлению, маркетингу и дизайну, а также помощь карьерного центра.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Хороший</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Сильный</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://sky.pro/courses/programming/web-developer" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+<div class="compare-card school-card" data-rating="4.65" data-search="geekbrains программирование веб-дизайн маркетинг управление аналитика онлайн курсы государственная лицензия" data-spec="Management" data-student-rating="4.63">
+<div class="card-head">
+<div>
+<span class="school-kicker">ШИРОКИЙ ПОРТФЕЛЬ</span>
+<h3>GeekBrains</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.65</span>
+</div>
+<div class="tags">
+<span class="school-tag">Management</span>
+<span class="school-tag">IT</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">Онлайн-портал с курсами по программированию, веб-дизайну, маркетингу и другим профессиям, с лицензированным обучением.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Средний+</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Широкий</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://geekbrains.ru/geek_university/prodanalytics" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+<div class="compare-card school-card" data-rating="4.62" data-search="skillfactory программирование data science аналитика python sql машинное обучение карьера практика российская школа" data-specs="IT,Data,Business" data-student-rating="4.58">
+<div class="card-head">
+<div>
+<span class="school-kicker">IT И DATA</span>
+<h3>Skillfactory</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.62</span>
+</div>
+<div class="tags">
+<span class="school-tag">IT</span>
+<span class="school-tag">Data</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">Российская школа с фокусом на программировании, Data Science, аналитике и прикладных IT-навыках с упором на практику.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Выше среднего</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Сильный</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://skillfactory.ru/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+
+<div class="compare-card school-card" data-rating="4.60" data-search="hexlet программирование frontend backend python javascript php java практика российская школа" data-specs="IT,Online" data-student-rating="4.56">
+<div class="card-head">
+<div>
+<span class="school-kicker">ПРАКТИКА КОДА</span>
+<h3>Hexlet</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.60</span>
+</div>
+<div class="tags">
+<span class="school-tag">IT</span>
+<span class="school-tag">Online</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">Российская школа для разработчиков с сильным упором на практику, код-ревью и траектории по frontend, backend и Python.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Высокий</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Продвинутый</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://hexlet.io/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+
+<div class="compare-card school-card" data-rating="4.57" data-search="фоксфорд школа математика английский программирование школьники егэ огэ онлайн подготовка российская школа" data-specs="English,IT,Online,Business" data-student-rating="4.54">
+<div class="card-head">
+<div>
+<span class="school-kicker">ШКОЛА И ЭКЗАМЕНЫ</span>
+<h3>Фоксфорд</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.57</span>
+</div>
+<div class="tags">
+<span class="school-tag">English</span>
+<span class="school-tag">IT</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">Российская онлайн-школа для школьников с курсами по математике, английскому, программированию и подготовке к экзаменам.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Высокий</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Учебный</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://foxford.ru/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+
+<div class="compare-card school-card" data-rating="4.59" data-search="eduson academy аналитика маркетинг управление финансы mba бизнес российская школа" data-specs="Business,Finance,Data,Marketing,Management" data-student-rating="4.55">
+<div class="card-head">
+<div>
+<span class="school-kicker">БИЗНЕС И АНАЛИТИКА</span>
+<h3>Eduson Academy</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.59</span>
+</div>
+<div class="tags">
+<span class="school-tag">Business</span>
+<span class="school-tag">Finance</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">Российская школа с курсами по аналитике, маркетингу, финансам, менеджменту и управлению для практического роста в карьере.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Хороший</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Сильный</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://eduson.academy/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+
+<div class="compare-card school-card" data-rating="4.55" data-search="maximum education егэ огэ английский математика программирование школьники российская школа" data-specs="Online,English,IT,Business,Management" data-student-rating="4.51">
+<div class="card-head">
+<div>
+<span class="school-kicker">ШКОЛА ПОДГОТОВКИ</span>
+<h3>MAXIMUM Education</h3>
+</div>
+<span class="rating-badge">★ GRADE 4.55</span>
+</div>
+<div class="tags">
+<span class="school-tag">Online</span>
+<span class="school-tag">English</span>
+</div><div class="score-grid"><div class="score-panel score-panel-grade"><span>GRADE</span><strong class="score-value grade-value"></strong><div class="score-track"><i class="score-fill" data-kind="grade"></i></div></div><div class="score-panel score-panel-student"><span>Студенты</span><strong class="score-value student-value"></strong><div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div></div></div>
+<p class="compare-sub">Российский образовательный центр для подготовки к ЕГЭ, ОГЭ, школьным предметам, английскому и программированию.</p>
+<div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+<div class="card-stats">
+<div class="compare-row"><span>Фидбек</span><strong>Хороший</strong></div>
+<div class="compare-row"><span>Карьерный фокус</span><strong>Учебный</strong></div>
+</div>
+<a class="btn btn-secondary" href="https://maximumtest.ru/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+</div>
+<div class="no-results" hidden="" id="noResults">
+<strong>Ничего не найдено</strong>
+<span>Попробуйте другое название школы или снимите фильтр по направлению.</span>
+</div>
+</div>
+</section>
+<footer>
+  Grade © 2026 · Дипломный проект
+</footer>
+<script>
+  const searchInput = document.getElementById('schoolSearch');
+  const specFilter = document.getElementById('specFilter');
+  const sortFilter = document.getElementById('sortFilter');
+  const grid = document.getElementById('schoolsGrid');
+  const cards = Array.from(document.querySelectorAll('.school-card'));
+  const resultCount = document.getElementById('resultCount');
+  const noResults = document.getElementById('noResults');
+  const heroRotatingWord = document.getElementById('heroRotatingWord');
+
+  const heroPhrases = [
+    'стоит сравнить',
+    'просто выбрать',
+    'реально обучают',
+    'имеют значение'
+  ];
+
+  let heroPhraseIndex = 0;
+
+  function initScorePanels() {
+    cards.forEach(card => {
+      const grade = parseFloat(card.dataset.rating || '0');
+      const student = parseFloat(card.dataset.studentRating || Math.max(grade - 0.04, 0).toFixed(2));
+      const gradeValue = card.querySelector('.grade-value');
+      const studentValue = card.querySelector('.student-value');
+      const gradeFill = card.querySelector('.score-fill[data-kind="grade"]');
+      const studentFill = card.querySelector('.score-fill[data-kind="student"]');
+
+      if (gradeValue) gradeValue.textContent = grade.toFixed(2);
+      if (studentValue) studentValue.textContent = student.toFixed(2);
+      if (gradeFill) gradeFill.style.setProperty('--fill', `${Math.min(grade * 20, 100)}%`);
+      if (studentFill) studentFill.style.setProperty('--fill', `${Math.min(student * 20, 100)}%`);
+    });
+  }
+
+  function compareCards(a, b) {
+    const sortMode = sortFilter.value;
+    const ratingA = parseFloat(a.dataset.rating || '0');
+    const ratingB = parseFloat(b.dataset.rating || '0');
+    const titleA = a.querySelector('h3').innerText.toLowerCase();
+    const titleB = b.querySelector('h3').innerText.toLowerCase();
+
+    if (sortMode === 'rating-asc') return ratingA - ratingB || titleA.localeCompare(titleB, 'ru');
+    if (sortMode === 'name-asc') return titleA.localeCompare(titleB, 'ru') || ratingB - ratingA;
+    return ratingB - ratingA || titleA.localeCompare(titleB, 'ru');
+  }
+
+  function normalize(text) {
+    return (text || '')
+      .toLowerCase()
+      .replace(/[ё]/g, 'е')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function updateView() {
+    const searchText = normalize(searchInput.value);
+    const selectedSpec = specFilter.value;
+
+    let visibleCards = cards.filter(card => {
+      const title = normalize(card.querySelector('h3')?.innerText || '');
+      const searchData = normalize(card.dataset.search || '');
+
+      const specList = (card.getAttribute('data-specs') || card.getAttribute('data-spec') || '')
+        .split(',')
+        .map(item => item.trim())
+        .filter(Boolean);
+
+      const matchesSearch =
+        !searchText ||
+        title.includes(searchText) ||
+        searchData.includes(searchText);
+
+      const matchesSpec =
+        selectedSpec === 'all' || specList.includes(selectedSpec);
+
+      return matchesSearch && matchesSpec;
+    });
+
+    visibleCards.sort(compareCards);
+
+    visibleCards.forEach(card => {
+      card.style.display = 'flex';
+      card.setAttribute('aria-hidden', 'false');
+      grid.appendChild(card);
+    });
+
+    cards.forEach(card => {
+      if (!visibleCards.includes(card)) {
+        card.style.display = 'none';
+        card.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    resultCount.textContent = `${visibleCards.length} ${
+      visibleCards.length === 1 ? 'школа' : 'школы'
+    }`;
+
+    noResults.hidden = visibleCards.length !== 0;
+  }
+
+  function rotateHeroWord() {
+    if (!heroRotatingWord) return;
+    heroRotatingWord.classList.remove('is-changed');
+    window.setTimeout(() => {
+      heroRotatingWord.textContent = heroPhrases[heroPhraseIndex];
+      heroRotatingWord.classList.add('is-changed');
+      heroPhraseIndex = (heroPhraseIndex + 1) % heroPhrases.length;
+    }, 160);
+  }
+
+  cards.forEach((card, index) => {
+    card.style.setProperty('--delay', `${Math.min(index * 0.04, 0.36)}s`);
+  });
+
+  function revealPage() {
+    window.requestAnimationFrame(() => {
+      document.body.classList.add('page-ready');
+      cards.forEach(card => card.classList.add('is-visible'));
+    });
+  }
+
+  initScorePanels();
+  updateView();
+  rotateHeroWord();
+  window.setInterval(rotateHeroWord, 2600);
+
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(revealPage);
+  });
+
+  searchInput.addEventListener('input', updateView);
+
+  specFilter.addEventListener('change', updateView);
+  sortFilter.addEventListener('change', updateView);
+</script>
+</body>
+</html>

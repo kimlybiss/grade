@@ -8,46 +8,85 @@
   <link rel="icon" href="/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 </head>
 
 <body>
 
-<header>
+<header class="site-header">
   <a class="logo" href="/">GRADE<span>'</span></a>
   <nav>
     <a href="/catalog">Каталог</a>
-    <a href="{{ url_for('methodology') }}">Методика</a>
-    <a href="/catalog">О практике</a>
+    <a href="{{ url_for('schools') }}">Школы</a>
+    <a href="/catalog">Избранное</a>
   </nav>
   <div class="header-spacer"></div>
   <button class="btn" type="button" onclick="window.location.href='/404.html'">Начать</button>
 </header>
 
 <section class="hero">
-  <div>
+  <div class="hero-copy">
+    <span class="compare-tag hero-tag">Независимое сравнение курсов</span>
     <h1>Инвестируйте в знания, а не в <span>рекламу</span></h1>
-    <p>Grade — это не витрина обещаний. Это спокойный и честный взгляд на онлайн-образование.</p>
-    <p>Мы анализируем программы, фиксируем цены и проверяем реальный результат, 
-      чтобы ты не тратил время и деньги на «пустые» обещания онлайн-школ</p>
+    <p>Grade — это спокойный и честный взгляд на онлайн-образование. Мы анализируем программы, фиксируем цены и проверяем реальный результат, чтобы выбор был осознанным.</p>
 
-    <div class="search-ui">
-      <input placeholder="Поиск по курсу или школе">
-      <button class="btn" type="button" onclick="window.location.href='/404.html'">Найти</button>
+    <div class="hero-actions">
+      <div class="search-ui">
+        <input placeholder="Поиск по курсу или школе">
+        <button class="btn" type="button" onclick="window.location.href='/404.html'">Найти</button>
+      </div>
+      <a class="hero-link" href="#compare-section">Смотреть сравнение</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <strong>16</strong>
+        <span>школ в подборке</span>
+      </div>
+      <div class="hero-stat">
+        <strong>11</strong>
+        <span>направлений фильтрации</span>
+      </div>
+      <div class="hero-stat">
+        <strong>1 клик</strong>
+        <span>до официальной страницы</span>
+      </div>
     </div>
   </div>
 
   <div class="hero-visual">
-    <img src="{{ url_for('static', filename='character.png') }}" alt="">
+    <div class="hero-visual-card">
+      <div class="hero-visual-glow"></div>
+      <img src="{{ url_for('static', filename='character.png') }}" alt="">
+      <div class="floating-card floating-card-a">
+        <span>Оценка GRADE</span>
+        <strong>4.9 / 5.0</strong>
+      </div>
+      <div class="floating-card floating-card-b">
+        <span>Фокус</span>
+        <strong>Практика + карьера</strong>
+      </div>
+    </div>
   </div>
 </section>
 
 <section class="features">
-  <div class="feature"><strong>01</strong><p>Мы не рекламируем курсы — мы помогаем найти обучение, которое работает.</p></div>
-  <div class="feature"><strong>02</strong><p>Алгоритм сравнивает учебные модули, а не рекламные слоганы лендингов.</p></div>
-  <div class="feature"><strong>03</strong><p>Ты выбираешь обучение осознанно, понимая, за что именно платишь деньги.</p></div>
+  <div class="feature">
+    <div class="feature-icon">01</div>
+    <strong>Честная аналитика</strong>
+    <p>Мы не рекламируем курсы — мы помогаем найти обучение, которое работает.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">02</div>
+    <strong>Сравнение по делу</strong>
+    <p>Алгоритм сравнивает учебные модули, а не рекламные слоганы лендингов.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">03</div>
+    <strong>Осознанный выбор</strong>
+    <p>Ты понимаешь, за что платишь деньги, и выбираешь программу без лишнего шума.</p>
+  </div>
 </section>
 
 <section class="who-is-it-for">
@@ -56,14 +95,15 @@
       <div class="sticky-title">
         <span class="compare-tag">ДЛЯ КОГО GRADE</span>
         <h2>
-          Мы создали сервис для тех, кто ценит 
+          Мы создали сервис для тех, кто ценит
           <span class="highlight">честность</span>
         </h2>
+        <p class="sticky-subtitle">Аккуратная подача, понятные сравнения и никаких перегруженных обещаний.</p>
       </div>
-      
+
       <div class="reasons-list">
         <div class="reason-item">
-          <span class="reason-num">/ 01</span>
+          <div class="feature-icon">01</div>
           <div class="reason-content">
             <h4>Рациональный подход</h4>
             <p>Если вам нужны цифры и методология обучения, а не обещания «успешного успеха» и легких денег.</p>
@@ -71,7 +111,7 @@
         </div>
 
         <div class="reason-item">
-          <span class="reason-num">/ 02</span>
+          <div class="feature-icon">02</div>
           <div class="reason-content">
             <h4>Прагматичный выбор</h4>
             <p>Для тех, кто ищет конкретные навыки и реальный фидбек от индустрии, а не диплом в рамку.</p>
@@ -79,7 +119,7 @@
         </div>
 
         <div class="reason-item">
-          <span class="reason-num">/ 03</span>
+          <div class="feature-icon">03</div>
           <div class="reason-content">
             <h4>Здоровый скептицизм</h4>
             <p>Вы устали от «прогревов» и хотите видеть прозрачное сравнение программ до оплаты.</p>
@@ -90,20 +130,19 @@
   </div>
 </section>
 
-<section class="compare-section">
+<section class="compare-section" id="compare-section">
   <span class="compare-tag">КРАТКИЙ АНАЛИЗ ОБУЧЕНИЯ</span>
   <h2 class="compare-title">Frontend-разработка</h2>
 
   <div class="compare-grid">
-
     <div class="compare-card">
       <h3>Skillbox · Frontend-разработчик</h3>
       <p class="compare-sub">Классическая программа с упором на базовую теорию</p>
-      
+
       <div class="compare-row">
         <span>Доля практики</span>
         <div class="progress-container">
-          <div class="progress-bar" data-value="55"></div> 
+          <div class="progress-bar" data-value="55"></div>
         </div>
         <strong>55%</strong>
       </div>
@@ -146,7 +185,7 @@
       <div class="compare-row">
         <span>Доля практики</span>
         <div class="progress-container">
-          <div class="progress-bar" data-value="75"></div> 
+          <div class="progress-bar" data-value="75"></div>
         </div>
         <strong>75%</strong>
       </div>
@@ -180,12 +219,11 @@
         <strong>≈ 120 000 ₽</strong>
       </div>
     </div>
-
   </div>
 </section>
 
 <footer>
-  Grade © 2026 · Дипломный проект сделанный с душой
+  Grade © 2026 · Дипломный проект
 </footer>
 
 <script>
@@ -219,19 +257,6 @@
     }, 4000);
   })();
 
-  const notForSection = document.querySelector('.not-for-section');
-  if (notForSection) {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.25 });
-    observer.observe(notForSection);
-  }
-
   const compareSection = document.querySelector('.compare-section');
   if (compareSection) {
     const observer = new IntersectionObserver(entries => {
@@ -245,10 +270,50 @@
     observer.observe(compareSection);
   }
 
+  const reasonItems = document.querySelectorAll('.reason-item');
+  const reasonObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        reasonObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.25 });
+
+  reasonItems.forEach(item => reasonObserver.observe(item));
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('page-ready');
+
+    const progressObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const bars = entry.target.querySelectorAll('.progress-bar');
+          bars.forEach(bar => {
+            bar.style.width = bar.getAttribute('data-value') + '%';
+          });
+          progressObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    if (compareSection) progressObserver.observe(compareSection);
+
+    const heroCard = document.querySelector('.hero-visual-card');
+    if (heroCard) {
+      window.addEventListener('mousemove', (e) => {
+        const x = (window.innerWidth / 2 - e.pageX) / 70;
+        const y = (window.innerHeight / 2 - e.pageY) / 70;
+        heroCard.style.setProperty('--mx', `${x}px`);
+        heroCard.style.setProperty('--my', `${y}px`);
+      });
+    }
+  });
+
   (function() {
     document.querySelectorAll('button').forEach(btn => {
       if (!btn.hasAttribute('data-no-redirect')) {
-        btn.addEventListener('click', function(e){
+        btn.addEventListener('click', function(){
           if (!btn.getAttribute('data-skip-404')) {
             window.location.href = '/404.html';
           }
@@ -260,69 +325,6 @@
     });
   })();
 </script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const bars = entry.target.querySelectorAll('.progress-bar');
-                bars.forEach(bar => {
-                    bar.style.width = bar.getAttribute('data-value') + '%';
-                });
-            }
-        });
-    }, { threshold: 0.5 });
-
-    const compareSection = document.querySelector('.compare-section');
-    if (compareSection) observer.observe(compareSection);
-
-    const img = document.querySelector('.hero-visual img');
-    if (img) {
-        window.addEventListener('mousemove', (e) => {
-            const x = (window.innerWidth / 2 - e.pageX) / 50;
-            const y = (window.innerHeight / 2 - e.pageY) / 50;
-            img.style.transform = `translate(${x}px, ${y}px)`;
-        });
-    }
-});
-</script>
-
-<script>
-  const reasonItems = document.querySelectorAll('.reason-item');
-
-  const reasonObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        reasonObserver.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.25
-  });
-
-  reasonItems.forEach(item => reasonObserver.observe(item));
-</script>
-
-
-<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script> 
-<script>
-  const lenis = new Lenis({
-    duration: 0.9,
-    easing: (t) => 1 - Math.pow(1 - t, 3),
-    smoothWheel: true,
-    smoothTouch: false,
-  });
-
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-
-  requestAnimationFrame(raf);
-</script>
-
 
 </body>
 </html>

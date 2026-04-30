@@ -365,7 +365,7 @@ body.schools-page.page-ready footer {
   align-items: center;
 }
 
-results-header {
+.results-header {
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.1em;

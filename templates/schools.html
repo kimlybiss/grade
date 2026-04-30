@@ -8,14 +8,14 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet"/>
-<link href="{{ url_for('static', filename='schools.css') }}" rel="stylesheet"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/schools.css') }}">
 </head>
 <body class="schools-page">
 <header>
 <a class="logo" href="/">GRADE<span>'</span></a>
 <nav>
-<a href="/catalog">Каталог</a>
+<a href="/catalog">Курсы</a>
 <a class="active" href="/schools">Школы</a>
 <a href="/catalog">Избранное</a>
 </nav>
@@ -443,41 +443,33 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
       const schoolsGrid = document.querySelector('.schools-grid');
-      const resultCount = document.getElementById('resultCount');
+      const counterElem = document.getElementById('resultCount');
 
+      window.updateCount = function() {
+        const visibleCards = document.querySelectorAll('.school-card:not([style*="display: none"])').length;
+        const word = getNoun(visibleCards, 'школа', 'школы', 'школ');
+        if (counterElem) {
+          counterElem.innerHTML = `${visibleCards} <span class="count-word">${word}</span>`;
+          counterElem.classList.remove('update-anim');
+          void counterElem.offsetWidth;
+          counterElem.classList.add('update-anim');
+        }
+      };
+      updateCount();
       if (schoolsGrid) {
         const observer = new IntersectionObserver(entries => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               entry.target.classList.add('is-visible');
-              
-              if (resultCount) {
-                resultCount.classList.add('update-anim');
-              }
-              
               observer.unobserve(entry.target);
             }
           });
-        }, { 
-          threshold: 0.03,
-          rootMargin: '0px 0px 100px 0px'
-        });
+        }, { threshold: 0.03, rootMargin: '0px 0px 100px 0px' });
 
         observer.observe(schoolsGrid);
       }
-
-      window.updateViewWithAnim = function() {
-        if (resultCount) {
-          resultCount.classList.remove('update-anim');
-          void resultCount.offsetWidth; 
-          resultCount.classList.add('update-anim');
-        }
-      };
     });
     </script>
-
-  </body>
-</html>
 
 <script>
   const searchInput = document.getElementById('schoolSearch');

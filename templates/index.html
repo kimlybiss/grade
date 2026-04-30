@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 </head>
 
 <body>
@@ -332,15 +332,6 @@
   });
 
   (function() {
-    document.querySelectorAll('button').forEach(btn => {
-      if (!btn.hasAttribute('data-no-redirect')) {
-        btn.addEventListener('click', function(){
-          if (!btn.getAttribute('data-skip-404')) {
-            window.location.href = '/404.html';
-          }
-        }, { once: true });
-      }
-    });
     document.querySelectorAll('a[href="#"], a[href=""]').forEach(a=>{
       a.setAttribute('href','/404.html');
     });

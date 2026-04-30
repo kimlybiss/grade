@@ -346,9 +346,9 @@ nav a:hover::after{width:100%}
   position:relative;
   min-height:480px;
   display:flex;
-  align-items:flex-start;
+  align-items:flex-end;
   justify-content:center;
-  padding-top:8px;
+  padding-top:0;
 }
 
 .hero-visual-card{

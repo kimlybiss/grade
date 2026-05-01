@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grade — курсы</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/courses.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="{{ url_for('index') }}">GRADE<span>'</span></a>
+  <nav>
+    <a href="{{ url_for('courses') }}">Курсы</a>
+    <a href="{{ url_for('schools') }}">Школы</a>
+    <a href="/c">Избранное</a>
+  </nav>
+  <div class="header-spacer"></div>
+  <div class="header-collection">
+    <div class="collection-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+      </svg>
+    </div>
+    <span class="collection-label">Мой выбор</span>
+    <span class="collection-badge">0</span>
+  </div>
+</header>
+
+<main class="courses-page">
+  <section class="courses-hero">
+    <div class="courses-hero-copy">
+      <div class="hero-intro">
+        <span class="compare-tag hero-tag">КАТАЛОГ ОНЛАЙН-КУРСОВ</span>
+        <h1 class="courses-title">
+          Курсы, которые удобно <span class="title-highlight">сравнивать</span>, а не <span class="title-highlight-soft">угадывать</span>
+        </h1>
+        <p>Подборка программ из разных сфер с понятными метриками: срок обучения, доля практики, стоимость, проверка домашних и карьерная поддержка.</p>
+
+        <div class="hero-stats compare-stats">
+          <div class="hero-stat">
+            <strong>{{ stats.total_courses }}</strong>
+            <span>курсов в базе</span>
+          </div>
+          <div class="hero-stat">
+            <strong data-sync-schools-count data-fallback="{{ stats.total_schools }}">{{ stats.total_schools }}</strong>
+            <span>онлайн-школ</span>
+          </div>
+          <div class="hero-stat">
+            <strong>{{ stats.total_directions }}</strong>
+            <span>направлений</span>
+          </div>
+          <div class="hero-stat">
+            <strong>{{ stats.avg_rating }}</strong>
+            <span>средний рейтинг</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-directions">
+        <span class="mini-label">Сферы обучения</span>
+        <div class="hero-directions-list">
+          {% for category in categories %}
+          <span class="direction-chip">{{ category.label }}</span>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="hero-search-note">
+        <span class="note-dot"></span>
+        <span>Курсы по IT, дизайну, маркетингу, аналитике, продукту, финансам, языкам и прикладным навыкам — всё в одном каталоге.</span>
+      </div>
+    </div>
+
+    <div class="courses-hero-panel">
+      <div class="featured-card">
+        <span class="mini-label">Лучший по сводной оценке</span>
+        <h3>{{ featured.school }} · {{ featured.course_name }}</h3>
+        <p>{{ featured.highlight }}</p>
+
+        <div class="featured-meta">
+          <span>{{ featured.category }}</span>
+          <span>⭐ {{ featured.rating }}</span>
+          <span>{{ featured.practice_percent }}% практика</span>
+        </div>
+
+        <div class="featured-price">
+          <strong>{{ featured.price_rub }} ₽</strong>
+          <span>{{ featured.duration_weeks }} недель обучения</span>
+        </div>
+      </div>
+
+      <div class="side-mini-grid">
+        <div class="side-mini-box">
+          <span>Средняя практика</span>
+          <strong>{{ stats.avg_practice }}%</strong>
+        </div>
+        <div class="side-mini-box">
+          <span>Средняя длительность</span>
+          <strong>{{ stats.avg_duration }} нед.</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="filters-panel" id="catalog">
+    <div class="filters-head">
+      <div>
+        <span class="compare-tag">ФИЛЬТРЫ И СОРТИРОВКА</span>
+        <h2>Подберите курс под цель обучения</h2>
+      </div>
+      <p>Поиск, фильтр по направлению и сортировка по рейтингу, цене, практике или длительности.</p>
+    </div>
+
+    <div class="filters-search">
+      <label for="searchCourses">Поиск по школе или курсу</label>
+      <input id="searchCourses" type="search" placeholder="Например: frontend, дизайн, аналитика...">
+    </div>
+
+    <div class="filters-row">
+      <div class="filter-group">
+        <span>Направление</span>
+        <div class="chip-row">
+          <button class="chip active" data-filter="all">Все</button>
+          {% for category in categories %}
+          <button class="chip" data-filter="{{ category.value }}">{{ category.label }}</button>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="filter-group filter-sort">
+        <span>Сортировка</span>
+        <select id="sortCourses">
+          <option value="rating">По рейтингу</option>
+          <option value="price">По цене</option>
+          <option value="practice">По практике</option>
+          <option value="duration">По длительности</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <section class="course-grid" id="courseGrid">
+    {% set ns = namespace(mida_removed=false) %}
+    {% for course in courses %}
+    {% if course.school|lower == 'mida' %}
+      {% set ns.mida_removed = true %}
+    {% else %}
+    <article class="course-card" data-category="{{ course.category }}" data-school="{{ course.school|lower }}" data-course="{{ course.course_name|lower }}" data-price="{{ course.price_rub }}" data-rating="{{ course.rating }}" data-practice="{{ course.practice_percent }}" data-duration="{{ course.duration_weeks }}">
+      <div class="course-card-top">
+        <div>
+          <span class="school-pill">{{ course.school }}</span>
+          <h3>{{ course.course_name }}</h3>
+        </div>
+        <div class="rating-badge">★ {{ course.rating }}</div>
+      </div>
+
+      <p class="compare-sub">{{ course.highlight }}</p>
+
+      <div class="course-tags">
+        <span>{{ course.category_label }}</span>
+        <span>{{ course.level }}</span>
+        <span>{{ course.format }}</span>
+      </div>
+
+      <div class="compare-row">
+        <span>Длительность</span>
+        <strong>{{ course.duration_weeks }} недель</strong>
+      </div>
+      <div class="compare-row">
+        <span>Практика</span>
+        <div class="progress-container"><div class="progress-bar" data-value="{{ course.practice_width }}"></div></div>
+        <strong>{{ course.practice_percent }}%</strong>
+      </div>
+      <div class="compare-row">
+        <span>Проекты</span>
+        <strong>{{ course.projects_count }}</strong>
+      </div>
+      <div class="compare-row">
+        <span>Фидбек</span>
+        <strong>{{ course.mentor_feedback }}</strong>
+      </div>
+      <div class="compare-row">
+        <span>Карьерная поддержка</span>
+        <strong>{{ course.career_label }}</strong>
+      </div>
+      <div class="compare-row">
+        <span>Стажировка</span>
+        <strong>{{ course.internship_label }}</strong>
+      </div>
+      <div class="compare-row">
+        <span>Отзывы</span>
+        <strong>{{ '{:,}'.format(course.reviews_count).replace(',', ' ') }}</strong>
+      </div>
+      <div class="compare-row price">
+        <span>Стоимость</span>
+        <strong>{{ course.price_display }} ₽</strong>
+      </div>
+
+      <div class="card-notes">
+        <p><strong>Плюсы:</strong> {{ course.pros }}</p>
+        <p><strong>Минусы:</strong> {{ course.cons }}</p>
+      </div>
+    </article>
+    {% endif %}
+    {% endfor %}
+
+    {% if ns.mida_removed %}
+    <article class="course-card course-card--replacement" data-category="code" data-school="netology" data-course="frontend-разработчик" data-price="109900" data-rating="4.8" data-practice="68" data-duration="24">
+      <div class="course-card-top">
+        <div>
+          <span class="school-pill">Нетология</span>
+          <h3>Frontend-разработчик</h3>
+        </div>
+        <div class="rating-badge">★ 4.8</div>
+      </div>
+
+      <p class="compare-sub">Замена вместо курса MIDA: больше практики, акцент на портфолио и понятный карьерный трек.</p>
+
+      <div class="course-tags">
+        <span>Веб-разработка</span>
+        <span>Junior</span>
+        <span>Онлайн</span>
+      </div>
+
+      <div class="compare-row">
+        <span>Длительность</span>
+        <strong>24 недели</strong>
+      </div>
+      <div class="compare-row">
+        <span>Практика</span>
+        <div class="progress-container"><div class="progress-bar" data-value="68"></div></div>
+        <strong>68%</strong>
+      </div>
+      <div class="compare-row">
+        <span>Проекты</span>
+        <strong>6</strong>
+      </div>
+      <div class="compare-row">
+        <span>Фидбек</span>
+        <strong>Code review</strong>
+      </div>
+      <div class="compare-row">
+        <span>Карьерная поддержка</span>
+        <strong>Есть</strong>
+      </div>
+      <div class="compare-row">
+        <span>Стажировка</span>
+        <strong>Есть</strong>
+      </div>
+      <div class="compare-row">
+        <span>Отзывы</span>
+        <strong>1 240</strong>
+      </div>
+      <div class="compare-row price">
+        <span>Стоимость</span>
+        <strong>109 900 ₽</strong>
+      </div>
+
+      <div class="card-notes">
+        <p><strong>Плюсы:</strong> сильный упор на практику, портфолио и менторскую проверку.</p>
+        <p><strong>Минусы:</strong> потребуется стабильный график и время на самостоятельную работу.</p>
+      </div>
+    </article>
+    {% endif %}
+  </section>
+
+  <section class="compare-summary">
+    <div class="summary-card">
+      <span class="mini-label">Сводка по каталогу</span>
+      <div class="summary-line"><strong>{{ stats.avg_practice }}%</strong><span>средняя доля практики</span></div>
+      <div class="summary-line"><strong>{{ '{:,}'.format(stats.min_price).replace(',', ' ') }} ₽</strong><span>минимальная цена</span></div>
+      <div class="summary-line"><strong>{{ '{:,}'.format(stats.max_price).replace(',', ' ') }} ₽</strong><span>максимальная цена</span></div>
+    </div>
+
+    <div class="summary-card summary-top-list">
+      <span class="mini-label">Топ-3 по сводной оценке</span>
+      {% for item in top_courses %}
+      <div class="top-course-row">
+        <div>
+          <strong>{{ item.school }}</strong>
+          <span>{{ item.course_name }} · {{ item.category }}</span>
+        </div>
+        <div class="top-course-meta">
+          <b>★ {{ item.rating }}</b>
+          <small>{{ item.practice }}% · {{ item.price }} ₽</small>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</main>
+
+<footer>
+  Grade © 2026 · Онлайн-сравнение курсов
+</footer>
+
+<script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+<script>
+  const searchInput = document.getElementById('searchCourses');
+  const sortSelect = document.getElementById('sortCourses');
+  const chips = document.querySelectorAll('.chip');
+  const cards = Array.from(document.querySelectorAll('.course-card'));
+  const grid = document.getElementById('courseGrid');
+  const heroIntro = document.querySelector('.hero-intro');
+  const heroPanel = document.querySelector('.courses-hero-panel');
+  const filtersPanel = document.querySelector('.filters-panel');
+  const summaryCards = document.querySelectorAll('.summary-card');
+  let currentFilter = 'all';
+
+  function normalizeText(value) {
+    return (value || '').toString().trim().toLowerCase();
+  }
+
+  function sortCards(list) {
+    const sortValue = sortSelect.value;
+    return [...list].sort((a, b) => {
+      const av = parseFloat(a.dataset[sortValue]) || 0;
+      const bv = parseFloat(b.dataset[sortValue]) || 0;
+      if (sortValue === 'price' || sortValue === 'duration') return av - bv;
+      return bv - av;
+    });
+  }
+
+  function renderCards() {
+    const query = normalizeText(searchInput.value);
+    const filtered = cards.filter(card => {
+      const matchesFilter = currentFilter === 'all' || card.dataset.category === currentFilter;
+      const matchesSearch = !query || normalizeText(card.dataset.school).includes(query) || normalizeText(card.dataset.course).includes(query);
+      return matchesFilter && matchesSearch;
+    });
+
+    const sorted = sortCards(filtered);
+    const visibleSet = new Set(sorted);
+
+    GradeAnimations.staggerDelays(sorted, '--card-delay', 0.04, 0.36);
+
+    sorted.forEach(card => {
+      grid.appendChild(card);
+      card.querySelectorAll('.progress-bar[data-value]').forEach(bar => {
+        bar.style.width = '0%';
+        bar.dataset.animated = '0';
+      });
+    });
+
+    cards.forEach(card => {
+      const visible = visibleSet.has(card);
+      card.style.display = visible ? '' : 'none';
+      if (visible) {
+        card.classList.add('is-visible');
+      } else {
+        card.classList.remove('is-visible');
+      }
+    });
+  }
+
+  const schoolsCountTarget = document.querySelector('[data-sync-schools-count]');
+
+  function setupProgressBarReveal() {
+    if (typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+
+        const bars = entry.target.querySelectorAll('.progress-bar[data-value]');
+        bars.forEach(bar => {
+          if (bar.dataset.animated === '1') return;
+          const value = Number(bar.dataset.value || 0);
+          window.requestAnimationFrame(() => {
+            bar.style.width = `${value}%`;
+          });
+          bar.dataset.animated = '1';
+        });
+      });
+    }, { threshold: 0.38, rootMargin: '0px 0px -10px 0px' });
+
+    cards.forEach(card => observer.observe(card));
+  }
+
+  function syncSchoolsCountFromSchoolsPage() {
+    if (!schoolsCountTarget) return;
+    const storedCount = Number(window.localStorage.getItem('grade-schools-count'));
+    const fallbackCount = Number(schoolsCountTarget.dataset.fallback || schoolsCountTarget.textContent || 0);
+    const count = Number.isFinite(storedCount) && storedCount > 0 ? storedCount : fallbackCount;
+    schoolsCountTarget.textContent = String(count);
+  }
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(item => item.classList.remove('active'));
+      chip.classList.add('active');
+      currentFilter = chip.dataset.filter;
+      renderCards();
+    });
+  });
+
+  searchInput.addEventListener('input', renderCards);
+  sortSelect.addEventListener('change', renderCards);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    GradeAnimations.setPageReady();
+    syncSchoolsCountFromSchoolsPage();
+    renderCards();
+    GradeAnimations.softHoverCards(cards, {
+      tilt: 1.2,
+      lift: 6,
+      shadowY: 20,
+      shadowBlur: 40,
+      sheen: 0.02
+    });
+
+    GradeAnimations.setVisibleOnNextFrame([heroIntro, heroPanel]);
+    GradeAnimations.revealOnVisible('.hero-directions, .hero-search-note, .filters-panel', {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px',
+      preserveTransform: true
+    });
+    GradeAnimations.revealOnVisible('.course-card, .summary-card', {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px',
+      preserveTransform: true
+    });
+    setupProgressBarReveal();
+
+    window.addEventListener('storage', syncSchoolsCountFromSchoolsPage);
+  });
+</script>
+
+</body>
+</html>

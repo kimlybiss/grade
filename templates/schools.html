@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ru">
 <head>
 <meta charset="utf-8"/>
@@ -15,9 +14,9 @@
 <header>
 <a class="logo" href="/">GRADE<span>'</span></a>
 <nav>
-<a href="/catalog">Курсы</a>
-<a class="active" href="/schools">Школы</a>
-<a href="/catalog">Избранное</a>
+<a href="{{ url_for('courses') }}">Курсы</a>
+<a href="{{ url_for('schools') }}">Школы</a>  
+<a href="/c">Избранное</a>
 </nav>
 <div class="header-spacer"></div>
 <div class="header-collection">
@@ -440,186 +439,167 @@
   Grade © 2026 · Дипломный проект
 </footer>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const schoolsGrid = document.querySelector('.schools-grid');
-      const counterElem = document.getElementById('resultCount');
 
-      window.updateCount = function() {
-        const visibleCards = document.querySelectorAll('.school-card:not([style*="display: none"])').length;
-        const word = getNoun(visibleCards, 'школа', 'школы', 'школ');
-        if (counterElem) {
-          counterElem.innerHTML = `${visibleCards} <span class="count-word">${word}</span>`;
-          counterElem.classList.remove('update-anim');
-          void counterElem.offsetWidth;
-          counterElem.classList.add('update-anim');
+<script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const schoolsGrid = document.querySelector('.schools-grid');
+    const counterElem = document.getElementById('resultCount');
+    const searchInput = document.getElementById('schoolSearch');
+    const specFilter = document.getElementById('specFilter');
+    const sortFilter = document.getElementById('sortFilter');
+    const grid = document.getElementById('schoolsGrid');
+    const cards = Array.from(document.querySelectorAll('.school-card'));
+    const noResults = document.getElementById('noResults');
+    const heroRotatingWord = document.getElementById('heroRotatingWord');
+
+    const heroPhrases = [
+      'стоит сравнить',
+      'просто выбрать',
+      'реально обучают',
+      'имеют значение'
+    ];
+
+    function initScorePanels() {
+      cards.forEach(card => {
+        const grade = parseFloat(card.dataset.rating || '0');
+        const student = parseFloat(card.dataset.studentRating || Math.max(grade - 0.04, 0).toFixed(2));
+        const gradeValue = card.querySelector('.grade-value');
+        const studentValue = card.querySelector('.student-value');
+        const gradeFill = card.querySelector('.score-fill[data-kind="grade"]');
+        const studentFill = card.querySelector('.score-fill[data-kind="student"]');
+
+        if (gradeValue) gradeValue.textContent = grade.toFixed(2);
+        if (studentValue) studentValue.textContent = student.toFixed(2);
+        if (gradeFill) gradeFill.style.setProperty('--fill', `${Math.min(grade * 20, 100)}%`);
+        if (studentFill) studentFill.style.setProperty('--fill', `${Math.min(student * 20, 100)}%`);
+      });
+    }
+
+    function compareCards(a, b) {
+      const sortMode = sortFilter.value;
+      const ratingA = parseFloat(a.dataset.rating || '0');
+      const ratingB = parseFloat(b.dataset.rating || '0');
+      const titleA = a.querySelector('h3').innerText.toLowerCase();
+      const titleB = b.querySelector('h3').innerText.toLowerCase();
+
+      if (sortMode === 'rating-asc') return ratingA - ratingB || titleA.localeCompare(titleB, 'ru');
+      if (sortMode === 'name-asc') return titleA.localeCompare(titleB, 'ru') || ratingB - ratingA;
+      return ratingB - ratingA || titleA.localeCompare(titleB, 'ru');
+    }
+
+    function normalize(text) {
+      return (text || '')
+        .toLowerCase()
+        .replace(/[ё]/g, 'е')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function getNoun(number, one, two, five) {
+      return GradeAnimations.getNoun(number, one, two, five);
+    }
+
+    function updateCount() {
+      const visibleCards = document.querySelectorAll('.school-card:not([style*="display: none"])').length;
+      const word = getNoun(visibleCards, 'школа', 'школы', 'школ');
+      if (counterElem) {
+        counterElem.innerHTML = `${visibleCards} <span class="count-word">${word}</span>`;
+        counterElem.classList.remove('update-anim');
+        void counterElem.offsetWidth;
+        counterElem.classList.add('update-anim');
+      }
+    }
+
+    function updateView() {
+      const searchText = normalize(searchInput.value);
+      const selectedSpec = specFilter.value;
+
+      let visibleCards = cards.filter(card => {
+        const title = normalize(card.querySelector('h3')?.innerText || '');
+        const searchData = normalize(card.dataset.search || '');
+
+        const specList = (card.getAttribute('data-specs') || card.getAttribute('data-spec') || '')
+          .split(',')
+          .map(item => item.trim())
+          .filter(Boolean);
+
+        const matchesSearch =
+          !searchText ||
+          title.includes(searchText) ||
+          searchData.includes(searchText);
+
+        const matchesSpec =
+          selectedSpec === 'all' || specList.includes(selectedSpec);
+
+        return matchesSearch && matchesSpec;
+      });
+
+      visibleCards.sort(compareCards);
+
+      visibleCards.forEach(card => {
+        card.style.display = 'flex';
+        card.setAttribute('aria-hidden', 'false');
+        grid.appendChild(card);
+      });
+
+      cards.forEach(card => {
+        if (!visibleCards.includes(card)) {
+          card.style.display = 'none';
+          card.setAttribute('aria-hidden', 'true');
         }
-      };
+      });
+
+      const count = visibleCards.length;
+      const word = getNoun(count, 'школа', 'школы', 'школ');
+
+      if (counterElem) {
+        counterElem.innerHTML = `${count} <span class="count-word">${word}</span>`;
+        counterElem.classList.remove('update-anim');
+        void counterElem.offsetWidth;
+        counterElem.classList.add('update-anim');
+      }
+
+      if (noResults) {
+        noResults.hidden = visibleCards.length !== 0;
+      }
+    }
+
+    initScorePanels();
+    updateView();
+
+    GradeAnimations.rotateText(heroRotatingWord, heroPhrases, {
+      interval: 2600,
+      delay: 160,
+      className: 'is-changed'
+    });
+
+    GradeAnimations.setPageReady();
+    GradeAnimations.staggerDelays(cards, '--delay', 0.04, 0.36);
+    GradeAnimations.setVisibleOnNextFrame(cards);
+
+    if (schoolsGrid) {
+      GradeAnimations.revealOnVisible(schoolsGrid, {
+        threshold: 0.03,
+        rootMargin: '0px 0px 100px 0px'
+      });
+    }
+
+    searchInput.addEventListener('input', () => {
+      updateView();
       updateCount();
-      if (schoolsGrid) {
-        const observer = new IntersectionObserver(entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.03, rootMargin: '0px 0px 100px 0px' });
-
-        observer.observe(schoolsGrid);
-      }
     });
-    </script>
-
-<script>
-  const searchInput = document.getElementById('schoolSearch');
-  const specFilter = document.getElementById('specFilter');
-  const sortFilter = document.getElementById('sortFilter');
-  const grid = document.getElementById('schoolsGrid');
-  const cards = Array.from(document.querySelectorAll('.school-card'));
-  const resultCount = document.getElementById('resultCount');
-  const noResults = document.getElementById('noResults');
-  const heroRotatingWord = document.getElementById('heroRotatingWord');
-
-  const heroPhrases = [
-    'стоит сравнить',
-    'просто выбрать',
-    'реально обучают',
-    'имеют значение'
-  ];
-
-  let heroPhraseIndex = 0;
-
-  function initScorePanels() {
-    cards.forEach(card => {
-      const grade = parseFloat(card.dataset.rating || '0');
-      const student = parseFloat(card.dataset.studentRating || Math.max(grade - 0.04, 0).toFixed(2));
-      const gradeValue = card.querySelector('.grade-value');
-      const studentValue = card.querySelector('.student-value');
-      const gradeFill = card.querySelector('.score-fill[data-kind="grade"]');
-      const studentFill = card.querySelector('.score-fill[data-kind="student"]');
-
-      if (gradeValue) gradeValue.textContent = grade.toFixed(2);
-      if (studentValue) studentValue.textContent = student.toFixed(2);
-      if (gradeFill) gradeFill.style.setProperty('--fill', `${Math.min(grade * 20, 100)}%`);
-      if (studentFill) studentFill.style.setProperty('--fill', `${Math.min(student * 20, 100)}%`);
+    specFilter.addEventListener('change', () => {
+      updateView();
+      updateCount();
     });
-  }
-
-  function compareCards(a, b) {
-    const sortMode = sortFilter.value;
-    const ratingA = parseFloat(a.dataset.rating || '0');
-    const ratingB = parseFloat(b.dataset.rating || '0');
-    const titleA = a.querySelector('h3').innerText.toLowerCase();
-    const titleB = b.querySelector('h3').innerText.toLowerCase();
-
-    if (sortMode === 'rating-asc') return ratingA - ratingB || titleA.localeCompare(titleB, 'ru');
-    if (sortMode === 'name-asc') return titleA.localeCompare(titleB, 'ru') || ratingB - ratingA;
-    return ratingB - ratingA || titleA.localeCompare(titleB, 'ru');
-  }
-  
-  function normalize(text) {
-    return (text || '')
-      .toLowerCase()
-      .replace(/[ё]/g, 'е')
-      .replace(/\s+/g, ' ')
-      .trim();
-  }
-
-  function getNoun(number, one, two, five) {
-    let n = Math.abs(number);
-    n %= 100;
-    if (n >= 5 && n <= 20) return five;
-    n %= 10;
-    if (n === 1) return one;
-    if (n >= 2 && n <= 4) return two;
-    return five;
-  }
-
-  function updateView() {
-    const searchText = normalize(searchInput.value);
-    const selectedSpec = specFilter.value;
-
-    let visibleCards = cards.filter(card => {
-      const title = normalize(card.querySelector('h3')?.innerText || '');
-      const searchData = normalize(card.dataset.search || '');
-
-      const specList = (card.getAttribute('data-specs') || card.getAttribute('data-spec') || '')
-        .split(',')
-        .map(item => item.trim())
-        .filter(Boolean);
-
-      const matchesSearch =
-        !searchText ||
-        title.includes(searchText) ||
-        searchData.includes(searchText);
-
-      const matchesSpec =
-        selectedSpec === 'all' || specList.includes(selectedSpec);
-
-      return matchesSearch && matchesSpec;
+    sortFilter.addEventListener('change', () => {
+      updateView();
+      updateCount();
     });
 
-    visibleCards.sort(compareCards);
-
-    visibleCards.forEach(card => {
-      card.style.display = 'flex';
-      card.setAttribute('aria-hidden', 'false');
-      grid.appendChild(card);
-    });
-
-    cards.forEach(card => {
-      if (!visibleCards.includes(card)) {
-        card.style.display = 'none';
-        card.setAttribute('aria-hidden', 'true');
-      }
-    });
-
-    const count = visibleCards.length;
-    const word = getNoun(count, 'школа', 'школы', 'школ');
-    
-    resultCount.innerHTML = `${count} <span class="count-word">${word}</span>`;
-
-    resultCount.classList.remove('update-anim');
-    void resultCount.offsetWidth; // Триггер рефлоу
-    resultCount.classList.add('update-anim');
-
-    noResults.hidden = visibleCards.length !== 0;
-  }
-
-  function rotateHeroWord() {
-    if (!heroRotatingWord) return;
-    heroRotatingWord.classList.remove('is-changed');
-    window.setTimeout(() => {
-      heroRotatingWord.textContent = heroPhrases[heroPhraseIndex];
-      heroRotatingWord.classList.add('is-changed');
-      heroPhraseIndex = (heroPhraseIndex + 1) % heroPhrases.length;
-    }, 160);
-  }
-
-  cards.forEach((card, index) => {
-    card.style.setProperty('--delay', `${Math.min(index * 0.04, 0.36)}s`);
+    updateCount();
   });
-
-  function revealPage() {
-    window.requestAnimationFrame(() => {
-      document.body.classList.add('page-ready');
-      cards.forEach(card => card.classList.add('is-visible'));
-    });
-  }
-
-  initScorePanels();
-  updateView();
-  rotateHeroWord();
-  window.setInterval(rotateHeroWord, 2600);
-
-  window.requestAnimationFrame(() => {
-    window.requestAnimationFrame(revealPage);
-  });
-
-  searchInput.addEventListener('input', updateView);
-  specFilter.addEventListener('change', updateView);
-  sortFilter.addEventListener('change', updateView);
 </script>
 </body>
 </html>

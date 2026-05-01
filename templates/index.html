@@ -17,9 +17,9 @@
 <header class="site-header">
   <a class="logo" href="/">GRADE<span>'</span></a>
   <nav>
-    <a href="/catalog">Курсы</a>
+    <a href="{{ url_for('courses') }}">Курсы</a>
     <a href="{{ url_for('schools') }}">Школы</a>
-    <a href="/catalog">Избранное</a>
+    <a href="/c">Избранное</a>
   </nav>
   <div class="header-spacer"></div>
   <div class="header-collection">
@@ -244,98 +244,32 @@
 </section>
 
 <footer>
-  Grade © 2026 · Дипломный проект
+  Grade © 2026 · Онлайн-сравнение курсов
 </footer>
 
+
+<script src="{{ url_for('static', filename='js/animations.js') }}"></script>
 <script>
   const featuresSection = document.querySelector('.features');
-  if (featuresSection) {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.3 });
-    observer.observe(featuresSection);
-  }
-
-  (function () {
-    const titles = [
-      "Grade — осознанный выбор",
-      "Grade — честно о курсах",
-      "Grade — без маркетинга",
-      "Grade — сравнение программ",
-      "Grade — без рекламы",
-      "Grade — анализ курсов",
-      "Grade — онлайн-образование"
-    ];
-    let index = 0;
-    setInterval(() => {
-      index = (index + 1) % titles.length;
-      document.title = titles[index];
-    }, 4000);
-  })();
-
   const compareSection = document.querySelector('.compare-section');
-  if (compareSection) {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.25 });
-    observer.observe(compareSection);
-  }
+  const heroCard = document.querySelector('.hero-visual-card');
 
-  const reasonItems = document.querySelectorAll('.reason-item');
-  const reasonObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        reasonObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.25 });
-
-  reasonItems.forEach(item => reasonObserver.observe(item));
-
-  document.addEventListener('DOMContentLoaded', () => {
-    document.body.classList.add('page-ready');
-
-    const progressObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const bars = entry.target.querySelectorAll('.progress-bar');
-          bars.forEach(bar => {
-            bar.style.width = bar.getAttribute('data-value') + '%';
-          });
-          progressObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    if (compareSection) progressObserver.observe(compareSection);
-
-    const heroCard = document.querySelector('.hero-visual-card');
-    if (heroCard) {
-      window.addEventListener('mousemove', (e) => {
-        const x = (window.innerWidth / 2 - e.pageX) / 70;
-        const y = (window.innerHeight / 2 - e.pageY) / 70;
-        heroCard.style.setProperty('--mx', `${x}px`);
-        heroCard.style.setProperty('--my', `${y}px`);
-      });
-    }
-  });
-
-  (function() {
-    document.querySelectorAll('a[href="#"], a[href=""]').forEach(a=>{
-      a.setAttribute('href','/404.html');
-    });
-  })();
+  GradeAnimations.setPageReady();
+  GradeAnimations.revealOnVisible('.features', { threshold: 0.3 });
+  GradeAnimations.revealOnVisible('.compare-section', { threshold: 0.25 });
+  GradeAnimations.revealOnVisible('.reason-item', { threshold: 0.25 });
+  GradeAnimations.fillProgressBarsOnVisible(compareSection, '.progress-bar[data-value]', { threshold: 0.5 });
+  GradeAnimations.cycleDocumentTitle([
+    "Grade — осознанный выбор",
+    "Grade — честно о курсах",
+    "Grade — без маркетинга",
+    "Grade — сравнение программ",
+    "Grade — без рекламы",
+    "Grade — анализ курсов",
+    "Grade — онлайн-образование"
+  ], 4000);
+  GradeAnimations.parallaxOnMouseMove(heroCard, 70);
+  GradeAnimations.redirectEmptyAnchors('/404.html');
 </script>
 
 </body>

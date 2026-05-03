@@ -23,14 +23,14 @@
   </nav>
   <div class="header-spacer"></div>
   <div class="header-collection">
-  <div class="collection-icon">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-    </svg>
+    <div class="collection-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+      </svg>
+    </div>
+    <span class="collection-label">Мой выбор</span>
+    <span class="collection-badge">0</span>
   </div>
-  <span class="collection-label">Мой выбор</span>
-  <span class="collection-badge">0</span>
-</div>
 </header>
 
 <section class="hero">
@@ -250,7 +250,6 @@
 
 <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
 <script>
-  const featuresSection = document.querySelector('.features');
   const compareSection = document.querySelector('.compare-section');
   const heroCard = document.querySelector('.hero-visual-card');
 

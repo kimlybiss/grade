@@ -18,10 +18,9 @@ html {
 body.schools-page {
   position: relative;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top left, rgba(123, 45, 45, 0.09), transparent 30%),
-    radial-gradient(circle at top right, rgba(255, 201, 140, 0.18), transparent 26%),
-    linear-gradient(180deg, var(--page-bg), var(--page-bg-2) 40%, #fff 100%);
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at top left, rgba(123, 45, 45, 0.09), transparent 30%), radial-gradient(circle at top right, rgba(255, 201, 140, 0.18), transparent 26%), linear-gradient(180deg, var(--page-bg), var(--page-bg-2) 40%, #fff 100%);
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
@@ -32,9 +31,7 @@ body.schools-page::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,.55)),
-    radial-gradient(circle at 1px 1px, rgba(123,45,45,.04) 1px, transparent 0);
+  background-image: linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,.55)), radial-gradient(circle at 1px 1px, rgba(123,45,45,.04) 1px, transparent 0);
   background-size: auto, 22px 22px;
   opacity: .22;
   z-index: 0;
@@ -43,6 +40,15 @@ body.schools-page::before {
 body.schools-page > * {
   position: relative;
   z-index: 1;
+}
+
+body.schools-page > header,
+body.schools-page > .school-hero,
+body.schools-page > .school-filters-wrap,
+body.schools-page > .school-tools,
+body.schools-page > .schools-section,
+body.schools-page > footer {
+  width: 100%;
 }
 
 nav a.active {
@@ -56,13 +62,7 @@ nav a.active {
   margin: 0 auto;
 }
 
-body.schools-page .school-hero .compare-tag,
-body.schools-page .school-hero h1,
-body.schools-page .school-hero p,
-body.schools-page .school-stats .school-stat,
-body.schools-page .school-filters-wrap,
-body.schools-page .school-tools,
-body.schools-page footer {
+body.schools-page .school-hero .compare-tag, body.schools-page .school-hero h1, body.schools-page .school-hero p, body.schools-page .school-stats .school-stat, body.schools-page .school-filters-wrap, body.schools-page .school-tools, body.schools-page footer {
   opacity: 0;
   transform: translateY(18px);
   will-change: transform, opacity;
@@ -283,9 +283,7 @@ body.schools-page.page-ready footer {
 .search-wrapper:focus-within {
   background: rgba(255,255,255,1);
   border-radius: inherit;
-  box-shadow:
-    0 0 0 1px rgba(123,45,45,.08),
-    0 18px 42px rgba(0,0,0,.06);
+  box-shadow: 0 0 0 1px rgba(123,45,45,.08), 0 18px 42px rgba(0,0,0,.06);
 }
 
 .select-divider {
@@ -308,7 +306,6 @@ body.schools-page.page-ready footer {
   appearance: none;
   padding-right: 28px;
   color: var(--text);
-
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23706c68' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 5 4 4 4-4'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right center;
@@ -403,16 +400,17 @@ body.schools-page.page-ready footer {
     grid-template-columns: 1fr;
     gap: 20px;
   }
-  
+
   .results-header {
     flex-direction: row;
     align-items: baseline;
     gap: 12px;
   }
-  
+
   #resultCount {
     font-size: 32px;
   }
+
 }
 
 .school-tools p {
@@ -435,16 +433,11 @@ body.schools-page.page-ready footer {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 22px;
-  min-height: 60vh;
-}
-
-.container {
-  min-height: 70vh;
 }
 
 .schools-section {
-  padding-bottom: 120px !important;
-  margin-bottom: 60px !important;
+  padding-bottom: 28px;
+  margin-bottom: 20px;
   margin-top: 20px;
   opacity: 0;
   transform: translateY(20px);
@@ -460,9 +453,7 @@ body.page-ready .schools-section {
   display: flex;
   flex-direction: column;
   padding: 26px !important;
-  background:
-    linear-gradient(180deg, rgba(123,45,45,.04), rgba(255,255,255,0) 24%),
-    var(--card-solid);
+  background: linear-gradient(180deg, rgba(123,45,45,.04), rgba(255,255,255,0) 24%), var(--card-solid);
   border: 1px solid var(--line-soft);
   border-radius: 30px;
   height: 100%;
@@ -470,11 +461,7 @@ body.page-ready .schools-section {
   overflow: hidden;
   transform: translateY(0);
   box-shadow: var(--shadow-md);
-  transition:
-    transform .6s cubic-bezier(.16,1,.3,1),
-    box-shadow .6s cubic-bezier(.16,1,.3,1),
-    border-color .35s ease,
-    opacity .7s ease;
+  transition: transform .6s cubic-bezier(.16,1,.3,1), box-shadow .6s cubic-bezier(.16,1,.3,1), border-color .35s ease, opacity .7s ease;
   will-change: transform;
 }
 
@@ -495,15 +482,12 @@ body.page-ready .schools-section {
   background: radial-gradient(circle at 30% 20%, rgba(123,45,45,.08), transparent 34%);
   opacity: 0;
   pointer-events: none;
-  transition:
-    opacity .8s ease,
-    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity .8s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .school-card:hover {
   transform: translateY(-8px);
-  box-shadow:
-    0 40px 120px rgba(0,0,0,.12);
+  box-shadow: 0 40px 120px rgba(0,0,0,.12);
   border-color: rgba(123,45,45,.14);
   background: #ffffff;
 }
@@ -649,12 +633,7 @@ body.page-ready .schools-section {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255, 255, 255, 0.3),
-    transparent
-  );
+  background: linear-gradient( 120deg, transparent, rgba(255, 255, 255, 0.3), transparent );
   transition: all 0.6s;
   z-index: -1;
 }
@@ -699,9 +678,7 @@ body.page-ready .schools-section {
   opacity: 0;
   transform: translateY(26px);
   will-change: transform, opacity;
-  transition: 
-    opacity 0.8s ease, 
-    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .schools-grid.is-visible {
@@ -717,17 +694,13 @@ body.page-ready .schools-section {
 .school-card.is-visible {
   opacity: 1;
   transform: translateY(0) scale(1);
-  transition:
-    opacity .55s ease,
-    transform .55s cubic-bezier(.22,1,.36,1),
-    box-shadow .45s cubic-bezier(.22,1,.36,1),
-    border-color .3s ease;
+  transition: opacity .55s ease, transform .55s cubic-bezier(.22,1,.36,1), box-shadow .45s cubic-bezier(.22,1,.36,1), border-color .3s ease;
   transition-delay: var(--delay, 0s);
 }
 
 footer {
   text-align: center;
-  padding: 40px;
+  padding: 28px 40px 32px;
   border-top: 1px solid var(--line);
   color: var(--muted);
 }
@@ -842,12 +815,12 @@ footer {
     display: none;
   }
 
-  .search-wrapper input,
-  .search-wrapper select {
+  .search-wrapper input, .search-wrapper select {
     flex: 1 1 100%;
     min-width: 0;
     width: 100%;
   }
+
 }
 
 @media (max-width: 768px) {
@@ -870,30 +843,18 @@ footer {
   .score-grid {
     grid-template-columns: 1fr;
   }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .school-card,
-  .score-fill,
-  .score-panel::before,
-  .rating-badge,
-  .btn-secondary,
-  .school-card::after,
-  .search-icon {
+  .school-card, .score-fill, .score-panel::before, .rating-badge, .btn-secondary, .school-card::after, .search-icon {
     transition: none !important;
   }
 
-  body.schools-page .school-hero .compare-tag,
-  body.schools-page .school-hero h1,
-  body.schools-page .school-hero p,
-  body.schools-page .school-stats .school-stat,
-  body.schools-page .school-filters-wrap,
-  body.schools-page .school-tools,
-  body.schools-page footer,
-  .school-card {
+  body.schools-page .school-hero .compare-tag, body.schools-page .school-hero h1, body.schools-page .school-hero p, body.schools-page .school-stats .school-stat, body.schools-page .school-filters-wrap, body.schools-page .school-tools, body.schools-page footer, .school-card {
     opacity: 1 !important;
     transform: none !important;
     animation: none !important;
   }
-  
+
 }

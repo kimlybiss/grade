@@ -83,7 +83,6 @@ body.page-ready .hero-copy > *:nth-child(5){animation-delay:.34s}
   padding:0 24px;
 }
 
-/* === HEADER / NAVIGATION =============================== */
 header{
   max-width:1200px;
   margin:0 auto;
@@ -154,7 +153,7 @@ nav a:hover::after{width:100%}
   padding: 6px 6px 6px 14px;
   background: #fff;
   border-radius: 14px;
-  border: 1px solid var(--line); 
+  border: 1px solid var(--line);
   transition: all 0.3s ease;
 }
 
@@ -231,7 +230,7 @@ nav a:hover::after{width:100%}
   display: flex;
   align-items: center;
   gap: 8px;
-  background: var(--card-soft); /* Мягкий фон из вашего конфига[cite: 1] */
+  background: var(--card-soft);
   padding: 6px;
   border-radius: 16px;
   border: 1px solid var(--line);

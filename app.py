@@ -113,13 +113,16 @@ def courses():
 
 @app.route("/catalog")
 def catalog():
-    return redirect(url_for("courses"))
+    return render_template("courses")
 
 
 @app.route("/schools")
 def schools():
     return render_template("schools.html")
 
+@app.route("/favorites")
+def favorites():
+    return render_template("favorites.html")
 
 @app.errorhandler(404)
 def page_not_found(e):

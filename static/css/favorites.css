@@ -1,0 +1,207 @@
+@import url("schools.css");
+
+body.favorites-page {
+  background:
+    radial-gradient(circle at top left, rgba(123, 45, 45, 0.10), transparent 28%),
+    radial-gradient(circle at top right, rgba(255, 201, 140, 0.16), transparent 24%),
+    linear-gradient(180deg, var(--page-bg), var(--page-bg-2) 40%, #fff 100%);
+}
+
+body.favorites-page .favorites-hero {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 26px 20px 6px;
+  text-align: center;
+}
+
+body.favorites-page .favorites-hero h1 {
+  font-size: clamp(2.4rem, 4.6vw, 4.1rem);
+  line-height: 1;
+  margin: 16px auto 16px;
+  max-width: 860px;
+  letter-spacing: -0.05em;
+}
+
+body.favorites-page .favorites-hero p {
+  max-width: 760px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+body.favorites-page .favorites-sections {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 18px 20px 34px;
+  display: grid;
+  gap: 24px;
+}
+
+body.favorites-page .favorites-section {
+  background: rgba(255, 255, 255, 0.66);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 30px;
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(16px);
+  padding: 22px;
+  overflow: hidden;
+}
+
+body.favorites-page .favorites-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+body.favorites-page .favorites-section-head h2 {
+  font-size: 1.35rem;
+  line-height: 1.1;
+  margin: 0 0 6px;
+  letter-spacing: -0.03em;
+}
+
+body.favorites-page .favorites-section-head span {
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+body.favorites-page .favorites-clear {
+  border: 1px solid rgba(123, 45, 45, 0.12);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 11px 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
+  box-shadow: 0 10px 24px rgba(22, 16, 13, 0.05);
+  white-space: nowrap;
+}
+
+body.favorites-page .favorites-clear:hover {
+  transform: translateY(-1px);
+  background: #fff;
+  box-shadow: 0 16px 30px rgba(22, 16, 13, 0.08);
+}
+
+body.favorites-page .favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 22px;
+}
+
+body.favorites-page .favorite-empty {
+  grid-column: 1 / -1;
+  background: linear-gradient(180deg, rgba(123,45,45,.04), rgba(255,255,255,.88));
+  border: 1px dashed var(--line);
+  border-radius: 24px;
+  padding: 34px 22px;
+  text-align: center;
+  color: var(--muted);
+}
+
+body.favorites-page .favorite-empty strong {
+  display: block;
+  color: var(--text);
+  font-size: 1.08rem;
+  margin-bottom: 8px;
+}
+
+body.favorites-page .favorite-empty span {
+  display: block;
+  line-height: 1.6;
+}
+
+body.favorites-page .school-card {
+  min-height: 100%;
+}
+
+body.favorites-page .school-card .favorite-toggle {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(123,45,45,.14);
+  background: rgba(255,255,255,.92);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--accent);
+  box-shadow: 0 10px 22px rgba(22,16,13,.08);
+  transition: transform .25s ease, background .25s ease, box-shadow .25s ease, color .25s ease;
+  z-index: 3;
+}
+
+body.favorites-page .school-card .favorite-toggle svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+body.favorites-page .school-card .favorite-toggle:hover {
+  transform: translateY(-1px) scale(1.03);
+  background: #fff;
+  box-shadow: 0 14px 28px rgba(22,16,13,.11);
+}
+
+body.favorites-page .school-card .favorite-toggle.is-active {
+  color: #7b2d2d;
+}
+
+body.favorites-page .collection-badge.is-updated {
+  transform: scale(1.14);
+}
+
+body.favorites-page footer {
+  text-align: center;
+  padding: 28px 40px 32px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  body.favorites-page .favorites-section-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  body.favorites-page .favorites-clear {
+    align-self: flex-start;
+  }
+
+  body.favorites-page .favorites-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  body.favorites-page .favorites-hero {
+    padding-top: 20px;
+  }
+
+  body.favorites-page .favorites-section {
+    padding: 18px 16px;
+    border-radius: 24px;
+  }
+
+  body.favorites-page .favorites-sections {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  body.favorites-page .school-card .favorite-toggle {
+    top: 14px;
+    right: 14px;
+    width: 40px;
+    height: 40px;
+  }
+}

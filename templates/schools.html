@@ -3,1425 +3,629 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>
-   Школы — GRADE
-  </title>
+  <title>Школы — GRADE</title>
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
   <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet"/>
   <link href="{{ url_for('static', filename='css/schools.css') }}" rel="stylesheet"/>
  </head>
  <body class="schools-page">
   <header>
-   <a class="logo" href="/">
-    GRADE
-    <span>
-     '
-    </span>
-   </a>
+   <a class="logo" href="/">GRADE <span>'</span></a>
    <nav>
-    <a href="{{ url_for('courses') }}">
-     Курсы
-    </a>
-    <a href="{{ url_for('schools') }}">
-     Школы
-    </a>
-    <a href="/c">
-     Избранное
-    </a>
+    <a href="{{ url_for('courses') }}">Курсы</a>
+    <a href="{{ url_for('schools') }}" class="active">Школы</a>
+    <a href="{{ url_for('favorites') }}">Избранное</a>
    </nav>
-   <div class="header-spacer">
-   </div>
+   <div class="header-spacer"></div>
    <div class="header-collection">
     <div class="collection-icon">
-     <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
-      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z">
-      </path>
-     </svg>
+     <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
     </div>
-    <span class="collection-label">
-     Мой выбор
-    </span>
-    <span class="collection-badge">
-     0
-    </span>
+    <span class="collection-label">Мой выбор</span>
+    <span class="collection-badge">0</span>
    </div>
   </header>
+
   <section class="school-hero">
-   <span class="compare-tag">
-    ОБРАЗОВАТЕЛЬНЫЕ ПЛАТФОРМЫ
-   </span>
-   <h1>
-    Школы, которые
-    <span aria-live="polite" class="hero-rotating-word" id="heroRotatingWord">
-     удобно сравнивать
-    </span>
-   </h1>
-   <p>
-    Находите надежные школы для вашего старта в новой профессии. Сравнивайте рейтинги лидеров рынка и выбирайте лучшее место для обучения в едином интерфейсе GRADE.
-   </p>
+   <span class="compare-tag">ОБРАЗОВАТЕЛЬНЫЕ ПЛАТФОРМЫ</span>
+   <h1>Школы, которые <span aria-live="polite" class="hero-rotating-word" id="heroRotatingWord">удобно сравнивать</span></h1>
+   <p>Находите надежные школы для вашего старта в новой профессии. Сравнивайте рейтинги лидеров рынка и выбирайте лучшее место для обучения в едином интерфейсе GRADE.</p>
    <div class="school-stats">
-    <div class="school-stat">
-     <strong>
-      15 гигантов
-     </strong>
-     <span>
-      образовательного рынка
-     </span>
-    </div>
-    <div class="school-stat">
-     <strong>
-      11 направлений
-     </strong>
-     <span>
-      для профессионального роста
-     </span>
-    </div>
-    <div class="school-stat">
-     <strong>
-      1 путь
-     </strong>
-     <span>
-      к карьере мечты
-     </span>
-    </div>
+    <div class="school-stat"><strong>15 гигантов</strong><span>образовательного рынка</span></div>
+    <div class="school-stat"><strong>11 направлений</strong><span>для профессионального роста</span></div>
+    <div class="school-stat"><strong>1 путь</strong><span>к карьере мечты</span></div>
    </div>
   </section>
+
   <section class="school-filters-wrap">
    <div class="search-ui school-filters-bar">
     <div class="search-wrapper">
      <div aria-hidden="true" class="search-icon">
-      <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
-       <circle cx="11" cy="11" r="8">
-       </circle>
-       <path d="m21 21-4.3-4.3">
-       </path>
-      </svg>
+      <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
      </div>
      <input id="schoolSearch" placeholder="Поиск школы по названию..." type="text"/>
-     <div class="select-divider">
-     </div>
+     <div class="select-divider"></div>
      <select aria-label="Фильтр по направлению" id="specFilter">
-      <option value="all">
-       Все направления
-      </option>
-      <option value="IT">
-       Программирование
-      </option>
-      <option value="Design">
-       Дизайн
-      </option>
-      <option value="Management">
-       Менеджмент
-      </option>
-      <option value="Product">
-       Продукт и бизнес
-      </option>
-      <option value="Finance">
-       Финансы
-      </option>
-      <option value="English">
-       Английский
-      </option>
-      <option value="Data">
-       Данные
-      </option>
-      <option value="Marketing">
-       Маркетинг
-      </option>
-      <option value="School">
-       Школьные предметы
-      </option>
-      <option value="Business">
-       Бизнес
-      </option>
+      <option value="all">Все направления</option>
+      <option value="IT">Программирование</option>
+      <option value="Design">Дизайн</option>
+      <option value="Management">Менеджмент</option>
+      <option value="Product">Продукт и бизнес</option>
+      <option value="Finance">Финансы</option>
+      <option value="English">Английский</option>
+      <option value="Data">Данные</option>
+      <option value="Marketing">Маркетинг</option>
+      <option value="School">Школьные предметы</option>
+      <option value="Business">Бизнес</option>
      </select>
-     <div class="select-divider">
-     </div>
+     <div class="select-divider"></div>
      <select aria-label="Сортировка" id="sortFilter">
-      <option value="rating-desc">
-       Сначала по оценке
-      </option>
-      <option value="rating-asc">
-       Сначала с низкой оценкой
-      </option>
-      <option value="name-asc">
-       По названию А—Я
-      </option>
+      <option value="rating-desc">Сначала по оценке</option>
+      <option value="rating-asc">Сначала с низкой оценкой</option>
+      <option value="name-asc">По названию А—Я</option>
      </select>
     </div>
    </div>
   </section>
+
   <section class="school-tools">
-   <div class="results-header">
-    <span>
-     Найдено:
-    </span>
-    <span id="resultCount">
-     0
-    </span>
-   </div>
-   <p>
-    Рейтинг GRADE — объективная оценка образовательной базы школы. Мы суммируем качество учебных программ, объем практики и реальную помощь в трудоустройстве выпускников. Оценка студентов — честный взгляд на школу изнутри. Рейтинг строится на отзывах тех, кто уже прошел обучение, и оценивает работу кураторов, комфорт платформы и поддержку.
-   </p>
+   <div class="results-header"><span>Найдено:</span><span id="resultCount">0</span></div>
+   <p>Рейтинг GRADE — объективная оценка образовательной базы школы. Мы суммируем качество учебных программ, объем практики и реальную помощь в трудоустройстве выпускников. Оценка студентов — честный взгляд на школу изнутри. Рейтинг строится на отзывах тех, кто уже прошел обучение, и оценивает работу кураторов, комфорт платформы и поддержку.</p>
   </section>
+
   <section class="container schools-section">
    <div class="schools-grid" id="schoolsGrid">
     <div class="compare-card school-card" data-rating="4.95" data-search="яндекс практикум it программирование data science анализ данных дизайн менеджмент маркетинг английский интерактивная платформа практика" data-spec="IT,English,Management,Marketing,Design,Data" data-student-rating="4.92">
      <div class="card-head">
       <div>
-       <span class="school-kicker">
-        ТОП-ВЫБОР
-       </span>
-       <h3>
-        Яндекс Практикум
-       </h3>
+       <span class="school-kicker">ТОП-ВЫБОР</span>
+       <h3>Яндекс Практикум</h3>
       </div>
-      <span class="rating-badge">
-       ★ GRADE 4.95
-      </span>
+      <span class="rating-badge">★ GRADE 4.95</span>
      </div>
-     <div class="tags">
-      <span class="school-tag">
-       IT
-      </span>
-      <span class="school-tag">
-       Design
-      </span>
-      <span class="school-tag">
-       English
-      </span>
-      <span class="school-tag">
-       Management
-      </span>
-      <span class="school-tag">
-       Marketing
-      </span>
-      <span class="school-tag">
-       Data
-      </span>
-     </div>
+     <div class="tags"><span class="school-tag">IT</span><span class="school-tag">Design</span><span class="school-tag">English</span><span class="school-tag">Management</span><span class="school-tag">Marketing</span><span class="school-tag">Data</span></div>
      <div class="score-grid">
       <div class="score-panel score-panel-grade">
-       <span>
-        GRADE
-       </span>
-       <strong class="score-value grade-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill" data-kind="grade">
-        </i>
-       </div>
+       <span>GRADE</span>
+       <strong class="score-value grade-value"></strong>
+       <div class="score-track"><i class="score-fill" data-kind="grade"></i></div>
       </div>
       <div class="score-panel score-panel-student">
-       <span>
-        Студенты
-       </span>
-       <strong class="score-value student-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill score-fill-student" data-kind="student">
-        </i>
-       </div>
+       <span>Студенты</span>
+       <strong class="score-value student-value"></strong>
+       <div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div>
       </div>
      </div>
-     <p class="compare-sub">
-      На официальном каталоге есть направления по программированию, анализу данных, дизайну, менеджменту, маркетингу, ИИ и английскому языку.
-     </p>
-     <div class="card-meta">
-      <span class="school-source">
-       Официальная страница школы
-      </span>
-     </div>
+     <p class="compare-sub">На официальном каталоге есть направления по программированию, анализу данных, дизайну, менеджменту, маркетингу, ИИ и английскому языку.</p>
+     <div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
      <div class="card-stats">
-      <div class="compare-row">
-       <span>
-        Фидбек
-       </span>
-       <strong>
-        Высокий
-       </strong>
-      </div>
-      <div class="compare-row">
-       <span>
-        Карьерный фокус
-       </span>
-       <strong>
-        Сильный
-       </strong>
-      </div>
+      <div class="compare-row"><span>Фидбек</span><strong>Высокий</strong></div>
+      <div class="compare-row"><span>Карьерный фокус</span><strong>Сильный</strong></div>
      </div>
-     <a class="btn btn-secondary" href="https://practicum.yandex.ru/catalog/" rel="noopener noreferrer" target="_blank">
-      Перейти на сайт
-     </a>
+     <a class="btn btn-secondary" href="https://practicum.yandex.ru/catalog/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
     </div>
     <div class="compare-card school-card" data-rating="4.90" data-search="нетология it программирование аналитика дизайн ux бизнес управление маркетинг финансы высшее образование практические программы" data-spec="IT,Marketing,Business,Design,Data,Finance,Product" data-student-rating="4.88">
      <div class="card-head">
       <div>
-       <span class="school-kicker">
-        СТАБИЛЬНЫЙ ВЫБОР
-       </span>
-       <h3>
-        Нетология
-       </h3>
+       <span class="school-kicker">СТАБИЛЬНЫЙ ВЫБОР</span>
+       <h3>Нетология</h3>
       </div>
-      <span class="rating-badge">
-       ★ GRADE 4.90
-      </span>
+      <span class="rating-badge">★ GRADE 4.90</span>
      </div>
-     <div class="tags">
-      <span class="school-tag">
-       IT
-      </span>
-      <span class="school-tag">
-       Marketing
-      </span>
-      <span class="school-tag">
-       Business
-      </span>
-      <span class="school-tag">
-       Design
-      </span>
-      <span class="school-tag">
-       Data
-      </span>
-      <span class="school-tag">
-       Finance
-      </span>
-      <span class="school-tag">
-       Product
-      </span>
-     </div>
+     <div class="tags"><span class="school-tag">IT</span><span class="school-tag">Marketing</span><span class="school-tag">Business</span><span class="school-tag">Design</span><span class="school-tag">Data</span><span class="school-tag">Finance</span><span class="school-tag">Product</span></div>
      <div class="score-grid">
       <div class="score-panel score-panel-grade">
-       <span>
-        GRADE
-       </span>
-       <strong class="score-value grade-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill" data-kind="grade">
-        </i>
-       </div>
+       <span>GRADE</span>
+       <strong class="score-value grade-value"></strong>
+       <div class="score-track"><i class="score-fill" data-kind="grade"></i></div>
       </div>
       <div class="score-panel score-panel-student">
-       <span>
-        Студенты
-       </span>
-       <strong class="score-value student-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill score-fill-student" data-kind="student">
-        </i>
-       </div>
+       <span>Студенты</span>
+       <strong class="score-value student-value"></strong>
+       <div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div>
       </div>
      </div>
-     <p class="compare-sub">
-      На сайте есть направления по программированию, аналитике, дизайну и UX, бизнесу, управлению, маркетингу, финансам и высшему образованию.
-     </p>
-     <div class="card-meta">
-      <span class="school-source">
-       Официальная страница школы
-      </span>
-     </div>
+     <p class="compare-sub">На сайте есть направления по программированию, аналитике, дизайну и UX, бизнесу, управлению, маркетингу, финансам и высшему образованию.</p>
+     <div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
      <div class="card-stats">
-      <div class="compare-row">
-       <span>
-        Фидбек
-       </span>
-       <strong>
-        Выше среднего
-       </strong>
-      </div>
-      <div class="compare-row">
-       <span>
-        Карьерный фокус
-       </span>
-       <strong>
-        Сильный
-       </strong>
-      </div>
+      <div class="compare-row"><span>Фидбек</span><strong>Выше среднего</strong></div>
+      <div class="compare-row"><span>Карьерный фокус</span><strong>Сильный</strong></div>
      </div>
-     <a class="btn btn-secondary" href="https://netology.ru/navigation/python-razrabotka" rel="noopener noreferrer" target="_blank">
-      Перейти на сайт
-     </a>
+     <a class="btn btn-secondary" href="https://netology.ru/navigation/python-razrabotka" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
     </div>
-    <div class="compare-card school-card" data-rating="4.88" data-search="productstar рбк программирование менеджмент дизайн аналитика it digital профессии практические курсы" data-spec="Product,It,Design,Management" data-student-rating="4.84">
+    <div class="compare-card school-card" data-rating="4.88" data-search="productstar рбк программирование менеджмент дизайн аналитика it digital профессии практические курсы" data-spec="Product,IT,Design,Management" data-student-rating="4.84">
      <div class="card-head">
       <div>
-       <span class="school-kicker">
-        ПОПУЛЯРНАЯ
-       </span>
-       <h3>
-        ProductStar
-       </h3>
+       <span class="school-kicker">ПОПУЛЯРНАЯ</span>
+       <h3>ProductStar</h3>
       </div>
-      <span class="rating-badge">
-       ★ GRADE 4.88
-      </span>
+      <span class="rating-badge">★ GRADE 4.88</span>
      </div>
-     <div class="tags">
-      <span class="school-tag">
-       Product
-      </span>
-      <span class="school-tag">
-       It
-      </span>
-      <span class="school-tag">
-       Design
-      </span>
-      <span class="school-tag">
-       Management
-      </span>
-     </div>
+     <div class="tags"><span class="school-tag">Product</span><span class="school-tag">IT</span><span class="school-tag">Design</span><span class="school-tag">Management</span></div>
      <div class="score-grid">
       <div class="score-panel score-panel-grade">
-       <span>
-        GRADE
-       </span>
-       <strong class="score-value grade-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill" data-kind="grade">
-        </i>
-       </div>
+       <span>GRADE</span>
+       <strong class="score-value grade-value"></strong>
+       <div class="score-track"><i class="score-fill" data-kind="grade"></i></div>
       </div>
       <div class="score-panel score-panel-student">
-       <span>
-        Студенты
-       </span>
-       <strong class="score-value student-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill score-fill-student" data-kind="student">
-        </i>
-       </div>
+       <span>Студенты</span>
+       <strong class="score-value student-value"></strong>
+       <div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div>
       </div>
      </div>
-     <p class="compare-sub">
-      Школа актуального образования РБК и ProductStar с курсами по ИТ, дизайну, менеджменту и аналитике.
-     </p>
-     <div class="card-meta">
-      <span class="school-source">
-       Официальная страница школы
-      </span>
-     </div>
+     <p class="compare-sub">Школа актуального образования РБК и ProductStar с курсами по ИТ, дизайну, менеджменту и аналитике.</p>
+     <div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
      <div class="card-stats">
-      <div class="compare-row">
-       <span>
-        Фидбек
-       </span>
-       <strong>
-        Хороший
-       </strong>
-      </div>
-      <div class="compare-row">
-       <span>
-        Карьерный фокус
-       </span>
-       <strong>
-        Сильный
-       </strong>
-      </div>
+      <div class="compare-row"><span>Фидбек</span><strong>Хороший</strong></div>
+      <div class="compare-row"><span>Карьерный фокус</span><strong>Сильный</strong></div>
      </div>
-     <a class="btn btn-secondary" href="https://productstar.ru/course/product-manager" rel="noopener noreferrer" target="_blank">
-      Перейти на сайт
-     </a>
+     <a class="btn btn-secondary" href="https://productstar.ru/course/product-manager" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
     </div>
     <div class="compare-card school-card" data-rating="4.85" data-search="skillbox программирование дизайн аналитика маркетинг управление финансы игры кино музыка маркетплейсы инженерия нейросети английский большое число курсов" data-spec="IT,Design,Marketing,English,Data" data-student-rating="4.81">
      <div class="card-head">
       <div>
-       <span class="school-kicker">
-        ШИРОКИЙ КАТАЛОГ
-       </span>
-       <h3>
-        Skillbox
-       </h3>
+       <span class="school-kicker">ШИРОКИЙ КАТАЛОГ</span>
+       <h3>Skillbox</h3>
       </div>
-      <span class="rating-badge">
-       ★ GRADE 4.85
-      </span>
+      <span class="rating-badge">★ GRADE 4.85</span>
      </div>
-     <div class="tags">
-      <span class="school-tag">
-       IT
-      </span>
-      <span class="school-tag">
-       Design
-      </span>
-      <span class="school-tag">
-       English
-      </span>
-      <span class="school-tag">
-       Marketing
-      </span>
-      <span class="school-tag">
-       Data
-      </span>
-     </div>
+     <div class="tags"><span class="school-tag">IT</span><span class="school-tag">Design</span><span class="school-tag">English</span><span class="school-tag">Marketing</span><span class="school-tag">Data</span></div>
      <div class="score-grid">
       <div class="score-panel score-panel-grade">
-       <span>
-        GRADE
-       </span>
-       <strong class="score-value grade-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill" data-kind="grade">
-        </i>
-       </div>
+       <span>GRADE</span>
+       <strong class="score-value grade-value"></strong>
+       <div class="score-track"><i class="score-fill" data-kind="grade"></i></div>
       </div>
       <div class="score-panel score-panel-student">
-       <span>
-        Студенты
-       </span>
-       <strong class="score-value student-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill score-fill-student" data-kind="student">
-        </i>
-       </div>
+       <span>Студенты</span>
+       <strong class="score-value student-value"></strong>
+       <div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div>
       </div>
      </div>
-     <p class="compare-sub">
-      Официальный каталог включает программирование, дизайн, аналитику, маркетинг, управление, финансы, игры, инженерные и языковые направления.
-     </p>
-     <div class="card-meta">
-      <span class="school-source">
-       Официальная страница школы
-      </span>
-     </div>
+     <p class="compare-sub">Официальный каталог включает программирование, дизайн, аналитику, маркетинг, управление, финансы, игры, инженерные и языковые направления.</p>
+     <div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
      <div class="card-stats">
-      <div class="compare-row">
-       <span>
-        Фидбек
-       </span>
-       <strong>
-        Средний+
-       </strong>
-      </div>
-      <div class="compare-row">
-       <span>
-        Карьерный фокус
-       </span>
-       <strong>
-        Широкий
-       </strong>
-      </div>
+      <div class="compare-row"><span>Фидбек</span><strong>Средний+</strong></div>
+      <div class="compare-row"><span>Карьерный фокус</span><strong>Широкий</strong></div>
      </div>
-     <a class="btn btn-secondary" href="https://skillbox.ru/" rel="noopener noreferrer" target="_blank">
-      Перейти на сайт
-     </a>
+     <a class="btn btn-secondary" href="https://skillbox.ru/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
     </div>
     <div class="compare-card school-card" data-rating="4.82" data-search="bang bang education школа дизайна технологий креатив маркетинг геймдев мода авторские курсы сертификат дизайн" data-spec="Design,Management" data-student-rating="4.80">
      <div class="card-head">
       <div>
-       <span class="school-kicker">
-        КРЕАТИВНАЯ ШКОЛА
-       </span>
-       <h3>
-        Bang Bang Education
-       </h3>
+       <span class="school-kicker">КРЕАТИВНАЯ ШКОЛА</span>
+       <h3>Bang Bang Education</h3>
       </div>
-      <span class="rating-badge">
-       ★ GRADE 4.82
-      </span>
+      <span class="rating-badge">★ GRADE 4.82</span>
      </div>
-     <div class="tags">
-      <span class="school-tag">
-       Design
-      </span>
-      <span class="school-tag">
-       Management
-      </span>
-     </div>
+     <div class="tags"><span class="school-tag">Design</span><span class="school-tag">Management</span></div>
      <div class="score-grid">
       <div class="score-panel score-panel-grade">
-       <span>
-        GRADE
-       </span>
-       <strong class="score-value grade-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill" data-kind="grade">
-        </i>
-       </div>
+       <span>GRADE</span>
+       <strong class="score-value grade-value"></strong>
+       <div class="score-track"><i class="score-fill" data-kind="grade"></i></div>
       </div>
       <div class="score-panel score-panel-student">
-       <span>
-        Студенты
-       </span>
-       <strong class="score-value student-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill score-fill-student" data-kind="student">
-        </i>
-       </div>
+       <span>Студенты</span>
+       <strong class="score-value student-value"></strong>
+       <div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div>
       </div>
      </div>
-     <p class="compare-sub">
-      Позиционирует себя как школа дизайна и технологий, а также развивает направления маркетинга, геймдева и моды.
-     </p>
-     <div class="card-meta">
-      <span class="school-source">
-       Официальная страница школы
-      </span>
-     </div>
+     <p class="compare-sub">Позиционирует себя как школа дизайна и технологий, а также развивает направления маркетинга, геймдев и моды.</p>
+     <div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
      <div class="card-stats">
-      <div class="compare-row">
-       <span>
-        Фидбек
-       </span>
-       <strong>
-        Выше среднего
-       </strong>
-      </div>
-      <div class="compare-row">
-       <span>
-        Карьерный фокус
-       </span>
-       <strong>
-        Творческий
-       </strong>
-      </div>
+      <div class="compare-row"><span>Фидбек</span><strong>Выше среднего</strong></div>
+      <div class="compare-row"><span>Карьерный фокус</span><strong>Творческий</strong></div>
      </div>
-     <a class="btn btn-secondary" href="https://bangbangeducation.ru/program/ux/" rel="noopener noreferrer" target="_blank">
-      Перейти на сайт
-     </a>
+     <a class="btn btn-secondary" href="https://bangbangeducation.ru/program/ux/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
     </div>
     <div class="compare-card school-card" data-rating="4.79" data-search="contented школа дизайна графический дизайн ux ui 3d моушн дизайн интерьеров практика портфолио" data-spec="Design" data-student-rating="4.77">
      <div class="card-head">
       <div>
-       <span class="school-kicker">
-        ПРОФИЛЬ ДИЗАЙНА
-       </span>
-       <h3>
-        Contented
-       </h3>
+       <span class="school-kicker">ПРОФИЛЬ ДИЗАЙНА</span>
+       <h3>Contented</h3>
       </div>
-      <span class="rating-badge">
-       ★ GRADE 4.79
-      </span>
+      <span class="rating-badge">★ GRADE 4.79</span>
      </div>
-     <div class="tags">
-      <span class="school-tag">
-       Design
-      </span>
-      <span class="school-tag">
-       UX/UI
-      </span>
-     </div>
+     <div class="tags"><span class="school-tag">Design</span><span class="school-tag">UX/UI</span></div>
      <div class="score-grid">
       <div class="score-panel score-panel-grade">
-       <span>
-        GRADE
-       </span>
-       <strong class="score-value grade-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill" data-kind="grade">
-        </i>
-       </div>
+       <span>GRADE</span>
+       <strong class="score-value grade-value"></strong>
+       <div class="score-track"><i class="score-fill" data-kind="grade"></i></div>
       </div>
       <div class="score-panel score-panel-student">
-       <span>
-        Студенты
-       </span>
-       <strong class="score-value student-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill score-fill-student" data-kind="student">
-        </i>
-       </div>
+       <span>Студенты</span>
+       <strong class="score-value student-value"></strong>
+       <div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div>
       </div>
      </div>
-     <p class="compare-sub">
-      Профильная онлайн-школа дизайна: графический дизайн, UX/UI, 3D, motion и интерьерные направления.
-     </p>
-     <div class="card-meta">
-      <span class="school-source">
-       Официальная страница школы
-      </span>
-     </div>
+     <p class="compare-sub">Профильная онлайн-школа дизайна: графический дизайн, UX/UI, 3D, motion и интерьерные направления.</p>
+     <div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
      <div class="card-stats">
-      <div class="compare-row">
-       <span>
-        Фидбек
-       </span>
-       <strong>
-        Хороший
-       </strong>
-      </div>
-      <div class="compare-row">
-       <span>
-        Карьерный фокус
-       </span>
-       <strong>
-        Портфолио
-       </strong>
-      </div>
+      <div class="compare-row"><span>Фидбек</span><strong>Хороший</strong></div>
+      <div class="compare-row"><span>Карьерный фокус</span><strong>Портфолио</strong></div>
      </div>
-     <a class="btn btn-secondary" href="https://contented.ru/edu/ux-ui-designer-pro" rel="noopener noreferrer" target="_blank">
-      Перейти на сайт
-     </a>
+     <a class="btn btn-secondary" href="https://contented.ru/edu/ux-ui-designer-pro" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
     </div>
     <div class="compare-card school-card" data-rating="4.76" data-search="skyeng английский онлайн индивидуальные занятия разговорные клубы talks интерактивная платформа уровни" data-spec="English,School" data-student-rating="4.73">
      <div class="card-head">
       <div>
-       <span class="school-kicker">
-        ЯЗЫКОВАЯ ШКОЛА
-       </span>
-       <h3>
-        Skyeng
-       </h3>
+       <span class="school-kicker">ЯЗЫКОВАЯ ШКОЛА</span>
+       <h3>Skyeng</h3>
       </div>
-      <span class="rating-badge">
-       ★ GRADE 4.76
-      </span>
+      <span class="rating-badge">★ GRADE 4.76</span>
      </div>
-     <div class="tags">
-      <span class="school-tag">
-       English
-      </span>
-      <span class="school-tag">
-       School Subjects
-      </span>
-     </div>
+     <div class="tags"><span class="school-tag">English</span><span class="school-tag">School Subjects</span></div>
      <div class="score-grid">
       <div class="score-panel score-panel-grade">
-       <span>
-        GRADE
-       </span>
-       <strong class="score-value grade-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill" data-kind="grade">
-        </i>
-       </div>
+       <span>GRADE</span>
+       <strong class="score-value grade-value"></strong>
+       <div class="score-track"><i class="score-fill" data-kind="grade"></i></div>
       </div>
       <div class="score-panel score-panel-student">
-       <span>
-        Студенты
-       </span>
-       <strong class="score-value student-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill score-fill-student" data-kind="student">
-        </i>
-       </div>
+       <span>Студенты</span>
+       <strong class="score-value student-value"></strong>
+       <div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div>
       </div>
      </div>
-     <p class="compare-sub">
-      Онлайн-школа английского с индивидуальными занятиями, разговорными клубами и собственной платформой Vimbox.
-     </p>
-     <div class="card-meta">
-      <span class="school-source">
-       Официальная страница школы
-      </span>
-     </div>
+     <p class="compare-sub">Онлайн-школа английского с индивидуальными занятиями, разговорными клубами и собственной платформой Vimbox.</p>
+     <div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
      <div class="card-stats">
-      <div class="compare-row">
-       <span>
-        Фидбек
-       </span>
-       <strong>
-        Высокий
-       </strong>
-      </div>
-      <div class="compare-row">
-       <span>
-        Карьерный фокус
-       </span>
-       <strong>
-        Языковой
-       </strong>
-      </div>
+      <div class="compare-row"><span>Фидбек</span><strong>Высокий</strong></div>
+      <div class="compare-row"><span>Карьерный фокус</span><strong>Языковой</strong></div>
      </div>
-     <a class="btn btn-secondary" href="https://skyeng.ru/programs/" rel="noopener noreferrer" target="_blank">
-      Перейти на сайт
-     </a>
+     <a class="btn btn-secondary" href="https://skyeng.ru/programs/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
     </div>
-    <div class="compare-card school-card" data-rating="4.74" data-search="sf education финансы аналитика бизнес ит mini mba инвестиции личные финансы диплом удостоверение карьера" data-spec="Finance" data-student-rating="4.70">
+    <div class="compare-card school-card" data-rating="4.74" data-search="sf education финансы аналитика бизнес ит mini mba инвестиции личные финансы диплом удостоверение карьера" data-spec="Finance,Business" data-student-rating="4.70">
      <div class="card-head">
       <div>
-       <span class="school-kicker">
-        ФИНАНСЫ И БИЗНЕС
-       </span>
-       <h3>
-        SF Education
-       </h3>
+       <span class="school-kicker">ФИНАНСЫ И БИЗНЕС</span>
+       <h3>SF Education</h3>
       </div>
-      <span class="rating-badge">
-       ★ GRADE 4.74
-      </span>
+      <span class="rating-badge">★ GRADE 4.74</span>
      </div>
-     <div class="tags">
-      <span class="school-tag">
-       Finance
-      </span>
-      <span class="school-tag">
-       Business
-      </span>
-     </div>
+     <div class="tags"><span class="school-tag">Finance</span><span class="school-tag">Business</span></div>
      <div class="score-grid">
       <div class="score-panel score-panel-grade">
-       <span>
-        GRADE
-       </span>
-       <strong class="score-value grade-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill" data-kind="grade">
-        </i>
-       </div>
+       <span>GRADE</span>
+       <strong class="score-value grade-value"></strong>
+       <div class="score-track"><i class="score-fill" data-kind="grade"></i></div>
       </div>
       <div class="score-panel score-panel-student">
-       <span>
-        Студенты
-       </span>
-       <strong class="score-value student-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill score-fill-student" data-kind="student">
-        </i>
-       </div>
+       <span>Студенты</span>
+       <strong class="score-value student-value"></strong>
+       <div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div>
       </div>
      </div>
-     <p class="compare-sub">
-      Каталог программ в области финансов, аналитики, бизнеса и IT, с отдельными курсами по инвестициям и личным финансам.
-     </p>
-     <div class="card-meta">
-      <span class="school-source">
-       Официальная страница школы
-      </span>
-     </div>
+     <p class="compare-sub">Каталог программ в области финансов, аналитики, бизнеса и IT, с отдельными курсами по инвестициям и личным финансам.</p>
+     <div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
      <div class="card-stats">
-      <div class="compare-row">
-       <span>
-        Фидбек
-       </span>
-       <strong>
-        Хороший
-       </strong>
-      </div>
-      <div class="compare-row">
-       <span>
-        Карьерный фокус
-       </span>
-       <strong>
-        Проф.
-       </strong>
-      </div>
+      <div class="compare-row"><span>Фидбек</span><strong>Хороший</strong></div>
+      <div class="compare-row"><span>Карьерный фокус</span><strong>Проф.</strong></div>
      </div>
-     <a class="btn btn-secondary" href="https://sf.education/financialanalyst" rel="noopener noreferrer" target="_blank">
-      Перейти на сайт
-     </a>
+     <a class="btn btn-secondary" href="https://sf.education/financialanalyst" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
     </div>
     <div class="compare-card school-card" data-rating="4.71" data-search="otus it программирование тестирование инфраструктура информационная безопасность управление data science llm ai" data-spec="IT,Data,Business" data-student-rating="4.69">
      <div class="card-head">
       <div>
-       <span class="school-kicker">
-        СИЛЬНЫЙ IT-ФОКУС
-       </span>
-       <h3>
-        OTUS
-       </h3>
+       <span class="school-kicker">СИЛЬНЫЙ IT-ФОКУС</span>
+       <h3>OTUS</h3>
       </div>
-      <span class="rating-badge">
-       ★ GRADE 4.71
-      </span>
+      <span class="rating-badge">★ GRADE 4.71</span>
      </div>
-     <div class="tags">
-      <span class="school-tag">
-       IT
-      </span>
-      <span class="school-tag">
-       Data
-      </span>
-      <span class="school-tag">
-       Business IT
-      </span>
-     </div>
+     <div class="tags"><span class="school-tag">IT</span><span class="school-tag">Data</span><span class="school-tag">Business IT</span></div>
      <div class="score-grid">
       <div class="score-panel score-panel-grade">
-       <span>
-        GRADE
-       </span>
-       <strong class="score-value grade-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill" data-kind="grade">
-        </i>
-       </div>
+       <span>GRADE</span>
+       <strong class="score-value grade-value"></strong>
+       <div class="score-track"><i class="score-fill" data-kind="grade"></i></div>
       </div>
       <div class="score-panel score-panel-student">
-       <span>
-        Студенты
-       </span>
-       <strong class="score-value student-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill score-fill-student" data-kind="student">
-        </i>
-       </div>
+       <span>Студенты</span>
+       <strong class="score-value student-value"></strong>
+       <div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div>
       </div>
      </div>
-     <p class="compare-sub">
-      Платформа для IT-специалистов: программирование, тестирование, инфраструктура, информационная безопасность, управление и Data Science.
-     </p>
-     <div class="card-meta">
-      <span class="school-source">
-       Официальная страница школы
-      </span>
-     </div>
+     <p class="compare-sub">Платформа для IT-специалистов: программирование, тестирование, инфраструктура, информационная безопасность, управление и Data Science.</p>
+     <div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
      <div class="card-stats">
-      <div class="compare-row">
-       <span>
-        Фидбек
-       </span>
-       <strong>
-        Высокий
-       </strong>
-      </div>
-      <div class="compare-row">
-       <span>
-        Карьерный фокус
-       </span>
-       <strong>
-        Продвинутый
-       </strong>
-      </div>
+      <div class="compare-row"><span>Фидбек</span><strong>Высокий</strong></div>
+      <div class="compare-row"><span>Карьерный фокус</span><strong>Продвинутый</strong></div>
      </div>
-     <a class="btn btn-secondary" href="https://otus.ru/lessons/python-specialization/" rel="noopener noreferrer" target="_blank">
-      Перейти на сайт
-     </a>
+     <a class="btn btn-secondary" href="https://otus.ru/lessons/python-specialization/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
     </div>
     <div class="compare-card school-card" data-rating="4.68" data-search="skypro программирование аналитика управление маркетинг дизайн python java веб разработка графический дизайнер карьерный центр" data-spec="IT,Data,Marketing,Design" data-student-rating="4.66">
      <div class="card-head">
       <div>
-       <span class="school-kicker">
-        ПРАКТИКА И КАРЬЕРА
-       </span>
-       <h3>
-        Skypro
-       </h3>
+       <span class="school-kicker">ПРАКТИКА И КАРЬЕРА</span>
+       <h3>Skypro</h3>
       </div>
-      <span class="rating-badge">
-       ★ GRADE 4.68
-      </span>
+      <span class="rating-badge">★ GRADE 4.68</span>
      </div>
-     <div class="tags">
-      <span class="school-tag">
-       IT
-      </span>
-      <span class="school-tag">
-       Marketing
-      </span>
-      <span class="school-tag">
-       Design
-      </span>
-      <span class="school-tag">
-       Data
-      </span>
-     </div>
+     <div class="tags"><span class="school-tag">IT</span><span class="school-tag">Marketing</span><span class="school-tag">Design</span><span class="school-tag">Data</span></div>
      <div class="score-grid">
       <div class="score-panel score-panel-grade">
-       <span>
-        GRADE
-       </span>
-       <strong class="score-value grade-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill" data-kind="grade">
-        </i>
-       </div>
+       <span>GRADE</span>
+       <strong class="score-value grade-value"></strong>
+       <div class="score-track"><i class="score-fill" data-kind="grade"></i></div>
       </div>
       <div class="score-panel score-panel-student">
-       <span>
-        Студенты
-       </span>
-       <strong class="score-value student-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill score-fill-student" data-kind="student">
-        </i>
-       </div>
+       <span>Студенты</span>
+       <strong class="score-value student-value"></strong>
+       <div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div>
       </div>
      </div>
-     <p class="compare-sub">
-      На сайте есть курсы по программированию, аналитике, управлению, маркетингу и дизайну, а также помощь карьерного центра.
-     </p>
-     <div class="card-meta">
-      <span class="school-source">
-       Официальная страница школы
-      </span>
-     </div>
+     <p class="compare-sub">На сайте есть курсы по программированию, аналитике, управлению, маркетингу и дизайну, а также помощь карьерного центра.</p>
+     <div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
      <div class="card-stats">
-      <div class="compare-row">
-       <span>
-        Фидбек
-       </span>
-       <strong>
-        Хороший
-       </strong>
-      </div>
-      <div class="compare-row">
-       <span>
-        Карьерный фокус
-       </span>
-       <strong>
-        Сильный
-       </strong>
-      </div>
+      <div class="compare-row"><span>Фидбек</span><strong>Хороший</strong></div>
+      <div class="compare-row"><span>Карьерный фокус</span><strong>Сильный</strong></div>
      </div>
-     <a class="btn btn-secondary" href="https://sky.pro/courses/programming/web-developer" rel="noopener noreferrer" target="_blank">
-      Перейти на сайт
-     </a>
+     <a class="btn btn-secondary" href="https://sky.pro/courses/programming/web-developer" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
     </div>
     <div class="compare-card school-card" data-rating="4.65" data-search="geekbrains программирование веб-дизайн маркетинг управление аналитика онлайн курсы государственная лицензия" data-spec="Management,Design,IT,Data,English" data-student-rating="4.63">
      <div class="card-head">
       <div>
-       <span class="school-kicker">
-        ШИРОКИЙ ПОРТФЕЛЬ
-       </span>
-       <h3>
-        GeekBrains
-       </h3>
+       <span class="school-kicker">ШИРОКИЙ ПОРТФЕЛЬ</span>
+       <h3>GeekBrains</h3>
       </div>
-      <span class="rating-badge">
-       ★ GRADE 4.65
-      </span>
+      <span class="rating-badge">★ GRADE 4.65</span>
      </div>
-     <div class="tags">
-      <span class="school-tag">
-       Management
-      </span>
-      <span class="school-tag">
-       IT
-      </span>
-      <span class="school-tag">
-       Data
-      </span>
-      <span class="school-tag">
-       English
-      </span>
-      <span class="school-tag">
-       Design
-      </span>
-     </div>
+     <div class="tags"><span class="school-tag">Management</span><span class="school-tag">IT</span><span class="school-tag">Data</span><span class="school-tag">English</span><span class="school-tag">Design</span></div>
      <div class="score-grid">
       <div class="score-panel score-panel-grade">
-       <span>
-        GRADE
-       </span>
-       <strong class="score-value grade-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill" data-kind="grade">
-        </i>
-       </div>
+       <span>GRADE</span>
+       <strong class="score-value grade-value"></strong>
+       <div class="score-track"><i class="score-fill" data-kind="grade"></i></div>
       </div>
       <div class="score-panel score-panel-student">
-       <span>
-        Студенты
-       </span>
-       <strong class="score-value student-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill score-fill-student" data-kind="student">
-        </i>
-       </div>
+       <span>Студенты</span>
+       <strong class="score-value student-value"></strong>
+       <div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div>
       </div>
      </div>
-     <p class="compare-sub">
-      Онлайн-портал с курсами по программированию, веб-дизайну, маркетингу и другим профессиям, с лицензированным обучением.
-     </p>
-     <div class="card-meta">
-      <span class="school-source">
-       Официальная страница школы
-      </span>
-     </div>
+     <p class="compare-sub">Онлайн-портал с курсами по программированию, веб-дизайну, маркетингу и другим профессиям, с лицензированным обучением.</p>
+     <div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
      <div class="card-stats">
-      <div class="compare-row">
-       <span>
-        Фидбек
-       </span>
-       <strong>
-        Средний+
-       </strong>
-      </div>
-      <div class="compare-row">
-       <span>
-        Карьерный фокус
-       </span>
-       <strong>
-        Широкий
-       </strong>
-      </div>
+      <div class="compare-row"><span>Фидбек</span><strong>Средний+</strong></div>
+      <div class="compare-row"><span>Карьерный фокус</span><strong>Широкий</strong></div>
      </div>
-     <a class="btn btn-secondary" href="https://gb.ru/" rel="noopener noreferrer" target="_blank">
-      Перейти на сайт
-     </a>
+     <a class="btn btn-secondary" href="https://gb.ru/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
     </div>
     <div class="compare-card school-card" data-rating="4.62" data-search="skillfactory программирование data science аналитика python sql машинное обучение карьера практика российская школа" data-spec="IT,Data,Business,Marketing,Design,Management" data-student-rating="4.58">
      <div class="card-head">
       <div>
-       <span class="school-kicker">
-        IT И DATA
-       </span>
-       <h3>
-        Skillfactory
-       </h3>
+       <span class="school-kicker">IT И DATA</span>
+       <h3>Skillfactory</h3>
       </div>
-      <span class="rating-badge">
-       ★ GRADE 4.62
-      </span>
+      <span class="rating-badge">★ GRADE 4.62</span>
      </div>
-     <div class="tags">
-      <span class="school-tag">
-       IT
-      </span>
-      <span class="school-tag">
-       Data
-      </span>
-      <span class="school-tag">
-       Business
-      </span>
-      <span class="school-tag">
-       Marketing
-      </span>
-      <span class="school-tag">
-       Design
-      </span>
-      <span class="school-tag">
-       Management
-      </span>
-     </div>
+     <div class="tags"><span class="school-tag">IT</span><span class="school-tag">Data</span><span class="school-tag">Business</span><span class="school-tag">Marketing</span><span class="school-tag">Design</span><span class="school-tag">Management</span></div>
      <div class="score-grid">
       <div class="score-panel score-panel-grade">
-       <span>
-        GRADE
-       </span>
-       <strong class="score-value grade-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill" data-kind="grade">
-        </i>
-       </div>
+       <span>GRADE</span>
+       <strong class="score-value grade-value"></strong>
+       <div class="score-track"><i class="score-fill" data-kind="grade"></i></div>
       </div>
       <div class="score-panel score-panel-student">
-       <span>
-        Студенты
-       </span>
-       <strong class="score-value student-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill score-fill-student" data-kind="student">
-        </i>
-       </div>
+       <span>Студенты</span>
+       <strong class="score-value student-value"></strong>
+       <div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div>
       </div>
      </div>
-     <p class="compare-sub">
-      Российская школа с фокусом на программировании, Data Science, аналитике и прикладных IT-навыках с упором на практику.
-     </p>
-     <div class="card-meta">
-      <span class="school-source">
-       Официальная страница школы
-      </span>
-     </div>
+     <p class="compare-sub">Российская школа с фокусом на программировании, Data Science, аналитике и прикладных IT-навыках с упором на практику.</p>
+     <div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
      <div class="card-stats">
-      <div class="compare-row">
-       <span>
-        Фидбек
-       </span>
-       <strong>
-        Выше среднего
-       </strong>
-      </div>
-      <div class="compare-row">
-       <span>
-        Карьерный фокус
-       </span>
-       <strong>
-        Сильный
-       </strong>
-      </div>
+      <div class="compare-row"><span>Фидбек</span><strong>Выше среднего</strong></div>
+      <div class="compare-row"><span>Карьерный фокус</span><strong>Сильный</strong></div>
      </div>
-     <a class="btn btn-secondary" href="https://skillfactory.ru/" rel="noopener noreferrer" target="_blank">
-      Перейти на сайт
-     </a>
-    </div>
-    <div class="compare-card school-card" data-rating="4.57" data-search="фоксфорд школа математика английский программирование школьники егэ огэ онлайн подготовка российская школа" data-spec="English,IT,School" data-student-rating="4.54">
-     <div class="card-head">
-      <div>
-       <span class="school-kicker">
-        ШКОЛА И ЭКЗАМЕНЫ
-       </span>
-       <h3>
-        Фоксфорд
-       </h3>
-      </div>
-      <span class="rating-badge">
-       ★ GRADE 4.57
-      </span>
-     </div>
-     <div class="tags">
-      <span class="school-tag">
-       English
-      </span>
-      <span class="school-tag">
-       IT
-      </span>
-      <span class="school-tag">
-       School Subjects
-      </span>
-     </div>
-     <div class="score-grid">
-      <div class="score-panel score-panel-grade">
-       <span>
-        GRADE
-       </span>
-       <strong class="score-value grade-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill" data-kind="grade">
-        </i>
-       </div>
-      </div>
-      <div class="score-panel score-panel-student">
-       <span>
-        Студенты
-       </span>
-       <strong class="score-value student-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill score-fill-student" data-kind="student">
-        </i>
-       </div>
-      </div>
-     </div>
-     <p class="compare-sub">
-      Российская онлайн-школа для школьников с курсами по математике, английскому, программированию и подготовке к экзаменам.
-     </p>
-     <div class="card-meta">
-      <span class="school-source">
-       Официальная страница школы
-      </span>
-     </div>
-     <div class="card-stats">
-      <div class="compare-row">
-       <span>
-        Фидбек
-       </span>
-       <strong>
-        Высокий
-       </strong>
-      </div>
-      <div class="compare-row">
-       <span>
-        Карьерный фокус
-       </span>
-       <strong>
-        Учебный
-       </strong>
-      </div>
-     </div>
-     <a class="btn btn-secondary" href="https://foxford.ru/" rel="noopener noreferrer" target="_blank">
-      Перейти на сайт
-     </a>
+     <a class="btn btn-secondary" href="https://skillfactory.ru/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
     </div>
     <div class="compare-card school-card" data-rating="4.59" data-search="eduson academy аналитика маркетинг управление финансы mba бизнес российская школа" data-spec="Business,Finance,Data,Marketing,Management" data-student-rating="4.55">
      <div class="card-head">
       <div>
-       <span class="school-kicker">
-        БИЗНЕС И АНАЛИТИКА
-       </span>
-       <h3>
-        Eduson Academy
-       </h3>
+       <span class="school-kicker">БИЗНЕС И АНАЛИТИКА</span>
+       <h3>Eduson Academy</h3>
       </div>
-      <span class="rating-badge">
-       ★ GRADE 4.59
-      </span>
+      <span class="rating-badge">★ GRADE 4.59</span>
      </div>
-     <div class="tags">
-      <span class="school-tag">
-       Business
-      </span>
-      <span class="school-tag">
-       Finance
-      </span>
-      <span class="school-tag">
-       Marketing
-      </span>
-      <span class="school-tag">
-       Management
-      </span>
-     </div>
+     <div class="tags"><span class="school-tag">Business</span><span class="school-tag">Finance</span><span class="school-tag">Marketing</span><span class="school-tag">Management</span></div>
      <div class="score-grid">
       <div class="score-panel score-panel-grade">
-       <span>
-        GRADE
-       </span>
-       <strong class="score-value grade-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill" data-kind="grade">
-        </i>
-       </div>
+       <span>GRADE</span>
+       <strong class="score-value grade-value"></strong>
+       <div class="score-track"><i class="score-fill" data-kind="grade"></i></div>
       </div>
       <div class="score-panel score-panel-student">
-       <span>
-        Студенты
-       </span>
-       <strong class="score-value student-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill score-fill-student" data-kind="student">
-        </i>
-       </div>
+       <span>Студенты</span>
+       <strong class="score-value student-value"></strong>
+       <div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div>
       </div>
      </div>
-     <p class="compare-sub">
-      Российская школа с курсами по аналитике, маркетингу, финансам, менеджменту и управлению для практического роста в карьере.
-     </p>
-     <div class="card-meta">
-      <span class="school-source">
-       Официальная страница школы
-      </span>
-     </div>
+     <p class="compare-sub">Российская школа с курсами по аналитике, маркетингу, финансам, менеджменту и управлению для практического роста в карьере.</p>
+     <div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
      <div class="card-stats">
-      <div class="compare-row">
-       <span>
-        Фидбек
-       </span>
-       <strong>
-        Хороший
-       </strong>
+      <div class="compare-row"><span>Фидбек</span><strong>Хороший</strong></div>
+      <div class="compare-row"><span>Карьерный фокус</span><strong>Сильный</strong></div>
+     </div>
+     <a class="btn btn-secondary" href="https://eduson.academy/catalogue/popular" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
+    </div>
+    <div class="compare-card school-card" data-rating="4.57" data-search="фоксфорд школа математика английский программирование школьники егэ огэ онлайн подготовка российская школа" data-spec="English,IT,School" data-student-rating="4.54">
+     <div class="card-head">
+      <div>
+       <span class="school-kicker">ШКОЛА И ЭКЗАМЕНЫ</span>
+       <h3>Фоксфорд</h3>
       </div>
-      <div class="compare-row">
-       <span>
-        Карьерный фокус
-       </span>
-       <strong>
-        Сильный
-       </strong>
+      <span class="rating-badge">★ GRADE 4.57</span>
+     </div>
+     <div class="tags"><span class="school-tag">English</span><span class="school-tag">IT</span><span class="school-tag">School Subjects</span></div>
+     <div class="score-grid">
+      <div class="score-panel score-panel-grade">
+       <span>GRADE</span>
+       <strong class="score-value grade-value"></strong>
+       <div class="score-track"><i class="score-fill" data-kind="grade"></i></div>
+      </div>
+      <div class="score-panel score-panel-student">
+       <span>Студенты</span>
+       <strong class="score-value student-value"></strong>
+       <div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div>
       </div>
      </div>
-     <a class="btn btn-secondary" href="https://eduson.academy/catalogue/popular" rel="noopener noreferrer" target="_blank">
-      Перейти на сайт
-     </a>
+     <p class="compare-sub">Российская онлайн-школа для школьников с курсами по математике, английскому, программированию и подготовке к экзаменам.</p>
+     <div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
+     <div class="card-stats">
+      <div class="compare-row"><span>Фидбек</span><strong>Высокий</strong></div>
+      <div class="compare-row"><span>Карьерный фокус</span><strong>Учебный</strong></div>
+     </div>
+     <a class="btn btn-secondary" href="https://foxford.ru/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
     </div>
     <div class="compare-card school-card" data-rating="4.55" data-search="maximum education егэ огэ английский математика программирование школьники российская школа" data-spec="School,English" data-student-rating="4.51">
      <div class="card-head">
       <div>
-       <span class="school-kicker">
-        ШКОЛА ПОДГОТОВКИ
-       </span>
-       <h3>
-        MAXIMUM Education
-       </h3>
+       <span class="school-kicker">ШКОЛА ПОДГОТОВКИ</span>
+       <h3>MAXIMUM Education</h3>
       </div>
-      <span class="rating-badge">
-       ★ GRADE 4.55
-      </span>
+      <span class="rating-badge">★ GRADE 4.55</span>
      </div>
-     <div class="tags">
-      <span class="school-tag">
-       School Subjects
-      </span>
-      <span class="school-tag">
-       English
-      </span>
-     </div>
+     <div class="tags"><span class="school-tag">School Subjects</span><span class="school-tag">English</span></div>
      <div class="score-grid">
       <div class="score-panel score-panel-grade">
-       <span>
-        GRADE
-       </span>
-       <strong class="score-value grade-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill" data-kind="grade">
-        </i>
-       </div>
+       <span>GRADE</span>
+       <strong class="score-value grade-value"></strong>
+       <div class="score-track"><i class="score-fill" data-kind="grade"></i></div>
       </div>
       <div class="score-panel score-panel-student">
-       <span>
-        Студенты
-       </span>
-       <strong class="score-value student-value">
-       </strong>
-       <div class="score-track">
-        <i class="score-fill score-fill-student" data-kind="student">
-        </i>
-       </div>
+       <span>Студенты</span>
+       <strong class="score-value student-value"></strong>
+       <div class="score-track"><i class="score-fill score-fill-student" data-kind="student"></i></div>
       </div>
      </div>
-     <p class="compare-sub">
-      Российский образовательный центр для подготовки к ЕГЭ, ОГЭ, школьным предметам, английскому и программированию.
-     </p>
-     <div class="card-meta">
-      <span class="school-source">
-       Официальная страница школы
-      </span>
-     </div>
+     <p class="compare-sub">Российский образовательный центр для подготовки к ЕГЭ, ОГЭ, школьным предметам, английскому и программированию.</p>
+     <div class="card-meta"><span class="school-source">Официальная страница школы</span></div>
      <div class="card-stats">
-      <div class="compare-row">
-       <span>
-        Фидбек
-       </span>
-       <strong>
-        Хороший
-       </strong>
-      </div>
-      <div class="compare-row">
-       <span>
-        Карьерный фокус
-       </span>
-       <strong>
-        Учебный
-       </strong>
-      </div>
+      <div class="compare-row"><span>Фидбек</span><strong>Хороший</strong></div>
+      <div class="compare-row"><span>Карьерный фокус</span><strong>Учебный</strong></div>
      </div>
-     <a class="btn btn-secondary" href="https://maximumtest.ru/" rel="noopener noreferrer" target="_blank">
-      Перейти на сайт
-     </a>
+     <a class="btn btn-secondary" href="https://maximumtest.ru/" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>
     </div>
-    <div class="no-results" hidden="" id="noResults">
-     <strong>
-      Ничего не найдено
-     </strong>
-     <span>
-      Попробуйте другое название школы
-     </span>
-    </div>
+    <div class="no-results" hidden id="noResults"><strong>Ничего не найдено</strong><span>Попробуйте другое название школы</span></div>
    </div>
   </section>
-  <footer>
-   Grade © 2026 · Дипломный проект
-  </footer>
-  <script src="{{ url_for('static', filename='js/animations.js') }}">
-  </script>
+
+  <footer>Grade © 2026 · Дипломный проект</footer>
+
+  <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
   <script>
    document.addEventListener('DOMContentLoaded', () => {
-    const schoolsGrid = document.querySelector('.schools-grid');
     const counterElem = document.getElementById('resultCount');
     const searchInput = document.getElementById('schoolSearch');
     const specFilter = document.getElementById('specFilter');
     const sortFilter = document.getElementById('sortFilter');
-    const grid = document.getElementById('schoolsGrid');
     const cards = Array.from(document.querySelectorAll('.school-card'));
     const noResults = document.getElementById('noResults');
     const heroRotatingWord = document.getElementById('heroRotatingWord');
+    const FAVORITES_KEY = 'gradeFavorites';
 
-    const heroPhrases = [
-      'стоит сравнить',
-      'просто выбрать',
-      'реально обучают',
-      'имеют значение'
-    ];
+    const heroPhrases = ['стоит сравнить','просто выбрать','реально обучают','имеют значение'];
+
+    function normalize(text) {
+      return (text || '').toLowerCase().replace(/[ё]/g, 'е').replace(/\s+/g, ' ').trim();
+    }
+
+    function loadFavorites() {
+      try {
+        const raw = localStorage.getItem(FAVORITES_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        console.warn('Не удалось загрузить избранное:', error);
+        return [];
+      }
+    }
+
+    function saveFavorites(items) {
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(items));
+      syncFavoriteBadges();
+    }
+
+    function syncFavoriteBadges() {
+      const count = loadFavorites().length;
+      document.querySelectorAll('.collection-badge').forEach(badge => {
+        badge.textContent = String(count);
+        badge.classList.remove('is-updated');
+        void badge.offsetWidth;
+        badge.classList.add('is-updated');
+      });
+    }
+
+    function buildSchoolFavoriteItem(card) {
+      const title = card.querySelector('h3')?.textContent?.trim() || 'Школа';
+      const url = card.querySelector('.btn-secondary')?.href || '';
+      return {
+        id: `school:${normalize(title)}:${normalize(url)}`,
+        type: 'school',
+        title,
+        kicker: card.querySelector('.school-kicker')?.textContent?.trim() || 'Школа',
+        description: card.querySelector('.compare-sub')?.textContent?.trim() || '',
+        rating: card.dataset.rating || '',
+        studentRating: card.dataset.studentRating || '',
+        tags: Array.from(card.querySelectorAll('.school-tag')).map(tag => tag.textContent.trim()).filter(Boolean),
+        url
+      };
+    }
+
+    function isFavorite(itemId) {
+      return loadFavorites().some(item => item.id === itemId);
+    }
+
+    function setCardFavoriteState(card, active) {
+      const btn = card.querySelector('.favorite-toggle');
+      if (!btn) return;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      btn.setAttribute('title', active ? 'Убрать из избранного' : 'Добавить в избранное');
+      btn.setAttribute('aria-label', active ? 'Убрать из избранного' : 'Добавить в избранное');
+      card.dataset.favoriteActive = active ? 'true' : 'false';
+    }
+
+    function renderFavoriteToggle(card) {
+      if (card.querySelector('.favorite-toggle')) return;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'favorite-toggle';
+      button.setAttribute('aria-label', 'Добавить в избранное');
+      button.setAttribute('aria-pressed', 'false');
+      button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-6.7-4.5-9-8.6C1.2 9.2 2 5.9 4.7 4.4c2-1.1 4.4-.8 6 .8.9.9 1.4 1.8 1.3 1.8.1 0 .5-.9 1.3-1.8 1.6-1.6 4-1.9 6-.8 2.7 1.5 3.5 4.8 1.7 8-2.3 4.1-9 8.6-9 8.6Z"/></svg>';
+      button.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        const item = buildSchoolFavoriteItem(card);
+        const favorites = loadFavorites();
+        const index = favorites.findIndex(existing => existing.id === item.id);
+        if (index >= 0) {
+          favorites.splice(index, 1);
+          setCardFavoriteState(card, false);
+        } else {
+          favorites.unshift(item);
+          setCardFavoriteState(card, true);
+        }
+        saveFavorites(favorites);
+      });
+      card.appendChild(button);
+    }
+
+    function syncSchoolFavoriteButtons() {
+      cards.forEach(card => {
+        renderFavoriteToggle(card);
+        const item = buildSchoolFavoriteItem(card);
+        setCardFavoriteState(card, isFavorite(item.id));
+      });
+      syncFavoriteBadges();
+    }
 
     function initScorePanels() {
       cards.forEach(card => {
@@ -1431,7 +635,6 @@
         const studentValue = card.querySelector('.student-value');
         const gradeFill = card.querySelector('.score-fill[data-kind="grade"]');
         const studentFill = card.querySelector('.score-fill[data-kind="student"]');
-
         if (gradeValue) gradeValue.textContent = grade.toFixed(2);
         if (studentValue) studentValue.textContent = student.toFixed(2);
         if (gradeFill) gradeFill.style.setProperty('--fill', `${Math.min(grade * 20, 100)}%`);
@@ -1445,26 +648,17 @@
       const ratingB = parseFloat(b.dataset.rating || '0');
       const titleA = a.querySelector('h3').innerText.toLowerCase();
       const titleB = b.querySelector('h3').innerText.toLowerCase();
-
       if (sortMode === 'rating-asc') return ratingA - ratingB || titleA.localeCompare(titleB, 'ru');
       if (sortMode === 'name-asc') return titleA.localeCompare(titleB, 'ru') || ratingB - ratingA;
       return ratingB - ratingA || titleA.localeCompare(titleB, 'ru');
     }
 
-    function normalize(text) {
-      return (text || '')
-        .toLowerCase()
-        .replace(/[ё]/g, 'е')
-        .replace(/\s+/g, ' ')
-        .trim();
-    }
-
     function getNoun(number, one, two, five) {
-      return GradeAnimations.getNoun(number, one, two, five);
+      return window.GradeAnimations && GradeAnimations.getNoun ? GradeAnimations.getNoun(number, one, two, five) : one;
     }
 
     function updateCount() {
-      const visibleCards = document.querySelectorAll('.school-card:not([style*="display: none"])').length;
+      const visibleCards = cards.filter(card => card.style.display !== 'none').length;
       const word = getNoun(visibleCards, 'школа', 'школы', 'школ');
       if (counterElem) {
         counterElem.innerHTML = `${visibleCards} <span class="count-word">${word}</span>`;
@@ -1477,92 +671,51 @@
     function updateView() {
       const searchText = normalize(searchInput.value);
       const selectedSpec = specFilter.value;
-
-      let visibleCards = cards.filter(card => {
+      const visibleCards = cards.filter(card => {
         const title = normalize(card.querySelector('h3')?.innerText || '');
         const searchData = normalize(card.dataset.search || '');
-
-        const specList = (card.getAttribute('data-specs') || card.getAttribute('data-spec') || '')
-          .split(',')
-          .map(item => item.trim())
-          .filter(Boolean);
-
-        const matchesSearch =
-          !searchText ||
-          title.includes(searchText) ||
-          searchData.includes(searchText);
-
-        const matchesSpec =
-          selectedSpec === 'all' || specList.includes(selectedSpec);
-
+        const specList = normalize(card.dataset.spec || '').split(',').map(item => item.trim());
+        const matchesSearch = !searchText || title.includes(searchText) || searchData.includes(searchText);
+        const matchesSpec = selectedSpec === 'all' || specList.includes(selectedSpec.toLowerCase()) || specList.includes(selectedSpec);
         return matchesSearch && matchesSpec;
       });
-
       visibleCards.sort(compareCards);
-
       visibleCards.forEach(card => {
         card.style.display = 'flex';
         card.setAttribute('aria-hidden', 'false');
-        grid.appendChild(card);
+        card.parentNode.appendChild(card);
       });
-
       cards.forEach(card => {
         if (!visibleCards.includes(card)) {
           card.style.display = 'none';
           card.setAttribute('aria-hidden', 'true');
         }
       });
-
-      const count = visibleCards.length;
-      const word = getNoun(count, 'школа', 'школы', 'школ');
-
-      if (counterElem) {
-        counterElem.innerHTML = `${count} <span class="count-word">${word}</span>`;
-        counterElem.classList.remove('update-anim');
-        void counterElem.offsetWidth;
-        counterElem.classList.add('update-anim');
-      }
-
-      if (noResults) {
-        noResults.hidden = visibleCards.length !== 0;
-      }
+      if (noResults) noResults.hidden = visibleCards.length !== 0;
     }
 
     initScorePanels();
+    syncSchoolFavoriteButtons();
     updateView();
 
-    GradeAnimations.rotateText(heroRotatingWord, heroPhrases, {
-      interval: 2600,
-      delay: 160,
-      className: 'is-changed'
-    });
-
-    GradeAnimations.setPageReady();
-    GradeAnimations.staggerDelays(cards, '--delay', 0.04, 0.36);
-    GradeAnimations.setVisibleOnNextFrame(cards);
-
-    if (schoolsGrid) {
-      GradeAnimations.revealOnVisible(schoolsGrid, {
-        threshold: 0.03,
-        rootMargin: '0px 0px 100px 0px'
-      });
+    if (window.GradeAnimations) {
+      GradeAnimations.rotateText(heroRotatingWord, heroPhrases, { interval: 2600, delay: 160, className: 'is-changed' });
+      GradeAnimations.setPageReady();
+      GradeAnimations.staggerDelays(cards, '--delay', 0.04, 0.36);
+      GradeAnimations.setVisibleOnNextFrame(cards);
+      const schoolsGrid = document.querySelector('.schools-grid');
+      if (schoolsGrid) {
+        GradeAnimations.revealOnVisible(schoolsGrid, { threshold: 0.03, rootMargin: '0px 0px 100px 0px' });
+      }
     }
 
-    searchInput.addEventListener('input', () => {
-      updateView();
-      updateCount();
-    });
-    specFilter.addEventListener('change', () => {
-      updateView();
-      updateCount();
-    });
-    sortFilter.addEventListener('change', () => {
-      updateView();
-      updateCount();
-    });
+    searchInput.addEventListener('input', () => { updateView(); updateCount(); });
+    specFilter.addEventListener('change', () => { updateView(); updateCount(); });
+    sortFilter.addEventListener('change', () => { updateView(); updateCount(); });
+    window.addEventListener('storage', event => { if (event.key === FAVORITES_KEY) syncSchoolFavoriteButtons(); });
 
     updateCount();
-  });
+   });
   </script>
  </body>
 </html>

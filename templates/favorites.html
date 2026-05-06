@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Избранное — GRADE</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+  <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet"/>
+  <link href="{{ url_for('static', filename='css/favorites.css') }}" rel="stylesheet"/>
+ </head>
+ <body class="schools-page favorites-page">
+  <header>
+   <a class="logo" href="/">GRADE <span>'</span></a>
+   <nav>
+    <a href="{{ url_for('courses') }}">Курсы</a>
+    <a href="{{ url_for('schools') }}">Школы</a>
+    <a href="/c" class="active">Избранное</a>
+   </nav>
+   <div class="header-spacer"></div>
+   <div class="header-collection">
+    <div class="collection-icon">
+     <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+    </div>
+    <span class="collection-label">Мой выбор</span>
+    <span class="collection-badge">0</span>
+   </div>
+  </header>
+
+  <section class="favorites-hero">
+   <span class="compare-tag">ИЗБРАННОЕ</span>
+   <h1>Собранные школы и курсы в одном месте</h1>
+   <p>Карточки из разделов школ и курсов сохраняются в браузере. Здесь они автоматически разделяются на школы и курсы, чтобы тебе было удобнее вернуться к выбору.</p>
+  </section>
+
+  <section class="favorites-sections">
+   <div class="favorites-section">
+    <div class="favorites-section-head">
+     <div>
+      <h2>Школы</h2>
+      <span id="schoolsCount">0 карточек</span>
+     </div>
+     <button class="favorites-clear" id="clearFavorites" type="button">Очистить избранное</button>
+    </div>
+    <div class="favorites-grid" id="favoritesSchoolsGrid"></div>
+   </div>
+
+   <div class="favorites-section">
+    <div class="favorites-section-head">
+     <div>
+      <h2>Курсы</h2>
+      <span id="coursesCount">0 карточек</span>
+     </div>
+    </div>
+    <div class="favorites-grid" id="favoritesCoursesGrid"></div>
+   </div>
+  </section>
+
+  <footer>Grade © 2026 · Избранное</footer>
+
+  <script>
+   document.addEventListener('DOMContentLoaded', () => {
+    const FAVORITES_KEY = 'gradeFavorites';
+    const schoolsGrid = document.getElementById('favoritesSchoolsGrid');
+    const coursesGrid = document.getElementById('favoritesCoursesGrid');
+    const schoolsCount = document.getElementById('schoolsCount');
+    const coursesCount = document.getElementById('coursesCount');
+    const clearBtn = document.getElementById('clearFavorites');
+    const headerBadge = document.querySelector('.collection-badge');
+
+    function loadFavorites() {
+      try {
+        const raw = localStorage.getItem(FAVORITES_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveFavorites(items) {
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(items));
+      renderFavorites();
+    }
+
+    function syncHeaderBadge(total) {
+      if (!headerBadge) return;
+      headerBadge.textContent = String(total);
+      headerBadge.classList.remove('is-updated');
+      void headerBadge.offsetWidth;
+      headerBadge.classList.add('is-updated');
+    }
+
+    function escapeHtml(text) {
+      return String(text || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function renderSchoolCard(item) {
+      const tags = (item.tags && item.tags.length)
+        ? item.tags.map(tag => `<span class="school-tag">${escapeHtml(tag)}</span>`).join('')
+        : '<span class="school-tag">Избранное</span>';
+
+      return `
+        <article class="compare-card school-card is-visible" style="opacity:1; transform:none;">
+         <div class="card-head">
+          <div>
+           <span class="school-kicker">${escapeHtml(item.kicker || 'ШКОЛА')}</span>
+           <h3>${escapeHtml(item.title || 'Школа')}</h3>
+          </div>
+          <span class="rating-badge">★ GRADE ${escapeHtml(item.rating || '—')}</span>
+         </div>
+         <div class="tags">${tags}</div>
+         <p class="compare-sub">${escapeHtml(item.description || '')}</p>
+         <div class="card-meta"><span class="school-source">Сохранено в избранном</span></div>
+         <div class="card-stats">
+          <div class="compare-row"><span>Тип</span><strong>Школа</strong></div>
+          <div class="compare-row"><span>Рейтинг студентов</span><strong>${escapeHtml(item.studentRating || '—')}</strong></div>
+         </div>
+         ${item.url ? `<a class="btn btn-secondary" href="${escapeHtml(item.url)}" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>` : ''}
+         <button type="button" class="favorite-toggle is-active" data-remove-id="${escapeHtml(item.id)}" aria-label="Убрать из избранного" aria-pressed="true" title="Убрать из избранного">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-6.7-4.5-9-8.6C1.2 9.2 2 5.9 4.7 4.4c2-1.1 4.4-.8 6 .8.9.9 1.4 1.8 1.3 1.8.1 0 .5-.9 1.3-1.8 1.6-1.6 4-1.9 6-.8 2.7 1.5 3.5 4.8 1.7 8-2.3 4.1-9 8.6-9 8.6Z"/></svg>
+         </button>
+        </article>`;
+    }
+
+    function renderCourseCard(item) {
+      const tags = (item.tags && item.tags.length)
+        ? item.tags.map(tag => `<span class="school-tag">${escapeHtml(tag)}</span>`).join('')
+        : '<span class="school-tag">Курс</span>';
+
+      return `
+        <article class="compare-card school-card is-visible" style="opacity:1; transform:none;">
+         <div class="card-head">
+          <div>
+           <span class="school-kicker">${escapeHtml(item.school || 'КУРС')}</span>
+           <h3>${escapeHtml(item.title || 'Курс')}</h3>
+          </div>
+          <span class="rating-badge">★ ${escapeHtml(item.rating || '0.0')}</span>
+         </div>
+         <div class="tags">${tags}</div>
+         <p class="compare-sub">${escapeHtml(item.description || 'Сохранённый курс')}</p>
+         <div class="card-meta"><span class="school-source">Сохранено в избранном</span></div>
+         <div class="card-stats">
+          <div class="compare-row"><span>Тип</span><strong>Курс</strong></div>
+          <div class="compare-row"><span>Формат</span><strong>${escapeHtml(item.format || 'Онлайн')}</strong></div>
+         </div>
+         ${item.url ? `<a class="btn btn-secondary" href="${escapeHtml(item.url)}" rel="noopener noreferrer" target="_blank">Перейти на сайт</a>` : ''}
+         <button type="button" class="favorite-toggle is-active" data-remove-id="${escapeHtml(item.id)}" aria-label="Убрать из избранного" aria-pressed="true" title="Убрать из избранного">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-6.7-4.5-9-8.6C1.2 9.2 2 5.9 4.7 4.4c2-1.1 4.4-.8 6 .8.9.9 1.4 1.8 1.3 1.8.1 0 .5-.9 1.3-1.8 1.6-1.6 4-1.9 6-.8 2.7 1.5 3.5 4.8 1.7 8-2.3 4.1-9 8.6-9 8.6Z"/></svg>
+         </button>
+        </article>`;
+    }
+
+    function renderEmpty(target, title) {
+      target.innerHTML = `<div class="favorite-empty"><strong>Пока пусто</strong><span>Добавляй ${title} с соответствующих страниц, нажимая на сердечко.</span></div>`;
+    }
+
+    function renderFavorites() {
+      const favorites = loadFavorites();
+      const schools = favorites.filter(item => item.type === 'school');
+      const courses = favorites.filter(item => item.type === 'course');
+
+      syncHeaderBadge(favorites.length);
+      schoolsCount.textContent = `${schools.length} карточек`;
+      coursesCount.textContent = `${courses.length} карточек`;
+
+      schoolsGrid.innerHTML = schools.length ? schools.map(renderSchoolCard).join('') : '';
+      coursesGrid.innerHTML = courses.length ? courses.map(renderCourseCard).join('') : '';
+
+      if (!schools.length) renderEmpty(schoolsGrid, 'школы');
+      if (!courses.length) renderEmpty(coursesGrid, 'курсы');
+    }
+
+    document.addEventListener('click', event => {
+      const removeBtn = event.target.closest('[data-remove-id]');
+      if (!removeBtn) return;
+      const id = removeBtn.getAttribute('data-remove-id');
+      const favorites = loadFavorites().filter(item => item.id !== id);
+      saveFavorites(favorites);
+    });
+
+    clearBtn.addEventListener('click', () => {
+      localStorage.removeItem(FAVORITES_KEY);
+      renderFavorites();
+    });
+
+    window.addEventListener('storage', event => {
+      if (event.key === FAVORITES_KEY) renderFavorites();
+    });
+
+    renderFavorites();
+   });
+  </script>
+ </body>
+</html>

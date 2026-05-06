@@ -6,7 +6,7 @@
   <title>Избранное — GRADE</title>
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet"/>
   <link href="{{ url_for('static', filename='css/favorites.css') }}" rel="stylesheet"/>
  </head>
@@ -30,8 +30,13 @@
 
   <section class="favorites-hero">
    <span class="compare-tag">ИЗБРАННОЕ</span>
-   <h1>Собранные школы и курсы в одном месте</h1>
-   <p>Карточки из разделов школ и курсов сохраняются в браузере. Здесь они автоматически разделяются на школы и курсы, чтобы тебе было удобнее вернуться к выбору.</p>
+   <h1><span>Собранные школы</span> и <span>курсы</span> в одном месте</h1>
+   <p>Все сохранённые карточки аккуратно разложены по категориям. Так проще быстро вернуться к понравившимся школам или курсам и продолжить выбор без лишнего поиска.</p>
+   <div class="favorites-hero-pills" aria-hidden="true">
+    <span>Разделение по категориям</span>
+    <span>Быстрая очистка</span>
+    <span>Синхронизация с браузером</span>
+   </div>
   </section>
 
   <section class="favorites-sections">
@@ -41,19 +46,20 @@
       <h2>Школы</h2>
       <span id="schoolsCount">0 карточек</span>
      </div>
-     <button class="favorites-clear" id="clearFavorites" type="button">Очистить избранное</button>
+     <button class="favorites-clear" id="clearSchoolsFavorites" type="button">Очистить школы</button>
     </div>
     <div class="favorites-grid" id="favoritesSchoolsGrid"></div>
    </div>
 
-   <div class="favorites-section">
+   <div class="favorites-section favorites-section--courses">
     <div class="favorites-section-head">
      <div>
       <h2>Курсы</h2>
       <span id="coursesCount">0 карточек</span>
      </div>
+     <button class="favorites-clear favorites-clear--courses" id="clearCoursesFavorites" type="button">Очистить курсы</button>
     </div>
-    <div class="favorites-grid" id="favoritesCoursesGrid"></div>
+    <div class="favorites-grid favorites-grid--courses" id="favoritesCoursesGrid"></div>
    </div>
   </section>
 
@@ -66,7 +72,8 @@
     const coursesGrid = document.getElementById('favoritesCoursesGrid');
     const schoolsCount = document.getElementById('schoolsCount');
     const coursesCount = document.getElementById('coursesCount');
-    const clearBtn = document.getElementById('clearFavorites');
+    const clearSchoolsBtn = document.getElementById('clearSchoolsFavorites');
+    const clearCoursesBtn = document.getElementById('clearCoursesFavorites');
     const headerBadge = document.querySelector('.collection-badge');
 
     function loadFavorites() {
@@ -177,6 +184,11 @@
       if (!courses.length) renderEmpty(coursesGrid, 'курсы');
     }
 
+    function clearFavoritesByType(type) {
+      const favorites = loadFavorites().filter(item => item.type !== type);
+      saveFavorites(favorites);
+    }
+
     document.addEventListener('click', event => {
       const removeBtn = event.target.closest('[data-remove-id]');
       if (!removeBtn) return;
@@ -185,10 +197,8 @@
       saveFavorites(favorites);
     });
 
-    clearBtn.addEventListener('click', () => {
-      localStorage.removeItem(FAVORITES_KEY);
-      renderFavorites();
-    });
+    clearSchoolsBtn.addEventListener('click', () => clearFavoritesByType('school'));
+    clearCoursesBtn.addEventListener('click', () => clearFavoritesByType('course'));
 
     window.addEventListener('storage', event => {
       if (event.key === FAVORITES_KEY) renderFavorites();

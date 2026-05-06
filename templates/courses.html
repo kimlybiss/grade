@@ -151,13 +151,18 @@
     {% if course.school|lower == 'mida' %}
       {% set ns.mida_removed = true %}
     {% else %}
-    <article class="course-card" data-category="{{ course.category }}" data-school="{{ course.school|lower }}" data-course="{{ course.course_name|lower }}" data-price="{{ course.price_rub }}" data-rating="{{ course.rating }}" data-practice="{{ course.practice_percent }}" data-duration="{{ course.duration_weeks }}">
+    <article class="course-card" data-category="{{ course.category }}" data-school="{{ course.school|lower }}" data-course="{{ course.course_name|lower }}" data-price="{{ course.price_rub }}" data-rating="{{ course.rating }}" data-practice="{{ course.practice_percent }}" data-duration="{{ course.duration_weeks }}" data-url="{{ url_for('courses') }}#catalog">
       <div class="course-card-top">
-        <div>
+        <div class="course-card-main">
           <span class="school-pill">{{ course.school }}</span>
           <h3>{{ course.course_name }}</h3>
         </div>
-        <div class="rating-badge">★ {{ course.rating }}</div>
+        <div class="card-actions">
+          <button type="button" class="favorite-toggle" data-favorite-toggle aria-label="Добавить в избранное" aria-pressed="false" title="Добавить в избранное">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-6.7-4.5-9-8.6C1.2 9.2 2 5.9 4.7 4.4c2-1.1 4.4-.8 6 .8.9.9 1.4 1.8 1.3 1.8.1 0 .5-.9 1.3-1.8 1.6-1.6 4-1.9 6-.8 2.7 1.5 3.5 4.8 1.7 8-2.3 4.1-9 8.6-9 8.6Z"></path></svg>
+          </button>
+          <div class="rating-badge">★ {{ course.rating }}</div>
+        </div>
       </div>
 
       <p class="compare-sub">{{ course.highlight }}</p>
@@ -211,13 +216,18 @@
     {% endfor %}
 
     {% if ns.mida_removed %}
-    <article class="course-card course-card--replacement" data-category="code" data-school="netology" data-course="frontend-разработчик" data-price="109900" data-rating="4.8" data-practice="68" data-duration="24">
+    <article class="course-card course-card--replacement" data-category="code" data-school="netology" data-course="frontend-разработчик" data-price="109900" data-rating="4.8" data-practice="68" data-duration="24" data-url="{{ url_for('courses') }}#catalog">
       <div class="course-card-top">
-        <div>
+        <div class="course-card-main">
           <span class="school-pill">Нетология</span>
           <h3>Frontend-разработчик</h3>
         </div>
-        <div class="rating-badge">★ 4.8</div>
+        <div class="card-actions">
+          <button type="button" class="favorite-toggle" data-favorite-toggle aria-label="Добавить в избранное" aria-pressed="false" title="Добавить в избранное">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-6.7-4.5-9-8.6C1.2 9.2 2 5.9 4.7 4.4c2-1.1 4.4-.8 6 .8.9.9 1.4 1.8 1.3 1.8.1 0 .5-.9 1.3-1.8 1.6-1.6 4-1.9 6-.8 2.7 1.5 3.5 4.8 1.7 8-2.3 4.1-9 8.6-9 8.6Z"></path></svg>
+          </button>
+          <div class="rating-badge">★ 4.8</div>
+        </div>
       </div>
 
       <p class="compare-sub">Замена вместо курса MIDA: больше практики, акцент на портфолио и понятный карьерный трек.</p>
@@ -302,6 +312,7 @@
 
 <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
 <script>
+  const FAVORITES_KEY = 'gradeFavorites';
   const searchInput = document.getElementById('searchCourses');
   const sortSelect = document.getElementById('sortCourses');
   const chips = document.querySelectorAll('.chip');
@@ -309,10 +320,78 @@
   const grid = document.getElementById('courseGrid');
   const heroIntro = document.querySelector('.hero-intro');
   const heroPanel = document.querySelector('.courses-hero-panel');
+  const headerBadge = document.querySelector('.collection-badge');
   let currentFilter = 'all';
 
   function normalizeText(value) {
     return (value || '').toString().trim().toLowerCase();
+  }
+
+  function loadFavorites() {
+    try {
+      const raw = window.localStorage.getItem(FAVORITES_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveFavorites(items) {
+    window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(items));
+    syncHeaderBadge(items.length);
+    updateFavoriteButtons(items);
+  }
+
+  function syncHeaderBadge(total) {
+    if (!headerBadge) return;
+    headerBadge.textContent = String(total);
+    headerBadge.classList.remove('is-updated');
+    void headerBadge.offsetWidth;
+    headerBadge.classList.add('is-updated');
+  }
+
+  function cardIdFrom(card) {
+    const school = normalizeText(card.dataset.school);
+    const course = normalizeText(card.dataset.course);
+    const price = String(card.dataset.price || '').trim();
+    return `course:${school}:${course}:${price}`;
+  }
+
+  function getCardTags(card) {
+    return Array.from(card.querySelectorAll('.course-tags span'))
+      .map(tag => tag.textContent.trim())
+      .filter(Boolean);
+  }
+
+  function getCourseItem(card) {
+    return {
+      id: cardIdFrom(card),
+      type: 'course',
+      school: card.querySelector('.school-pill')?.textContent.trim() || card.dataset.school || 'Курс',
+      title: card.querySelector('h3')?.textContent.trim() || card.dataset.course || 'Курс',
+      rating: card.dataset.rating || '—',
+      description: card.querySelector('.compare-sub')?.textContent.trim() || '',
+      format: getCardTags(card)[2] || 'Онлайн',
+      tags: getCardTags(card),
+      url: card.dataset.url || "{{ url_for('courses') }}#catalog"
+    };
+  }
+
+  function updateFavoriteButtons(items = loadFavorites()) {
+    const favorites = Array.isArray(items) ? items : [];
+    cards.forEach(card => {
+      const button = card.querySelector('[data-favorite-toggle]');
+      if (!button) return;
+
+      const id = cardIdFrom(card);
+      const active = favorites.some(item => item && item.id === id);
+
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      button.setAttribute('aria-label', active ? 'Убрать из избранного' : 'Добавить в избранное');
+      button.title = active ? 'Убрать из избранного' : 'Добавить в избранное';
+    });
   }
 
   function sortCards(list) {
@@ -355,9 +434,9 @@
         card.classList.remove('is-visible');
       }
     });
-  }
 
-  const schoolsCountTarget = document.querySelector('[data-sync-schools-count]');
+    updateFavoriteButtons();
+  }
 
   function setupProgressBarReveal() {
     if (typeof IntersectionObserver === 'undefined') return;
@@ -382,6 +461,7 @@
   }
 
   function syncSchoolsCountFromSchoolsPage() {
+    const schoolsCountTarget = document.querySelector('[data-sync-schools-count]');
     if (!schoolsCountTarget) return;
     const storedCount = Number(window.localStorage.getItem('grade-schools-count'));
     const fallbackCount = Number(schoolsCountTarget.dataset.fallback || schoolsCountTarget.textContent || 0);
@@ -401,9 +481,33 @@
   searchInput.addEventListener('input', renderCards);
   sortSelect.addEventListener('change', renderCards);
 
+  document.addEventListener('click', event => {
+    const button = event.target.closest('[data-favorite-toggle]');
+    if (!button) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const card = button.closest('.course-card');
+    if (!card) return;
+
+    const item = getCourseItem(card);
+    const favorites = loadFavorites();
+    const index = favorites.findIndex(favorite => favorite && favorite.id === item.id);
+
+    if (index >= 0) {
+      favorites.splice(index, 1);
+    } else {
+      favorites.unshift(item);
+    }
+
+    saveFavorites(favorites);
+  });
+
   document.addEventListener('DOMContentLoaded', () => {
     GradeAnimations.setPageReady();
     syncSchoolsCountFromSchoolsPage();
+    syncHeaderBadge(loadFavorites().length);
     renderCards();
     GradeAnimations.softHoverCards(cards, {
       tilt: 1.2,
@@ -426,7 +530,15 @@
     });
     setupProgressBarReveal();
 
-    window.addEventListener('storage', syncSchoolsCountFromSchoolsPage);
+    window.addEventListener('storage', event => {
+      if (event.key === FAVORITES_KEY) {
+        syncHeaderBadge(loadFavorites().length);
+        updateFavoriteButtons();
+      }
+      if (event.key === 'grade-schools-count') {
+        syncSchoolsCountFromSchoolsPage();
+      }
+    });
   });
 </script>
 

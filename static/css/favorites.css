@@ -10,24 +10,64 @@ body.favorites-page {
 body.favorites-page .favorites-hero {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 26px 20px 6px;
+  padding: 28px 20px 8px;
   text-align: center;
 }
 
 body.favorites-page .favorites-hero h1 {
-  font-size: clamp(2.4rem, 4.6vw, 4.1rem);
-  line-height: 1;
+  font-size: clamp(2.5rem, 5vw, 4.4rem);
+  line-height: 0.96;
   margin: 16px auto 16px;
-  max-width: 860px;
-  letter-spacing: -0.05em;
+  max-width: 900px;
+  letter-spacing: -0.06em;
+}
+
+body.favorites-page .favorites-hero h1 span {
+  position: relative;
+  display: inline-block;
+  padding: 0 0.06em;
+}
+
+body.favorites-page .favorites-hero h1 span::after {
+  content: '';
+  position: absolute;
+  left: -0.02em;
+  right: -0.02em;
+  bottom: 0.08em;
+  height: 0.32em;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(123, 45, 45, 0.14), rgba(255, 201, 140, 0.52));
+  z-index: -1;
 }
 
 body.favorites-page .favorites-hero p {
-  max-width: 760px;
+  max-width: 780px;
   margin: 0 auto;
   color: var(--muted);
   font-size: 1.05rem;
   line-height: 1.7;
+}
+
+body.favorites-page .favorites-hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+body.favorites-page .favorites-hero-pills span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(123, 45, 45, 0.10);
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 700;
+  box-shadow: 0 10px 24px rgba(22, 16, 13, 0.05);
 }
 
 body.favorites-page .favorites-sections {
@@ -73,7 +113,7 @@ body.favorites-page .favorites-section-head span {
 
 body.favorites-page .favorites-clear {
   border: 1px solid rgba(123, 45, 45, 0.12);
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.88);
   color: var(--accent);
   border-radius: 999px;
   padding: 11px 16px;
@@ -90,10 +130,19 @@ body.favorites-page .favorites-clear:hover {
   box-shadow: 0 16px 30px rgba(22, 16, 13, 0.08);
 }
 
+body.favorites-page .favorites-clear--courses {
+  color: #6f4d14;
+}
+
 body.favorites-page .favorites-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 22px;
+  align-items: start;
+}
+
+body.favorites-page .favorites-grid--courses {
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
 }
 
 body.favorites-page .favorite-empty {
@@ -203,5 +252,161 @@ body.favorites-page footer {
     right: 14px;
     width: 40px;
     height: 40px;
+  }
+
+  body.favorites-page .favorites-hero-pills {
+    gap: 8px;
+  }
+
+  body.favorites-page .favorites-hero-pills span {
+    padding: 9px 12px;
+    font-size: 0.88rem;
+  }
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,250,245,.88));
+  border: 1px solid rgba(123, 45, 45, 0.08);
+  border-radius: 26px;
+  box-shadow: 0 16px 34px rgba(22, 16, 13, 0.08);
+  padding: 22px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card h3 {
+  margin: 8px 0 0;
+  font-size: 1.2rem;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .school-kicker {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(123,45,45,.08);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .school-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 8px 10px;
+  background: rgba(123,45,45,.06);
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .compare-sub {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+  font-size: 0.98rem;
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .card-meta {
+  padding-top: 2px;
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .school-source {
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .card-stats {
+  display: grid;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .compare-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.78);
+  border: 1px solid rgba(123,45,45,.08);
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .compare-row span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .compare-row strong {
+  font-size: 0.96rem;
+  text-align: right;
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .btn {
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .favorite-toggle {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(123,45,45,.14);
+  background: rgba(255,255,255,.94);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--accent);
+  box-shadow: 0 10px 22px rgba(22,16,13,.08);
+  transition: transform .25s ease, background .25s ease, box-shadow .25s ease, color .25s ease;
+  z-index: 3;
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .favorite-toggle svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .favorite-toggle:hover {
+  transform: translateY(-1px) scale(1.03);
+  background: #fff;
+  box-shadow: 0 14px 28px rgba(22,16,13,.11);
+}
+
+body.favorites-page .favorites-section--courses .favorite-course-card .favorite-toggle.is-active {
+  color: #7b2d2d;
+}
+
+@media (max-width: 900px) {
+  body.favorites-page .favorites-grid--courses {
+    grid-template-columns: 1fr;
   }
 }

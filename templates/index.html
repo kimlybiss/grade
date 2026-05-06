@@ -271,5 +271,36 @@
   GradeAnimations.redirectEmptyAnchors('/404.html');
 </script>
 
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const FAVORITES_KEY = 'gradeFavorites';
+    const badge = document.querySelector('.collection-badge');
+
+    function updateBadge() {
+      if (!badge) return;
+      let count = 0;
+      try {
+        const raw = localStorage.getItem(FAVORITES_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        count = Array.isArray(parsed) ? parsed.length : 0;
+      } catch (error) {
+        count = 0;
+      }
+      badge.textContent = String(count);
+      badge.classList.remove('is-updated');
+      void badge.offsetWidth;
+      badge.classList.add('is-updated');
+    }
+
+    updateBadge();
+    window.addEventListener('storage', event => {
+      if (event.key === FAVORITES_KEY) updateBadge();
+    });
+    window.addEventListener('pageshow', updateBadge);
+    window.addEventListener('focus', updateBadge);
+  });
+</script>
+
 </body>
 </html>

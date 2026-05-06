@@ -365,15 +365,38 @@
   }
 
   function getCourseItem(card) {
+    const rows = {};
+    card.querySelectorAll('.compare-row').forEach(row => {
+      const label = row.querySelector('span')?.textContent.trim();
+      const value = row.querySelector('strong')?.textContent.trim();
+      if (label && value) rows[label] = value;
+    });
+
+    const notes = Array.from(card.querySelectorAll('.card-notes p'))
+      .map(note => note.textContent.trim())
+      .filter(Boolean);
+
     return {
       id: cardIdFrom(card),
       type: 'course',
       school: card.querySelector('.school-pill')?.textContent.trim() || card.dataset.school || 'Курс',
       title: card.querySelector('h3')?.textContent.trim() || card.dataset.course || 'Курс',
       rating: card.dataset.rating || '—',
+      practice_percent: card.dataset.practice || String(Math.round(Number(rows['Практика']?.replace('%', '') || 0))),
+      duration_weeks: card.dataset.duration || '',
+      price_rub: card.dataset.price || '',
       description: card.querySelector('.compare-sub')?.textContent.trim() || '',
       format: getCardTags(card)[2] || 'Онлайн',
+      level: getCardTags(card)[1] || '',
+      category_label: getCardTags(card)[0] || '',
       tags: getCardTags(card),
+      projects_count: rows['Проекты'] || '',
+      mentor_feedback: rows['Фидбек'] || '',
+      career_support: rows['Карьерная поддержка'] || '',
+      internship: rows['Стажировка'] || '',
+      reviews_count: rows['Отзывы'] || '',
+      pros: notes[0] ? notes[0].replace(/^Плюсы:\s*/i, '') : '',
+      cons: notes[1] ? notes[1].replace(/^Минусы:\s*/i, '') : '',
       url: card.dataset.url || "{{ url_for('courses') }}#catalog"
     };
   }

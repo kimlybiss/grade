@@ -565,6 +565,14 @@
     function buildSchoolFavoriteItem(card) {
       const title = card.querySelector('h3')?.textContent?.trim() || 'Школа';
       const url = card.querySelector('.btn-secondary')?.href || '';
+
+      const stats = {};
+      card.querySelectorAll('.card-stats .compare-row').forEach(row => {
+        const key = row.querySelector('span')?.textContent.trim();
+        const val = row.querySelector('strong')?.textContent.trim();
+        if (key && val) stats[key] = val;
+      });
+
       return {
         id: `school:${normalize(title)}:${normalize(url)}`,
         type: 'school',
@@ -573,11 +581,14 @@
         description: card.querySelector('.compare-sub')?.textContent?.trim() || '',
         rating: card.dataset.rating || '',
         studentRating: card.dataset.studentRating || '',
-        tags: Array.from(card.querySelectorAll('.school-tag')).map(tag => tag.textContent.trim()).filter(Boolean),
-        url
+        tags: Array.from(card.querySelectorAll('.school-tag'))
+          .map(tag => tag.textContent.trim())
+          .filter(Boolean),
+        url,
+        feedback: stats['Фидбек'] || '',
+        career: stats['Карьерный фокус'] || ''
       };
     }
-
     function isFavorite(itemId) {
       return loadFavorites().some(item => item.id === itemId);
     }
